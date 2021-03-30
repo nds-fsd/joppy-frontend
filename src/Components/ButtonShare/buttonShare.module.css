@@ -1,0 +1,20 @@
+.button_share {
+    background-color: white;
+    color: rgb(143, 141, 141);
+    font-size: 13px;
+    padding-left: 5px;
+    width: 55px;
+    height: 60px;
+    
+}
+
+.share {
+    font-size: 30px;
+    margin-bottom: -15px;
+    padding-left: 5px;
+    
+}
+
+.button_share:hover {
+    color: rgb(110, 110, 110);
+}
