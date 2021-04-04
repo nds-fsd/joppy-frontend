@@ -1,0 +1,8 @@
+.navbar {
+    position: relative;
+    background-color:white;
+    box-shadow: 3px 3px 5px 3px rgb(180, 180, 180);
+    display: flex;
+    justify-content: space-around;
+
+}
