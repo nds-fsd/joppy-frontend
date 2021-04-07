@@ -1,3 +1,3 @@
-import ButtonSnooze from "./buttonSnooze.view";
+import ButtonSnooze from './buttonSnooze.view';
 
 export default ButtonSnooze;
