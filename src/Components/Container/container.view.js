@@ -8,6 +8,7 @@ import {
 import { OFFER_PAGE, PROFILE_PAGE, CHALLENGES_PAGE, CONVERSATIONS_PAGE } from "../../Routers/routers";
 import NavBar from "../NavBar";
 import ButtonsBar from "../ButtonsBar";
+import JobOffer from "../JobOffer"
 
 const Container = () => {
 
@@ -19,7 +20,7 @@ const Container = () => {
             <div className={styles.main}>
               <Switch>
                   <Route exact path={OFFER_PAGE}>
-
+                  <JobOffer/>
                   </Route>
                   <Route path={PROFILE_PAGE}>
 
