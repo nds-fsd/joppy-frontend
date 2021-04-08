@@ -1,8 +1,6 @@
-import "./App.css";
-import React from "react";
-import Container from "./Components/Container";
-import Tag from "./Components/Tag";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import './App.css';
+import React from 'react';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCheck,
   faBuilding,
@@ -18,9 +16,11 @@ import {
   faUser,
   faCircleNotch,
   faLayerGroup,
-} from "@fortawesome/free-solid-svg-icons";
+} from '@fortawesome/free-solid-svg-icons';
 
-import { faCommentAlt } from "@fortawesome/free-regular-svg-icons";
+import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
+import Tag from './Components/Tag';
+import Container from './Components/Container';
 
 library.add(
   faCheck,
@@ -42,9 +42,9 @@ library.add(
 
 function App() {
   return (
-    <div className='App'>
+    <div className="App">
       <Container />
-      <Tag icon={"money-bill-wave"} match={true}>
+      <Tag icon="money-bill-wave" match>
         Salary
       </Tag>
     </div>
