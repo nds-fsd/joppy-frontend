@@ -1,4 +1,13 @@
 .App {
+  position: absolute;
   height: 100%;
   width: 100%;
+}
+
+.container {
+  display: grid;
+  grid-template-rows: 2fr 7fr;
+  grid-template-areas:
+    'Navbar'
+    'main';
 }

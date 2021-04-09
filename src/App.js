@@ -1,4 +1,3 @@
-import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -20,9 +19,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
-
+import styles from './App.css';
 import { OFFER_PAGE, PROFILE_PAGE, CHALLENGES_PAGE, CONVERSATIONS_PAGE } from './Routers/routers';
 import OfferPage from './Pages/OfferPage/offerPage.view';
+import NavBar from './Components/NavBar';
 
 library.add(
   faCheck,
@@ -45,21 +45,26 @@ library.add(
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Switch>
-          <Route path={OFFER_PAGE}>
-            <OfferPage />
-          </Route>
-          <Route exact path={PROFILE_PAGE}>
-            <h1>Profile</h1>
-          </Route>
-          <Route exact path={CHALLENGES_PAGE}>
-            <h1>Challenges</h1>
-          </Route>
-          <Route exact path={CONVERSATIONS_PAGE}>
-            <h1>Conversations</h1>
-          </Route>
-        </Switch>
+      <div className={styles.App}>
+        <div className={styles.container}>
+          <NavBar />
+          <div className={styles.main}>
+            <Switch>
+              <Route exact path={OFFER_PAGE}>
+                <OfferPage />
+              </Route>
+              <Route path={PROFILE_PAGE}>
+                <h1>Profile</h1>
+              </Route>
+              <Route path={CHALLENGES_PAGE}>
+                <h1>Challenges</h1>
+              </Route>
+              <Route path={CONVERSATIONS_PAGE}>
+                <h1>Conversations</h1>
+              </Route>
+            </Switch>
+          </div>
+        </div>
       </div>
     </Router>
   );

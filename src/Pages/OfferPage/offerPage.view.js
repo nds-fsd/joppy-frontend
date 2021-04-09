@@ -1,12 +1,13 @@
 import React from 'react';
 import ButtonsBar from '../../Components/ButtonsBar';
-import NavBar from '../../Components/NavBar';
 import styles from './offerPage.module.css';
+import JobOffer from '../../Components/JobOffer';
 
 const OfferPage = () => (
   <div className={styles.offerPageContainer}>
-    <NavBar />
-    <div className={styles.offerBody}>Something</div>
+    <div className={styles.offerBody}>
+      <JobOffer />
+    </div>
     <ButtonsBar />
   </div>
 );
