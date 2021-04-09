@@ -20,7 +20,7 @@ import {
 
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 import styles from './App.css';
-import { OFFER_PAGE, PROFILE_PAGE, CHALLENGES_PAGE, CONVERSATIONS_PAGE } from './Routers/routers';
+import { OFFER_PAGE, PROFILE_PAGE, CHALLENGES_PAGE, CONVERSATIONS_PAGE } from './Routers/routers'; //eslint-disable-line
 import OfferPage from './Pages/OfferPage/offerPage.view';
 import NavBar from './Components/NavBar';
 

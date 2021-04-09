@@ -4,8 +4,9 @@ import CompanyIntro from '../CompanyIntro';
 import JobPosition from '../JobPosition';
 import Description from '../Description';
 
-const JobOffer = () => (
+const JobOffer = ({ placeholder }) => (
   <div className={styles.scroll}>
+    <h1>{placeholder}</h1>
     <CompanyIntro />
     <JobPosition />
     <Description />

@@ -11,3 +11,7 @@
     'Navbar'
     'main';
 }
+
+.main {
+  width: 50%;
+}
