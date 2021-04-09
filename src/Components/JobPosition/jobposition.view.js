@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './jobposition.module.css';
 import Tag from '../Tag';
 
-const JobPosition = ({ icon, children, match }) => (
+const JobPosition = ({ icon, offerData, match }) => (
   <div className={styles.jobtag}>
     <h2>Software Engineer</h2>
     <Tag icon={icon} match={match}>

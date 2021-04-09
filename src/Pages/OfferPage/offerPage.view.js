@@ -12,7 +12,7 @@ const OfferPage = () => {
       .then((res) => res.json())
       .then((data) => setOfferArray(data))
       .catch();
-  });
+  }, []);
   const handleReject = () => setCount(count + 1);
   const handleAccept = () => setCount(count + 1);
 
@@ -20,7 +20,7 @@ const OfferPage = () => {
     <div className={styles.offerPageContainer}>
       <div className={styles.offerBody}>
         {offerArray && count < offerArray.length ? (
-          <JobOffer placeholder={offerArray[count]._id} /> //eslint-disable-line
+          <JobOffer offerInfo={offerArray[count]._id} /> //eslint-disable-line
         ) : (
           <p>Nothing to show</p>
         )}

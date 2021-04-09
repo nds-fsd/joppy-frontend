@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './companyintro.module.css';
 
-const CompanyIntro = () => (
+const CompanyIntro = ({ data }) => (
   <div className={styles.container}>
     <div>
       <img src="./logo512.png" alt="company logo" width="80" height="80" />
