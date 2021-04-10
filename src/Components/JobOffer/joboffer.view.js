@@ -10,26 +10,26 @@ const JobOffer = ({ offerInfo }) => {
   useEffect(() => {
     fetch(`http://localhost:3001/offer/${offerInfo}`)
       .then((response) => {
-        console.log(response);
         if (response.ok) {
           return response.json();
         }
         return Promise.reject();
       })
       .then((data) => {
-        console.log(data);
         setOfferData(data);
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .catch();
   }, [offerInfo]);
 
   return (
     <div className={styles.scroll}>
-      <CompanyIntro />
-      <JobPosition offerData={offerData} />
-      <Description />
+      {offerData ? <CompanyIntro companyInfo={offerData.companyInfo} /> : null}
+      {offerData ? <JobPosition offerData={offerData} /> : null}
+      {offerData ? (
+        <Description offerData={offerData} companyInfo={offerData.companyInfo} />
+      ) : (
+        <p>loading</p>
+      )}
     </div>
   );
 };

@@ -1,15 +1,17 @@
 import React from 'react';
 import styles from './companyintro.module.css';
 
-const CompanyIntro = ({ data }) => (
+const CompanyIntro = ({ companyInfo }) => (
   <div className={styles.container}>
     <div>
-      <img src="./logo512.png" alt="company logo" width="80" height="80" />
+      {companyInfo ? (
+        <img src={companyInfo.logo} alt="company logo" width="80" height="80" />
+      ) : null}
     </div>
     <div className={styles.title}>
-      <h4 className={styles.companyname}>Facebook Inc.</h4>
-      <p className={styles.size}>Small sized company</p>
-      <p className={styles.profile}>Full Company profile</p>
+      {companyInfo ? <h4 className={styles.companyname}>{companyInfo.name}</h4> : null}
+      {companyInfo ? <p className={styles.size}>{companyInfo.type}</p> : null}
+      {companyInfo ? <p className={styles.profile}>Full Company profile</p> : null}
     </div>
   </div>
 );

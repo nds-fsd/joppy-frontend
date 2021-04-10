@@ -6,15 +6,15 @@ const JobPosition = ({ icon, offerData, match }) => (
   <div className={styles.jobtag}>
     <h2>Software Engineer</h2>
     <Tag icon={icon} match={match}>
-      {children}
+      {offerData.title}
     </Tag>
     <p>Searching for</p>
     <Tag icon={icon} match={match}>
-      {children}
+      {offerData.title}
     </Tag>
     <p>Knowing</p>
     <Tag icon={icon} match={match}>
-      {children}
+      {offerData.title}
     </Tag>
   </div>
 );
