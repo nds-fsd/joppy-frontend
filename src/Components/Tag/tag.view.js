@@ -2,8 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './tag.module.css';
 
-const Tag = ({ icon, skill, match }) => {
+const Tag = ({ icon, skill, role, match }) => {
   console.log(skill);
+  console.log(role);
 
   return (
     <div className={styles.tagContainer}>
@@ -14,6 +15,7 @@ const Tag = ({ icon, skill, match }) => {
       )}
 
       {skill ? <span className={styles.tagChildren}>{skill}</span> : null}
+      {role ? <span className={styles.tagChildren}>{role}</span> : null}
 
       {match && (
         <span className={styles.tagCheck}>

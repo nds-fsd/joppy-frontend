@@ -22,6 +22,7 @@ import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 import styles from './App.css';
 import { OFFER_PAGE, PROFILE_PAGE, CHALLENGES_PAGE, CONVERSATIONS_PAGE } from './Routers/routers'; //eslint-disable-line
 import OfferPage from './Pages/OfferPage/offerPage.view';
+import ProfilePage from './Pages/ProfilePage';
 import NavBar from './Components/NavBar';
 
 library.add(
@@ -54,7 +55,7 @@ function App() {
                 <OfferPage />
               </Route>
               <Route path={PROFILE_PAGE}>
-                <h1>Profile</h1>
+                <ProfilePage />
               </Route>
               <Route path={CHALLENGES_PAGE}>
                 <h1>Challenges</h1>
