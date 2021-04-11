@@ -13,7 +13,11 @@ const Description = ({ offerData, companyInfo }) => (
     {companyInfo ? <p>{companyInfo.description}</p> : null}
 
     {companyInfo.skills ? <h2>Main tech stack</h2> : null}
-    {companyInfo.skills ? companyInfo.skills.map((skill) => <Tag skill={skill} />) : null}
+    {companyInfo.skills
+      ? offerData.skills.map((skill) => <Tag key={skill} skill={skill.skill} />)
+      : null}
+
+    <hr />
 
     <video width="320" height="240" controls>
       <source src="facebook.mp4" type="video/mp4" />
