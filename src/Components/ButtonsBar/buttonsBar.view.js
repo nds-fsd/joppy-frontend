@@ -5,12 +5,12 @@ import ButtonSnooze from '../ButtonSnooze';
 import ButtonReject from '../ButtonReject';
 import ButtonShare from '../ButtonShare';
 
-const ButtonsBar = () => (
+const ButtonsBar = ({ rejectClicked, acceptClicked }) => (
   <div className={styles.buttonsBar}>
-    <ButtonReject icon="thumbs-down" />
+    <ButtonReject onClick={rejectClicked} icon="thumbs-down" />
     <ButtonSnooze icon="history" />
     <ButtonShare icon="share" />
-    <ButtonAccept icon="thumbs-up" />
+    <ButtonAccept onClick={acceptClicked} icon="thumbs-up" />
   </div>
 );
 
