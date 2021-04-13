@@ -1,0 +1,30 @@
+.navbar {
+  position: relative;
+  margin: auto;
+  margin-top: 2%;
+  margin-bottom: 3px;
+  background-color: white;
+  box-shadow: 3px 3px 5px 3px rgb(180, 180, 180);
+  display: flex;
+  justify-content: space-between;
+  padding: 2%;
+  padding-left: 8%;
+  padding-right: 8%;
+  align-items: center;
+  color: gray;
+}
+
+.navButton {
+  text-decoration: none;
+  color: grey;
+  font-size: 1.4em;
+}
+
+.navButtonCenter {
+  text-decoration: none;
+  color: grey;
+  font-size: 1.4em;
+  position: absolute;
+  left: 50%;
+  margin-left: -0.5em;
+}
