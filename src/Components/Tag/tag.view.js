@@ -2,51 +2,30 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './tag.module.css';
 
-const Tag = ({ icon, id, skill, role, city, match, getValue, clickable }) => (
-  <div className={styles.tagContainer}>
-    {icon && (
-      <span className={styles.tagIcon}>
-        <FontAwesomeIcon icon={icon} />
-      </span>
-    )}
+const Tag = ({ name, icon, match, value, onClick }) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick(value);
+    }
+  };
 
-    {skill ? (
-      <div
-        className={styles.tagChildren}
-        onClick={() => {
-          if (clickable) getValue({ skill, id });
-        }}
-      >
-        {skill}
-      </div>
-    ) : null}
-    {role ? (
-      <span
-        className={styles.tagChildren}
-        onClick={() => {
-          if (clickable) getValue({ role, id });
-        }}
-      >
-        {role}
-      </span>
-    ) : null}
-    {city ? (
-      <span
-        className={styles.tagChildren}
-        onClick={() => {
-          if (clickable) getValue({ city, id });
-        }}
-      >
-        {city}
-      </span>
-    ) : null}
+  return (
+    <div className={styles.tagContainer} onClick={handleClick}>
+      {icon && (
+        <span className={styles.tagIcon}>
+          <FontAwesomeIcon icon={icon} />
+        </span>
+      )}
 
-    {match && (
-      <span className={styles.tagCheck}>
-        <FontAwesomeIcon icon="check" />
-      </span>
-    )}
-  </div>
-);
+      <div className={styles.tagChildren}>{name}</div>
+
+      {match && (
+        <span className={styles.tagCheck}>
+          <FontAwesomeIcon icon="check" />
+        </span>
+      )}
+    </div>
+  );
+};
 
 export default Tag;

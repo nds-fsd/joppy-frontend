@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import styles from './profilePage.module.css';
 import { PROFILE_PAGE } from '../../Routers/routers'; //eslint-disable-line
 import Profile from '../../Components/Profile';
-import ProfileForm from '../../Components/ProfileForm';
-
 import ProfileIntro from '../../Components/ProfileIntro';
 
 const ProfilePage = () => {
@@ -42,7 +40,6 @@ const ProfilePage = () => {
           </Route>
         </Switch>
       </Router>
-      <ProfileForm />
     </div>
   );
 };

@@ -4,17 +4,35 @@ import styles from './profileForm.module.css';
 import Tag from '../Tag';
 
 const ProfileForm = () => {
-  const [skillData, setSkillData] = useState();
-  const [roleData, setRoleData] = useState();
-  const [cityData, setCityData] = useState();
-  const [getData, setGetData] = useState([]);
+  const [skillData, setSkillData] = useState([]);
+  const [roleData, setRoleData] = useState([]);
+  const [cityData, setCityData] = useState([]);
+  const [data, setData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    skills: [],
+    roles: [],
+    location: '',
+  });
+
+  const addSkill = (skillId) => {
+    if (data.skills.includes(skillId)) {
+      setData({ ...data, skills: [...data.skills.filter((s) => s !== skillId)] });
+    } else {
+      setData({ ...data, skills: [...data.skills, skillId] });
+    }
+  };
+  const addRole = (role) => {
+    setData({ ...data, roles: [...data.roles, role] });
+  };
 
   //eslint-disable-line
   const getDataHandler = (data) => {
     setGetData([...getData, data]);
   };
 
-  console.log(getData);
+  data = console.log(getData);
 
   const onSubmitHandler = (data) => {
     debugger; //eslint-disable-line
@@ -96,10 +114,10 @@ const ProfileForm = () => {
           ? skillData.map((skill) => (
               <Tag
                 className={styles.tag}
-                clickable
-                id={skill._id} //eslint-disable-line
-                skill={skill.skill}
-                getValue={getDataHandler}
+                name={skill.name}
+                onClick={addSkill}
+                isActive={data.skills.includes(skill._id)}
+                value={skill._id} //eslint-disable-line
               />
             ))
           : null}
