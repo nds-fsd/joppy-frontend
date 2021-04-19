@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './tag.module.css';
 
-const Tag = ({ name, icon, match, value, onClick }) => {
+const Tag = ({ name, icon, match, value, onClick, isActive }) => {
   const handleClick = () => {
     if (onClick) {
       onClick(value);
