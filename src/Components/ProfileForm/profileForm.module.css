@@ -1,0 +1,11 @@
+.Tag {
+  background-color: blanchedalmond;
+}
+
+.Tag:hover {
+  background-color: brown;
+}
+
+.Tag:active {
+  background-color: darkolivegreen;
+}
