@@ -10,7 +10,10 @@ const Tag = ({ name, icon, match, value, onClick, isActive }) => {
   };
 
   return (
-    <div className={styles.tagContainer} onClick={handleClick}>
+    <div
+      className={!isActive ? styles.tagContainer : styles.tagContainerActive}
+      onClick={handleClick}
+    >
       {icon && (
         <span className={styles.tagIcon}>
           <FontAwesomeIcon icon={icon} />
@@ -22,6 +25,12 @@ const Tag = ({ name, icon, match, value, onClick, isActive }) => {
       {match && (
         <span className={styles.tagCheck}>
           <FontAwesomeIcon icon="check" />
+        </span>
+      )}
+
+      {isActive && (
+        <span className={styles.tagCross}>
+          <FontAwesomeIcon icon="times" />
         </span>
       )}
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './description.module.css';
-import Tag from '../Tag';
+// import Tag from '../Tag';
 
 const Description = ({ offerData, companyInfo }) => (
   <div className={styles.jobdescription}>
@@ -12,10 +12,10 @@ const Description = ({ offerData, companyInfo }) => (
     {companyInfo ? <p>{companyInfo.type}</p> : null}
     {companyInfo ? <p>{companyInfo.description}</p> : null}
 
-    {companyInfo.skills ? <h2>Main tech stack</h2> : null}
-    {companyInfo.skills
+    {/* {companyInfo.skills ? <h2>Main tech stack</h2> : null} */}
+    {/* {companyInfo.skills
       ? offerData.skills.map((skill) => <Tag key={skill} skill={skill.skill} />)
-      : null}
+      : null} */}
 
     <hr />
 
