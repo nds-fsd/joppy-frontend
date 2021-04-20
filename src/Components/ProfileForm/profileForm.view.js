@@ -4,8 +4,8 @@ import styles from './profileForm.module.css';
 import Tag from '../Tag';
 
 const ProfileForm = () => {
-  const [isFirstPage, setIsFirstPage] = useState(true); //eslint-disable-line
-  const [isSecondPage, setIsSecondPage] = useState(false); //eslint-disable-line
+  const [isFirstPage, setIsFirstPage] = useState(true);
+  const [isSecondPage, setIsSecondPage] = useState(false);
   const [skillData, setSkillData] = useState([]);
   const [roleData, setRoleData] = useState([]);
   const [cityData, setCityData] = useState([]);
@@ -15,7 +15,7 @@ const ProfileForm = () => {
     password: '',
     skills: [],
     roles: [],
-    city: [],
+    city: '',
   });
 
   const {
@@ -45,6 +45,10 @@ const ProfileForm = () => {
   };
 
   const addRole = (roleId) => {
+    if (!userData.roles.includes(roleId) && userData.roles.length === 3) {
+      return;
+    }
+
     if (userData.roles.includes(roleId)) {
       setUserData({ ...userData, roles: [...userData.roles.filter((r) => r !== roleId)] });
     } else {
@@ -53,10 +57,10 @@ const ProfileForm = () => {
   };
 
   const addCity = (cityId) => {
-    if (userData.city.includes(cityId)) {
-      setUserData({ ...userData, city: [...userData.city.filter((c) => c !== cityId)] });
+    if (userData.city === cityId) {
+      setUserData({ ...userData, city: '' });
     } else {
-      setUserData({ ...userData, city: [...userData.city, cityId] });
+      setUserData({ ...userData, city: cityId });
     }
   };
 
@@ -142,7 +146,7 @@ const ProfileForm = () => {
                     className={styles.tag}
                     name={city.name}
                     onClick={addCity}
-                    isActive={userData.city.includes(city._id)}
+                    isActive={userData.city === city._id}
                     value={city._id}
                   />
                 ))
