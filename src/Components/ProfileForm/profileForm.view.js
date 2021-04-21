@@ -10,12 +10,10 @@ const ProfileForm = () => {
   const [roleData, setRoleData] = useState([]);
   const [cityData, setCityData] = useState([]);
   const [userData, setUserData] = useState({
-    name: '',
-    email: '',
-    password: '',
     skills: [],
     roles: [],
     city: '',
+    salary: '40000',
   });
 
   const {
@@ -25,7 +23,8 @@ const ProfileForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    const allData = { ...userData, ...data };
+    console.log(allData);
   };
 
   const authObject = {
@@ -44,6 +43,11 @@ const ProfileForm = () => {
     }
   };
 
+  const skillNameById = (id) => {
+    const skillObject = skillData.find((item) => item._id === id);
+    return skillObject.skill;
+  };
+
   const addRole = (roleId) => {
     if (!userData.roles.includes(roleId) && userData.roles.length === 3) {
       return;
@@ -56,12 +60,22 @@ const ProfileForm = () => {
     }
   };
 
+  const roleNameById = (id) => {
+    const roleObject = roleData.find((item) => item._id === id);
+    return roleObject.role;
+  };
+
   const addCity = (cityId) => {
     if (userData.city === cityId) {
       setUserData({ ...userData, city: '' });
     } else {
       setUserData({ ...userData, city: cityId });
     }
+  };
+
+  const cityNameById = (id) => {
+    const cityObject = cityData.find((item) => item._id === id);
+    return cityObject.name;
   };
 
   useEffect(() => {
@@ -110,6 +124,17 @@ const ProfileForm = () => {
     <div className={styles.formContainer}>
       {isFirstPage && (
         <div className={styles.firstPage}>
+          <div className={styles.slider}>
+            <input
+              type="range"
+              min="14000"
+              max="200000"
+              step="2000"
+              value={userData.salary}
+              onChange={(e) => setUserData({ ...userData, salary: e.target.value })}
+            />
+            <p>{userData.salary}</p>
+          </div>
           <h2>Skills</h2>
           <div>
             {skillData
@@ -165,14 +190,27 @@ const ProfileForm = () => {
       )}
       {isSecondPage && (
         <div className={styles.secondPage}>
+          <h1>
+            You want a salary of: <span>{userData.salary}</span>
+          </h1>
+          <h1>
+            You want to work at: <span>{cityNameById(userData.city)}</span>
+          </h1>
+          <h1>The roles you want</h1>
+          {userData.roles.length > 0 &&
+            userData.roles.map((roleId) => <Tag name={roleNameById(roleId)} />)}
+          <h1>The skills you have</h1>
+          {userData.skills.length > 0 &&
+            userData.skills.map((skillId) => <Tag name={skillNameById(skillId)} />)}
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h2>User Name</h2>
+            <h2>Name</h2>
             <input type="text" {...register('name', { required: true, maxLength: 15 })} />
             {errors.name && <p>First name is required</p>}
             <h2>Email</h2>
             <input
               {...register('email', {
                 required: true,
+                message: 'Email required',
                 pattern: {
                   value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                   message: 'Enter a valid e-mail address',
