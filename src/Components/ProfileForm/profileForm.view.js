@@ -148,6 +148,16 @@ const ProfileForm = () => {
                   />
                 ))
               : null}
+            {userData.skills.length > 0 && (
+              <div className={styles.skillsWithYears}>
+                {userData.skills.map((skillId) => (
+                  <div>
+                    <Tag name={skillNameById(skillId)} />
+                    <input type="range" />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <h2>Roles</h2>
           <div>
@@ -162,6 +172,16 @@ const ProfileForm = () => {
                   />
                 ))
               : null}
+            {userData.roles.length > 0 && (
+              <div className={styles.skillsWithYears}>
+                {userData.roles.map((roleId) => (
+                  <div>
+                    <Tag name={roleNameById(roleId)} />
+                    <input type="range" />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           <h2>Where do you want to work?</h2>
           <div>

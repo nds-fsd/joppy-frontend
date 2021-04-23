@@ -9,3 +9,8 @@
 .Tag:active {
   background-color: darkolivegreen;
 }
+
+.skillsWithYears {
+  display: flex;
+  flex-direction: column;
+}
