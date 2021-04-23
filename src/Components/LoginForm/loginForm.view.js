@@ -56,10 +56,7 @@ const LoginForm = () => {
         <div className={styles.inputBox}>
           <h2>Email</h2>
           <input
-            className={styles.input}
-            name="email"
-            placeholder="Write your email"
-            ref={register('email', {
+            {...register('email', {
               required: true,
               message: 'Email required',
               pattern: {
@@ -72,13 +69,7 @@ const LoginForm = () => {
         </div>
         <div className={styles.inputBox}>
           <h2>Password</h2>
-          <input
-            className={styles.input}
-            type="password"
-            name="password"
-            placeholder="********"
-            ref={register('password', { required: true, minLength: 8 })}
-          />
+          <input {...register('password', { required: true, minLength: 8 })} />
           {errors.password && 'Password is required'}
         </div>
       </form>
