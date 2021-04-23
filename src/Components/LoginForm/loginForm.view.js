@@ -16,9 +16,6 @@ const LoginForm = () => {
     console.log(data);
 
     const url = 'http://localhost:3001/login';
-    const body = {
-      data,
-    };
 
     const options = {
       method: 'POST',
@@ -27,7 +24,7 @@ const LoginForm = () => {
         'Content-type': 'application/json',
       }),
       mode: 'cors',
-      body: JSON.stringify(body),
+      body: JSON.stringify(data),
     };
 
     fetch(url, options)
@@ -42,7 +39,7 @@ const LoginForm = () => {
         console.log(response);
       })
       .catch((error) => {
-        console.error(error);
+        console.log('error', error);
       });
   };
 
@@ -56,10 +53,7 @@ const LoginForm = () => {
         <div className={styles.inputBox}>
           <h2>Email</h2>
           <input
-            className={styles.input}
-            name="email"
-            placeholder="Write your email"
-            ref={register('email', {
+            {...register('email', {
               required: true,
               message: 'Email required',
               pattern: {
@@ -72,20 +66,12 @@ const LoginForm = () => {
         </div>
         <div className={styles.inputBox}>
           <h2>Password</h2>
-          <input
-            className={styles.input}
-            type="password"
-            name="password"
-            placeholder="********"
-            ref={register('password', { required: true, minLength: 8 })}
-          />
+          <input {...register('password', { required: true, minLength: 1 })} type="password" />
           {errors.password && 'Password is required'}
         </div>
+        <input type="submit" className={styles.submit} />
       </form>
       <p>Forgotten password</p>
-      <button type="submit" className={styles.submit}>
-        Sign in
-      </button>
       <p>No account? Create one </p> <Link to={REGISTER_PAGE}>here</Link>
     </div>
   );

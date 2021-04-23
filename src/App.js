@@ -29,7 +29,7 @@ import {
   REGISTER_PAGE,
   LOGIN_PAGE,
 } from './Routers/routers'; //eslint-disable-line
-import OfferPage from './Pages/OfferPage/offerPage.view';
+import OfferPage from './Pages/OfferPage';
 import ProfilePage from './Pages/ProfilePage';
 import RegisterPage from './Pages/RegisterPage';
 import LoginPage from './Pages/LoginPage';
