@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './profileForm.module.css';
 import Tag from '../Tag';
+import fetchMeStuff from '../../Utils/functions';
+import OneProfileForm from '../OneProfileForm';
 
 const ProfileForm = () => {
   const [isFirstPage, setIsFirstPage] = useState(true);
@@ -22,11 +24,6 @@ const ProfileForm = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    const allData = { ...userData, ...data };
-    console.log(allData);
-  };
-
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
@@ -43,9 +40,9 @@ const ProfileForm = () => {
     }
   };
 
-  const skillNameById = (id) => {
-    const skillObject = skillData.find((item) => item._id === id);
-    return skillObject.skill;
+  const nameById = (id, array, attribute) => {
+    const skillObject = array.find((item) => item._id === id);
+    return skillObject[attribute];
   };
 
   const addRole = (roleId) => {
@@ -60,11 +57,6 @@ const ProfileForm = () => {
     }
   };
 
-  const roleNameById = (id) => {
-    const roleObject = roleData.find((item) => item._id === id);
-    return roleObject.role;
-  };
-
   const addCity = (cityId) => {
     if (userData.city === cityId) {
       setUserData({ ...userData, city: '' });
@@ -73,140 +65,37 @@ const ProfileForm = () => {
     }
   };
 
-  const cityNameById = (id) => {
-    const cityObject = cityData.find((item) => item._id === id);
-    return cityObject.name;
+  useEffect(() => {
+    fetchMeStuff('http://localhost:3001/skill', authObject, setSkillData);
+    fetchMeStuff('http://localhost:3001/role', authObject, setRoleData);
+    fetchMeStuff('http://localhost:3001/city', authObject, setCityData);
+  }, []);
+
+  const onSubmit = (data) => {
+    const allData = { ...userData, ...data };
+    console.log(allData);
   };
-
-  useEffect(() => {
-    fetch('http://localhost:3001/skill', authObject)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject();
-      })
-      .then((data) => {
-        setSkillData(data);
-      })
-      .catch();
-  }, []);
-
-  useEffect(() => {
-    fetch('http://localhost:3001/role', authObject)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject();
-      })
-      .then((data) => {
-        setRoleData(data);
-      })
-      .catch();
-  }, []);
-
-  useEffect(() => {
-    fetch('http://localhost:3001/city', authObject)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject();
-      })
-      .then((data) => {
-        setCityData(data);
-      })
-      .catch();
-  }, []);
 
   return (
     <div className={styles.formContainer}>
       {isFirstPage && (
-        <div className={styles.firstPage}>
-          <div className={styles.slider}>
-            <input
-              type="range"
-              min="14000"
-              max="200000"
-              step="2000"
-              value={userData.salary}
-              onChange={(e) => setUserData({ ...userData, salary: e.target.value })}
-            />
-            <p>{userData.salary}</p>
-          </div>
-          <h2>Skills</h2>
-          <div>
-            {skillData
-              ? skillData.map((skill) => (
-                  <Tag
-                    className={styles.tag}
-                    name={skill.skill}
-                    onClick={addSkill}
-                    isActive={userData.skills.includes(skill._id)}
-                    value={skill._id}
-                  />
-                ))
-              : null}
-            {userData.skills.length > 0 && (
-              <div className={styles.skillsWithYears}>
-                {userData.skills.map((skillId) => (
-                  <div>
-                    <Tag name={skillNameById(skillId)} />
-                    <input type="range" />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <h2>Roles</h2>
-          <div>
-            {roleData
-              ? roleData.map((role) => (
-                  <Tag
-                    className={styles.tag}
-                    name={role.role}
-                    onClick={addRole}
-                    isActive={userData.roles.includes(role._id)}
-                    value={role._id}
-                  />
-                ))
-              : null}
-            {userData.roles.length > 0 && (
-              <div className={styles.skillsWithYears}>
-                {userData.roles.map((roleId) => (
-                  <div>
-                    <Tag name={roleNameById(roleId)} />
-                    <input type="range" />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <h2>Where do you want to work?</h2>
-          <div>
-            {cityData
-              ? cityData.map((city) => (
-                  <Tag
-                    className={styles.tag}
-                    name={city.name}
-                    onClick={addCity}
-                    isActive={userData.city === city._id}
-                    value={city._id}
-                  />
-                ))
-              : null}
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              setIsFirstPage(false);
-              setIsSecondPage(true);
-            }}
-          >
-            Next page
-          </button>
-        </div>
+        <OneProfileForm
+          sliderValue={userData.salary}
+          sliderOnChange={(s) => setUserData({ ...userData, salary: s })}
+          skillData={skillData}
+          addSkill={addSkill}
+          otherArraySkills={userData.skills}
+          roleData={roleData}
+          addRole={addRole}
+          otherArrayRoles={userData.roles}
+          cityData={cityData}
+          addCity={addCity}
+          userDataCity={userData.city}
+          nextClicked={() => {
+            setIsFirstPage(false);
+            setIsSecondPage(true);
+          }}
+        />
       )}
       {isSecondPage && (
         <div className={styles.secondPage}>
@@ -214,14 +103,14 @@ const ProfileForm = () => {
             You want a salary of: <span>{userData.salary}</span>
           </h1>
           <h1>
-            You want to work at: <span>{cityNameById(userData.city)}</span>
+            You want to work at: <span>{nameById(userData.city, cityData, 'name')}</span>
           </h1>
           <h1>The roles you want</h1>
           {userData.roles.length > 0 &&
-            userData.roles.map((roleId) => <Tag name={roleNameById(roleId)} />)}
+            userData.roles.map((roleId) => <Tag name={nameById(roleId, roleData, 'role')} />)}
           <h1>The skills you have</h1>
           {userData.skills.length > 0 &&
-            userData.skills.map((skillId) => <Tag name={skillNameById(skillId)} />)}
+            userData.skills.map((skillId) => <Tag name={nameById(skillId, skillData, 'skill')} />)}
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Name</h2>
             <input type="text" {...register('name', { required: true, maxLength: 15 })} />
