@@ -13,7 +13,7 @@ const ProfileForm = () => {
   const [cityData, setCityData] = useState([]);
   const [userData, setUserData] = useState({
     skills: [],
-    roles: [],
+    positions: [],
     city: '',
     salary: '40000',
   });
@@ -33,27 +33,39 @@ const ProfileForm = () => {
   };
 
   const addSkill = (skillId) => {
-    if (userData.skills.includes(skillId)) {
-      setUserData({ ...userData, skills: [...userData.skills.filter((s) => s !== skillId)] });
+    if (userData.skills.some((e) => e.name === skillId)) {
+      setUserData({
+        ...userData,
+        skills: [...userData.skills.filter((r) => r.name !== skillId)],
+      });
     } else {
-      setUserData({ ...userData, skills: [...userData.skills, skillId] });
+      setUserData({
+        ...userData,
+        skills: [...userData.skills, { name: skillId, years: '5' }],
+      });
     }
   };
 
   const nameById = (id, array, attribute) => {
-    const skillObject = array.find((item) => item._id === id);
-    return skillObject[attribute];
+    const object = array.find((item) => item._id === id);
+    return object[attribute];
   };
 
   const addRole = (roleId) => {
-    if (!userData.roles.includes(roleId) && userData.roles.length === 3) {
+    if (!userData.positions.some((e) => e.name === roleId) && userData.positions.length === 3) {
       return;
     }
 
-    if (userData.roles.includes(roleId)) {
-      setUserData({ ...userData, roles: [...userData.roles.filter((r) => r !== roleId)] });
+    if (userData.positions.some((e) => e.name === roleId)) {
+      setUserData({
+        ...userData,
+        positions: [...userData.positions.filter((r) => r.name !== roleId)],
+      });
     } else {
-      setUserData({ ...userData, roles: [...userData.roles, roleId] });
+      setUserData({
+        ...userData,
+        positions: [...userData.positions, { name: roleId, years: '5' }],
+      });
     }
   };
 
@@ -63,6 +75,28 @@ const ProfileForm = () => {
     } else {
       setUserData({ ...userData, city: cityId });
     }
+  };
+
+  const addPositionYears = (y, positionName) => {
+    const updatedPositions = [...userData.positions];
+    const objIndex = updatedPositions.findIndex((obj) => obj.name === positionName);
+    updatedPositions[objIndex].years = y;
+
+    setUserData({
+      ...userData,
+      positions: updatedPositions,
+    });
+  };
+
+  const addSkillYears = (y, skillName) => {
+    const updatedSkills = [...userData.skills];
+    const objIndex = updatedSkills.findIndex((obj) => obj.name === skillName);
+    updatedSkills[objIndex].years = y;
+
+    setUserData({
+      ...userData,
+      skills: updatedSkills,
+    });
   };
 
   useEffect(() => {
@@ -87,10 +121,12 @@ const ProfileForm = () => {
           otherArraySkills={userData.skills}
           roleData={roleData}
           addRole={addRole}
-          otherArrayRoles={userData.roles}
+          otherArrayRoles={userData.positions}
           cityData={cityData}
           addCity={addCity}
           userDataCity={userData.city}
+          roleYearsOnChange={addPositionYears}
+          skillYearsOnChange={addSkillYears}
           nextClicked={() => {
             setIsFirstPage(false);
             setIsSecondPage(true);
@@ -105,12 +141,14 @@ const ProfileForm = () => {
           <h1>
             You want to work at: <span>{nameById(userData.city, cityData, 'name')}</span>
           </h1>
-          <h1>The roles you want</h1>
-          {userData.roles.length > 0 &&
-            userData.roles.map((roleId) => <Tag name={nameById(roleId, roleData, 'name')} />)}
+          <h1>The positions you want</h1>
+          {userData.positions.length > 0 &&
+            userData.positions.map((position) => (
+              <Tag name={nameById(position.name, roleData, 'name')} />
+            ))}
           <h1>The skills you have</h1>
           {userData.skills.length > 0 &&
-            userData.skills.map((skillId) => <Tag name={nameById(skillId, skillData, 'skill')} />)}
+            userData.skills.map((skill) => <Tag name={nameById(skill.name, skillData, 'skill')} />)}
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Name</h2>
             <input type="text" {...register('name', { required: true, maxLength: 15 })} />

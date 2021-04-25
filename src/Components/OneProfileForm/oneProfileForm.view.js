@@ -17,6 +17,8 @@ const OneProfileForm = ({
   addCity,
   userDataCity,
   nextClicked,
+  roleYearsOnChange,
+  skillYearsOnChange,
 }) => (
   <div className={styles.firstPage}>
     <SalarySlider value={sliderValue} onChange={sliderOnChange} />
@@ -28,6 +30,7 @@ const OneProfileForm = ({
       tagClicked={addSkill}
       attributeName="skill"
       otherArray={otherArraySkills}
+      yearsOnChange={skillYearsOnChange}
     />
 
     <TagBlock
@@ -37,6 +40,7 @@ const OneProfileForm = ({
       tagClicked={addRole}
       attributeName="name"
       otherArray={otherArrayRoles}
+      yearsOnChange={roleYearsOnChange}
     />
 
     <h2>Where do you want to work?</h2>

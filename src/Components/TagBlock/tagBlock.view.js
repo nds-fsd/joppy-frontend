@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './tagBlock.module.css';
 import Tag from '../Tag';
 
-const TagBlock = ({ array, tagClicked, attributeName, title, subtitle, otherArray }) => {
+const TagBlock = ({
+  array,
+  tagClicked,
+  attributeName,
+  title,
+  subtitle,
+  otherArray,
+  yearsOnChange,
+}) => {
   const nameById = (id, arr, attribute) => {
     const object = arr.find((item) => item._id === id);
     return object[attribute];
   };
-
-  const [years, setYears] = useState('5');
 
   return (
     <div className={styles.tagBlockContainer}>
@@ -21,26 +27,26 @@ const TagBlock = ({ array, tagClicked, attributeName, title, subtitle, otherArra
                 name={item[attributeName]}
                 onClick={tagClicked}
                 value={item._id}
-                isActive={otherArray.includes(item._id)}
+                isActive={otherArray.some((e) => e.name === item._id)}
               />
             ))
           : null}
         {otherArray.length > 0 && (
           <div className={styles.skillsWithYears}>
-            {otherArray.map((id) => (
+            {otherArray.map((obj) => (
               <div>
-                <Tag name={nameById(id, array, attributeName)} />
+                <Tag name={nameById(obj.name, array, attributeName)} />
                 <input
                   type="range"
                   min="0"
                   max="11"
                   step="1"
-                  value={years}
-                  onChange={(e) => setYears(e.target.value)}
+                  value={obj.years}
+                  onChange={(e) => yearsOnChange(e.target.value, obj.name)}
                 />
-                <span>{years === '0' && '<1'}</span>
-                <span>{years === '11' && '>10'}</span>
-                <span>{years !== '0' && years !== '11' && years}</span>
+                <span>{obj.years === '0' && '<1'}</span>
+                <span>{obj.years === '11' && '>10'}</span>
+                <span>{obj.years !== '0' && obj.years !== '11' && obj.years}</span>
               </div>
             ))}
           </div>
