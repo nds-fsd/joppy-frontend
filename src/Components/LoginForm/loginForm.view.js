@@ -75,7 +75,6 @@ const LoginForm = () => {
             type="password"
             className={styles.input}
           />
-          {errors.password && 'Password is required'}
         </div>
         <input type="submit" className={styles.submit} />
 
