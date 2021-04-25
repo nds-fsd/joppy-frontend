@@ -35,7 +35,7 @@ const OneProfileForm = ({
       subtitle="something about roles"
       array={roleData}
       tagClicked={addRole}
-      attributeName="role"
+      attributeName="name"
       otherArray={otherArrayRoles}
     />
 

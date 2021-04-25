@@ -67,7 +67,7 @@ const ProfileForm = () => {
 
   useEffect(() => {
     fetchMeStuff('http://localhost:3001/skill', authObject, setSkillData);
-    fetchMeStuff('http://localhost:3001/role', authObject, setRoleData);
+    fetchMeStuff('http://localhost:3001/position', authObject, setRoleData);
     fetchMeStuff('http://localhost:3001/city', authObject, setCityData);
   }, []);
 
@@ -107,14 +107,17 @@ const ProfileForm = () => {
           </h1>
           <h1>The roles you want</h1>
           {userData.roles.length > 0 &&
-            userData.roles.map((roleId) => <Tag name={nameById(roleId, roleData, 'role')} />)}
+            userData.roles.map((roleId) => <Tag name={nameById(roleId, roleData, 'name')} />)}
           <h1>The skills you have</h1>
           {userData.skills.length > 0 &&
             userData.skills.map((skillId) => <Tag name={nameById(skillId, skillData, 'skill')} />)}
           <form onSubmit={handleSubmit(onSubmit)}>
             <h2>Name</h2>
             <input type="text" {...register('name', { required: true, maxLength: 15 })} />
-            {errors.name && <p>First name is required</p>}
+            {errors.name && errors.name.type === 'required' && <p>First name is required</p>}
+            {errors.name && errors.name.type === 'maxLength' && (
+              <p>Name cant be longer than 15 characters</p>
+            )}
             <h2>Email</h2>
             <input
               {...register('email', {
@@ -126,7 +129,7 @@ const ProfileForm = () => {
                 },
               })}
             />
-            {errors.email && <p className="error">{errors.email.message}</p>}
+            {errors.email && <p>{errors.email.message}</p>}
             <h2>Password</h2>
             <input type="password" {...register('password', { required: true, minLength: 8 })} />
             {errors.password && 'Password is required'}
