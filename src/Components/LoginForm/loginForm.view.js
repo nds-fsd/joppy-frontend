@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import styles from './loginForm.module.css';
-
 import { REGISTER_PAGE } from '../../Routers/routers';
 
 const LoginForm = () => {
@@ -11,6 +10,8 @@ const LoginForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const [errorMessage, setErrorMessage] = useState();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -33,19 +34,20 @@ const LoginForm = () => {
         if (response.ok) {
           return response.json();
         }
-        return Promise.reject();
+        {
+          const err = response.json();
+          return Promise.resolve(err);
+        }
       })
       .then((response) => {
         console.log(response);
+
+        setErrorMessage(JSON.stringify(response));
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log(error);
       });
   };
-
-  // const enterSession = () => {
-  //   <Link to={OFFER_PAGE} />;
-  // };
 
   return (
     <div className={styles.loginForm}>
@@ -61,18 +63,35 @@ const LoginForm = () => {
                 message: 'Enter a valid e-mail address',
               },
             })}
+            className={styles.input}
           />
           {errors.email && <p className="error">{errors.email.message}</p>}
         </div>
+
         <div className={styles.inputBox}>
           <h2>Password</h2>
-          <input {...register('password', { required: true, minLength: 1 })} type="password" />
+          <input
+            {...register('password', { required: true, minLength: 1 })}
+            type="password"
+            className={styles.input}
+          />
           {errors.password && 'Password is required'}
         </div>
         <input type="submit" className={styles.submit} />
+
+        {errorMessage && errorMessage.includes('email is not registered') ? (
+          <p className={styles.invalid}>This email is not registered</p>
+        ) : null}
+        {errorMessage && errorMessage.includes('password') ? (
+          <p className={styles.invalid}>Wrong password</p>
+        ) : null}
       </form>
-      <p>Forgotten password</p>
-      <p>No account? Create one </p> <Link to={REGISTER_PAGE}>here</Link>
+      <div className={styles.noAccount}>
+        <p>No account? Create one </p>
+        <Link to={REGISTER_PAGE} className={styles.link}>
+          here
+        </Link>
+      </div>
     </div>
   );
 };

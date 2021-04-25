@@ -17,7 +17,7 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/user/60734d55bade0c33abeaea00', authObject)
+    fetch('http://localhost:3001/user/60841b03bd945a22ea17224a', authObject)
       .then((response) => {
         if (response.ok) {
           return response.json();
