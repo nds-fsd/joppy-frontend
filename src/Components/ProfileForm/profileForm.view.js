@@ -108,6 +108,25 @@ const ProfileForm = () => {
   const onSubmit = (data) => {
     const allData = { ...userData, ...data };
     console.log(allData);
+
+    const options = {
+      method: 'POST',
+      headers: new Headers({ Accept: 'apllication/json', 'Content-type': 'application/json' }),
+      mode: 'cors',
+      body: JSON.stringify(allData),
+    };
+
+    fetch('http://localhost:3001/register', options)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject();
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch();
   };
 
   return (
