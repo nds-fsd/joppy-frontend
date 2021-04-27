@@ -1,0 +1,24 @@
+.loginPage {
+  display: flex;
+  height: 100vh;
+}
+
+.rightStyle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: relative;
+  width: 50%;
+  height: 100vh;
+  right: 0px;
+  top: 0px;
+  background: #f3efff;
+
+  flex: none;
+  order: 1;
+  align-self: stretch;
+  flex-grow: 1;
+  margin: 0px 0px;
+}
