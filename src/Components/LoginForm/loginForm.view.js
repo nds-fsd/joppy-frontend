@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styles from './loginForm.module.css';
-import { REGISTER_PAGE } from '../../Routers/routers';
+import { REGISTER_PAGE, OFFER_PAGE } from '../../Routers/routers';
+import Plant from './plant.svg';
 
 const LoginForm = () => {
+  const history = useHistory();
+
+  const loginOK = () => {
+    history.push(`${OFFER_PAGE}`);
+  };
   const {
     register,
     handleSubmit,
@@ -17,7 +23,6 @@ const LoginForm = () => {
     console.log(data);
 
     const url = 'http://localhost:3001/login';
-
     const options = {
       method: 'POST',
       headers: new Headers({
@@ -30,8 +35,8 @@ const LoginForm = () => {
 
     fetch(url, options)
       .then((response) => {
-        console.log(response);
         if (response.ok) {
+          loginOK();
           return response.json();
         }
         {
@@ -40,8 +45,6 @@ const LoginForm = () => {
         }
       })
       .then((response) => {
-        console.log(response);
-
         setErrorMessage(JSON.stringify(response));
       })
       .catch((error) => {
@@ -51,7 +54,7 @@ const LoginForm = () => {
 
   return (
     <div className={styles.loginForm}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className={styles.inputBox}>
           <h2>Email</h2>
           <input
@@ -65,32 +68,32 @@ const LoginForm = () => {
             })}
             className={styles.input}
           />
+          {errorMessage && errorMessage.includes('email is not registered') ? (
+            <p className={styles.invalid}>This email is not registered</p>
+          ) : null}
           {errors.email && <p className="error">{errors.email.message}</p>}
         </div>
 
         <div className={styles.inputBox}>
           <h2>Password</h2>
           <input
-            {...register('password', { required: true, minLength: 1 })}
+            {...register('password', { required: true, minLength: 3 })}
             type="password"
             className={styles.input}
           />
+          {errorMessage && errorMessage.includes('password') ? (
+            <p className={styles.invalid}>Wrong password</p>
+          ) : null}
         </div>
         <input type="submit" className={styles.submit} />
-
-        {errorMessage && errorMessage.includes('email is not registered') ? (
-          <p className={styles.invalid}>This email is not registered</p>
-        ) : null}
-        {errorMessage && errorMessage.includes('password') ? (
-          <p className={styles.invalid}>Wrong password</p>
-        ) : null}
+        <div className={styles.noAccount}>
+          <p>No account? Create one </p>
+          <Link to={REGISTER_PAGE} className={styles.link}>
+            here
+          </Link>
+        </div>
       </form>
-      <div className={styles.noAccount}>
-        <p>No account? Create one </p>
-        <Link to={REGISTER_PAGE} className={styles.link}>
-          here
-        </Link>
-      </div>
+      <img src={Plant} alt="plant" className={styles.plant} />
     </div>
   );
 };
