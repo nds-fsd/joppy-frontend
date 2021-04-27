@@ -29,12 +29,14 @@ import {
   CONVERSATIONS_PAGE,
   REGISTER_PAGE,
   LOGIN_PAGE,
+  ADMIN_PAGE,
 } from './Routers/routers'; //eslint-disable-line
 import OfferPage from './Pages/OfferPage';
 import ProfilePage from './Pages/ProfilePage';
 import RegisterPage from './Pages/RegisterPage';
 import LoginPage from './Pages/LoginPage';
 import NavBar from './Components/NavBar';
+import AdminPage from './Pages/AdminPage';
 
 library.add(
   faCheck,
@@ -70,6 +72,9 @@ function App() {
         <Switch>
           <Route path={REGISTER_PAGE}>{isLoggedIn ? <Redirect to="/" /> : <RegisterPage />}</Route>
           <Route path={LOGIN_PAGE}>{isLoggedIn ? <Redirect to="/" /> : <LoginPage />}</Route>
+          <Route path={ADMIN_PAGE}>
+            <AdminPage />
+          </Route>
           <div className={styles.container}>
             <NavBar />
             <div className={styles.main}>

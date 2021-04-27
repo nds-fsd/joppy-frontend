@@ -3,6 +3,13 @@
   height: 100vh;
 }
 
+.logo {
+  position: fixed;
+  width: 330px;
+  margin-left: 9%;
+  margin-top: 5%;
+}
+
 .rightStyle {
   display: flex;
   flex-direction: column;
@@ -20,5 +27,4 @@
   order: 1;
   align-self: stretch;
   flex-grow: 1;
-  margin: 0px 0px;
 }
