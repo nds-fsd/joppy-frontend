@@ -20,6 +20,7 @@ const OneProfileForm = ({
   nextClicked,
   roleYearsOnChange,
   skillYearsOnChange,
+  buttonEnabled,
 }) => (
   <div className={styles.firstPage}>
     <FormBlock
@@ -64,7 +65,11 @@ const OneProfileForm = ({
       />
     </FormBlock>
 
-    <button className={styles.nextButton} type="button" onClick={nextClicked}>
+    <button
+      className={buttonEnabled ? styles.nextButton : styles.nextButtonDisabled}
+      type="button"
+      onClick={nextClicked}
+    >
       Next step
     </button>
   </div>

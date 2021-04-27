@@ -3,3 +3,9 @@
   flex-direction: column;
   align-items: center;
 }
+
+.tagContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}

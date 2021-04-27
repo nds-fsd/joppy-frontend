@@ -11,16 +11,18 @@ const TagBlock = ({ array, tagClicked, attributeName, otherArray, yearsOnChange 
   return (
     <div className={styles.tagBlockContainer}>
       <div>
-        {array
-          ? array.map((item) => (
-              <Tag
-                name={item[attributeName]}
-                onClick={tagClicked}
-                value={item._id}
-                isActive={otherArray.some((e) => e.name === item._id)}
-              />
-            ))
-          : null}
+        <div className={styles.tagContainer}>
+          {array
+            ? array.map((item) => (
+                <Tag
+                  name={item[attributeName]}
+                  onClick={tagClicked}
+                  value={item._id}
+                  isActive={otherArray.some((e) => e.name === item._id)}
+                />
+              ))
+            : null}
+        </div>
         {otherArray.length > 0 && (
           <div className={styles.skillsWithYears}>
             <p>Use the slider to select your years of experience with each</p>

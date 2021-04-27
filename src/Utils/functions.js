@@ -1,4 +1,4 @@
-const fetchMeStuff = (url, auth, func) => {
+export const fetchMeStuff = (url, auth, func) => {
   fetch(url, auth)
     .then((response) => {
       if (response.ok) {

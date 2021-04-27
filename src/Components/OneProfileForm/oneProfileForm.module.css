@@ -15,3 +15,15 @@
   border-radius: 1.5em;
   margin-top: 2em;
 }
+
+.nextButtonDisabled {
+  border: none;
+  background: #816bbd;
+  color: rgb(184, 184, 184);
+  cursor: not-allowed;
+  font-size: 1.1em;
+  height: 3em;
+  width: 8em;
+  border-radius: 1.5em;
+  margin-top: 2em;
+}

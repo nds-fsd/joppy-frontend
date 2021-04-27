@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import styles from './profileForm.module.css';
 import Tag from '../Tag';
-import fetchMeStuff from '../../Utils/functions';
+import { fetchMeStuff } from '../../Utils/functions';
+import { setUserSession } from '../../Utils/Auth';
 import OneProfileForm from '../OneProfileForm';
 import FormBlock from '../FormBlock';
 
@@ -18,6 +20,8 @@ const ProfileForm = () => {
     city: '',
     salary: '40000',
   });
+
+  const history = useHistory();
 
   const {
     register,
@@ -130,7 +134,9 @@ const ProfileForm = () => {
       })
       .then((res) => {
         console.log(res);
+        setUserSession(res);
       })
+      .then(history.push('/'))
       .catch();
   };
 
@@ -153,6 +159,9 @@ const ProfileForm = () => {
             userDataCity={userData.city}
             roleYearsOnChange={addPositionYears}
             skillYearsOnChange={addSkillYears}
+            buttonEnabled={
+              userData.skills.length > 0 && userData.positions.length > 0 && userData.city !== ''
+            }
             nextClicked={() => {
               if (
                 userData.positions.length > 0 &&
