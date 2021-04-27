@@ -10,7 +10,7 @@ const CompanyIntro = ({ companyInfo }) => (
     </div>
     <div className={styles.title}>
       {companyInfo ? <h4 className={styles.companyname}>{companyInfo.name}</h4> : null}
-      {companyInfo ? <p className={styles.size}>{companyInfo.type}</p> : null}
+      {companyInfo ? <p className={styles.size}>{companyInfo.companySize}</p> : null}
       {companyInfo ? <p className={styles.profile}>Full Company profile</p> : null}
     </div>
   </div>
