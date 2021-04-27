@@ -1,0 +1,52 @@
+.loginForm {
+  margin-top: 100px;
+  margin-left: 100px;
+}
+
+.inputBox {
+  padding: 5px;
+  padding-left: 20px;
+  width: 300px;
+  border-radius: 15px;
+  background-color: hsl(284, 31%, 90%);
+  margin-bottom: 5px;
+  border: 0px;
+}
+
+.input {
+  background-color: hsl(284, 31%, 90%);
+  margin-bottom: 5px;
+  border: 0px;
+}
+
+.submit {
+  width: 300px;
+  text-align: center;
+  background-color: rgb(94, 1, 94);
+  color: rgb(252, 249, 252);
+  font-weight: bolder;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.submit:hover {
+  background-color: hsl(284, 31%, 90%);
+  color: rgb(94, 1, 94);
+}
+
+h2 {
+  color: rgb(94, 1, 94);
+}
+
+.noAccount {
+  display: flex;
+}
+.link {
+  margin-left: 5px;
+  margin-top: 16px;
+}
+
+.invalid {
+  font-weight: bold;
+  color: darkred;
+}

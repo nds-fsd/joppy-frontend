@@ -7,8 +7,16 @@ import Description from '../Description';
 const JobOffer = ({ offerInfo }) => {
   const [offerData, setOfferData] = useState();
 
+  const authObject = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+    },
+  };
+
   useEffect(() => {
-    fetch(`http://localhost:3001/offer/${offerInfo}`)
+    fetch(`http://localhost:3001/offer/${offerInfo}`, authObject)
       .then((response) => {
         if (response.ok) {
           return response.json();

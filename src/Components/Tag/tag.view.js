@@ -2,20 +2,25 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './tag.module.css';
 
-const Tag = ({ icon, skill, role, match }) => {
-  console.log(skill);
-  console.log(role);
+const Tag = ({ name, icon, match, value, onClick, isActive }) => {
+  const handleClick = () => {
+    if (onClick) {
+      onClick(value);
+    }
+  };
 
   return (
-    <div className={styles.tagContainer}>
+    <div
+      className={!isActive ? styles.tagContainer : styles.tagContainerActive}
+      onClick={handleClick}
+    >
       {icon && (
         <span className={styles.tagIcon}>
           <FontAwesomeIcon icon={icon} />
         </span>
       )}
 
-      {skill ? <span className={styles.tagChildren}>{skill}</span> : null}
-      {role ? <span className={styles.tagChildren}>{role}</span> : null}
+      <div className={styles.tagChildren}>{name}</div>
 
       {match && (
         <span className={styles.tagCheck}>
