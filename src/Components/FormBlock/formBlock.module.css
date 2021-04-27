@@ -1,0 +1,31 @@
+.formBlock {
+  position: relative;
+  display: block;
+  background: #fcfcfc;
+  border-radius: 1em;
+  box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
+  padding: 1em 2em;
+  margin: 1em;
+  width: 70vw;
+}
+
+.childrenContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  color: #14142b;
+  font-size: 1.4em;
+  margin: 0;
+  padding: 0;
+}
+
+.subtitle {
+  color: #a0a3bd;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 2em;
+}

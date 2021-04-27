@@ -1,16 +1,82 @@
-.Tag {
-  background-color: blanchedalmond;
-}
-
-.Tag:hover {
-  background-color: brown;
-}
-
-.Tag:active {
-  background-color: darkolivegreen;
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 5vh;
 }
 
 .skillsWithYears {
   display: flex;
   flex-direction: column;
+}
+
+.firstPageTitle {
+  color: #14142b;
+  font-size: 1.5em;
+}
+
+.listText {
+  color: #14142b;
+  font-size: 1.2em;
+}
+
+.secondPageTitle {
+  color: #14142b;
+  font-size: 1.8em;
+}
+
+.purpleSpan {
+  color: #5f2eea;
+  font-weight: 600;
+}
+
+.inputForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputWrapper {
+  background: #f3efff;
+  border-radius: 0.5em;
+  padding: 0.5em 1em;
+  margin: 0.5em 0;
+  width: 25vw;
+  min-width: 200px;
+}
+
+.inputWrapper > h2 {
+  color: #5f2eea;
+  margin: 0;
+}
+
+.inputWrapper > input {
+  background: none;
+  border: none;
+}
+
+.inputWrapper > input:focus {
+  border: none;
+  outline: none;
+}
+
+.backButton {
+  border: none;
+  background: #5f2eea;
+  color: white;
+  cursor: pointer;
+  font-size: 1.1em;
+  height: 3em;
+  width: 8em;
+  border-radius: 1.5em;
+  margin-top: 2em;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 4em;
+}
+
+.tagContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }

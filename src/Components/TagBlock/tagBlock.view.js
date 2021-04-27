@@ -2,15 +2,7 @@ import React from 'react';
 import styles from './tagBlock.module.css';
 import Tag from '../Tag';
 
-const TagBlock = ({
-  array,
-  tagClicked,
-  attributeName,
-  title,
-  subtitle,
-  otherArray,
-  yearsOnChange,
-}) => {
+const TagBlock = ({ array, tagClicked, attributeName, otherArray, yearsOnChange }) => {
   const nameById = (id, arr, attribute) => {
     const object = arr.find((item) => item._id === id);
     return object[attribute];
@@ -18,8 +10,6 @@ const TagBlock = ({
 
   return (
     <div className={styles.tagBlockContainer}>
-      <h2>{title}</h2>
-      <p>{subtitle}</p>
       <div>
         {array
           ? array.map((item) => (
@@ -33,9 +23,10 @@ const TagBlock = ({
           : null}
         {otherArray.length > 0 && (
           <div className={styles.skillsWithYears}>
+            <p>Use the slider to select your years of experience with each</p>
             {otherArray.map((obj) => (
               <div>
-                <Tag name={nameById(obj.name, array, attributeName)} />
+                <Tag name={nameById(obj.name, array, attributeName)} isActive />
                 <input
                   type="range"
                   min="0"

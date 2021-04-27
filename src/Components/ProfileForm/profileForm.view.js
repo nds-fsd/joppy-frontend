@@ -4,6 +4,7 @@ import styles from './profileForm.module.css';
 import Tag from '../Tag';
 import fetchMeStuff from '../../Utils/functions';
 import OneProfileForm from '../OneProfileForm';
+import FormBlock from '../FormBlock';
 
 const ProfileForm = () => {
   const [isFirstPage, setIsFirstPage] = useState(true);
@@ -105,6 +106,10 @@ const ProfileForm = () => {
     fetchMeStuff('http://localhost:3001/city', authObject, setCityData);
   }, []);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [isFirstPage]);
+
   const onSubmit = (data) => {
     const allData = { ...userData, ...data };
     console.log(allData);
@@ -130,83 +135,124 @@ const ProfileForm = () => {
   };
 
   return (
-    <div className={styles.formContainer}>
+    <>
       {isFirstPage && (
-        <OneProfileForm
-          sliderValue={userData.salary}
-          sliderOnChange={(s) => setUserData({ ...userData, salary: s })}
-          skillData={skillData}
-          addSkill={addSkill}
-          otherArraySkills={userData.skills}
-          roleData={roleData}
-          addRole={addRole}
-          otherArrayRoles={userData.positions}
-          cityData={cityData}
-          addCity={addCity}
-          userDataCity={userData.city}
-          roleYearsOnChange={addPositionYears}
-          skillYearsOnChange={addSkillYears}
-          nextClicked={() => {
-            setIsFirstPage(false);
-            setIsSecondPage(true);
-          }}
-        />
+        <>
+          <p className={styles.firstPageTitle}>Let us know what makes your ideal job</p>
+          <OneProfileForm
+            sliderValue={userData.salary}
+            sliderOnChange={(s) => setUserData({ ...userData, salary: s })}
+            skillData={skillData}
+            addSkill={addSkill}
+            otherArraySkills={userData.skills}
+            roleData={roleData}
+            addRole={addRole}
+            otherArrayRoles={userData.positions}
+            cityData={cityData}
+            addCity={addCity}
+            userDataCity={userData.city}
+            roleYearsOnChange={addPositionYears}
+            skillYearsOnChange={addSkillYears}
+            nextClicked={() => {
+              if (
+                userData.positions.length > 0 &&
+                userData.skills.length > 0 &&
+                userData.city !== ''
+              ) {
+                setIsFirstPage(false);
+                setIsSecondPage(true);
+              }
+            }}
+          />
+        </>
       )}
       {isSecondPage && (
-        <div className={styles.secondPage}>
-          <h1>
-            You want a salary of: <span>{userData.salary}</span>
-          </h1>
-          <h1>
-            You want to work at: <span>{nameById(userData.city, cityData, 'name')}</span>
-          </h1>
-          <h1>The positions you want</h1>
-          {userData.positions.length > 0 &&
-            userData.positions.map((position) => (
-              <Tag name={nameById(position.name, roleData, 'name')} />
-            ))}
-          <h1>The skills you have</h1>
-          {userData.skills.length > 0 &&
-            userData.skills.map((skill) => <Tag name={nameById(skill.name, skillData, 'skill')} />)}
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <h2>Name</h2>
-            <input type="text" {...register('name', { required: true, maxLength: 15 })} />
-            {errors.name && errors.name.type === 'required' && <p>First name is required</p>}
-            {errors.name && errors.name.type === 'maxLength' && (
-              <p>Name cant be longer than 15 characters</p>
-            )}
-            <h2>Email</h2>
-            <input
-              {...register('email', {
-                required: true,
-                message: 'Email required',
-                pattern: {
-                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                  message: 'Enter a valid e-mail address',
-                },
-              })}
-            />
-            {errors.email && <p>{errors.email.message}</p>}
-            <h2>Password</h2>
-            <input type="password" {...register('password', { required: true, minLength: 8 })} />
-            {errors.password && 'Password is required'}
-            <h2>Short bio</h2>
-            <input {...register('bio', { required: true, maxLength: 200 })} />
-            {errors.bio && 'bio is required'}
-            <button
-              type="button"
-              onClick={() => {
-                setIsFirstPage(true);
-                setIsSecondPage(false);
-              }}
-            >
-              Go Back
-            </button>
-            <input type="submit" />
-          </form>
-        </div>
+        <FormBlock>
+          <div className={styles.secondPage}>
+            <p className={styles.secondPageTitle}>
+              Here's a summary of your selections {/*eslint-disable-line*/}
+            </p>
+            <p className={styles.listText}>
+              · You want a salary of:{' '}
+              <span className={styles.purpleSpan}>{`${userData.salary}€`}</span>
+            </p>
+            <p className={styles.listText}>
+              · You want to work at:{' '}
+              <span className={styles.purpleSpan}>{nameById(userData.city, cityData, 'name')}</span>
+            </p>
+            <p className={styles.listText}>· The positions you want:</p>
+            <div className={styles.tagContainer}>
+              {userData.positions.length > 0 &&
+                userData.positions.map((position) => (
+                  <Tag name={nameById(position.name, roleData, 'name')} isActive />
+                ))}
+            </div>
+            <p className={styles.listText}>· The skills you have:</p>
+            <div className={styles.tagContainer}>
+              {userData.skills.length > 0 &&
+                userData.skills.map((skill) => (
+                  <Tag name={nameById(skill.name, skillData, 'skill')} isActive />
+                ))}
+            </div>
+
+            <p className={styles.secondPageTitle}>
+              Now that we know about your ideal job, who are you?
+            </p>
+
+            <form onSubmit={handleSubmit(onSubmit)} className={styles.inputForm}>
+              <div className={styles.inputWrapper}>
+                <h2>Name</h2>
+                <input type="text" {...register('name', { required: true, maxLength: 15 })} />
+                {errors.name && errors.name.type === 'required' && <p>First name is required</p>}
+                {errors.name && errors.name.type === 'maxLength' && (
+                  <p>Name cant be longer than 15 characters</p>
+                )}
+              </div>
+              <div className={styles.inputWrapper}>
+                <h2>Email</h2>
+                <input
+                  {...register('email', {
+                    required: true,
+                    message: 'Email required',
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                      message: 'Enter a valid e-mail address',
+                    },
+                  })}
+                />
+                {errors.email && <p>{errors.email.message}</p>}
+              </div>
+              <div className={styles.inputWrapper}>
+                <h2>Password</h2>
+                <input
+                  type="password"
+                  {...register('password', { required: true, minLength: 8 })}
+                />
+                {errors.password && 'Password is required'}
+              </div>
+              <div className={styles.inputWrapper}>
+                <h2>Short bio</h2>
+                <input {...register('bio', { required: true, maxLength: 200 })} />
+                {errors.bio && 'bio is required'}
+              </div>
+              <div className={styles.buttonsDiv}>
+                <button
+                  className={styles.backButton}
+                  type="button"
+                  onClick={() => {
+                    setIsFirstPage(true);
+                    setIsSecondPage(false);
+                  }}
+                >
+                  Go Back
+                </button>
+                <input className={`${styles.backButton} ${styles.submitButton}`} type="submit" />
+              </div>
+            </form>
+          </div>
+        </FormBlock>
       )}
-    </div>
+    </>
   );
 };
 

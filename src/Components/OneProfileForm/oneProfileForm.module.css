@@ -1,0 +1,17 @@
+.firstPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nextButton {
+  border: none;
+  background: #5f2eea;
+  color: white;
+  cursor: pointer;
+  font-size: 1.1em;
+  height: 3em;
+  width: 8em;
+  border-radius: 1.5em;
+  margin-top: 2em;
+}
