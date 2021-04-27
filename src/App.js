@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCheck,
@@ -20,6 +20,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
+import { getUserToken } from './Utils/Auth';
 import styles from './App.css';
 import {
   OFFER_PAGE,
@@ -55,16 +56,20 @@ library.add(
 );
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const userToken = getUserToken();
+    if (userToken) {
+      setIsLoggedIn(true);
+    }
+  }, []);
   return (
     <Router>
       <div className={styles.App}>
         <Switch>
-          <Route path={REGISTER_PAGE}>
-            <RegisterPage />
-          </Route>
-          <Route path={LOGIN_PAGE}>
-            <LoginPage />
-          </Route>
+          <Route path={REGISTER_PAGE}>{isLoggedIn ? <Redirect to="/" /> : <RegisterPage />}</Route>
+          <Route path={LOGIN_PAGE}>{isLoggedIn ? <Redirect to="/" /> : <LoginPage />}</Route>
           <div className={styles.container}>
             <NavBar />
             <div className={styles.main}>

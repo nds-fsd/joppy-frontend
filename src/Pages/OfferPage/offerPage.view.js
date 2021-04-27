@@ -28,7 +28,7 @@ const OfferPage = () => {
     <div className={styles.offerPageContainer}>
       <div className={styles.offerBody}>
         {offerArray && count < offerArray.length ? (
-          <JobOffer offerInfo={offerArray[count]._id} /> //eslint-disable-line
+          <JobOffer offerInfo={offerArray[count]._id} />
         ) : (
           <p>Nothing to show</p>
         )}

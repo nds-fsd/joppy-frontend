@@ -1,0 +1,35 @@
+.registerForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f7f7fc;
+  padding-bottom: 10vh;
+}
+
+.navBar {
+  display: flex;
+  width: 95vw;
+  z-index: 10;
+  background: transparent;
+  padding-top: 0.5em;
+  align-items: center;
+  padding-top: 1em;
+}
+
+.logo {
+  height: inherit;
+  width: inherit;
+}
+
+.logoContainer {
+  padding: 0;
+  height: 11vh;
+}
+
+.login {
+  text-decoration: none;
+  margin-left: auto;
+  margin-right: 2em;
+  color: #14142b;
+  font-weight: 500;
+}

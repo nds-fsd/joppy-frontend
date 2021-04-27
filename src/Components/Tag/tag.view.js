@@ -27,12 +27,6 @@ const Tag = ({ name, icon, match, value, onClick, isActive }) => {
           <FontAwesomeIcon icon="check" />
         </span>
       )}
-
-      {isActive && (
-        <span className={styles.tagCross}>
-          <FontAwesomeIcon icon="times" />
-        </span>
-      )}
     </div>
   );
 };
