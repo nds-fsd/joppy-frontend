@@ -6,7 +6,7 @@
 }
 
 .form {
-  margin-top: 35%;
+  margin-top: 45%;
   margin-left: 18%;
 }
 
@@ -37,13 +37,14 @@
 }
 
 .submit {
-  width: 325px;
+  width: 340px;
   height: 40px;
   text-align: center;
   background-color: #5f2eea;
   color: rgb(252, 249, 252);
   font-weight: bolder;
   border-radius: 40px;
+  border-width: 0px;
 }
 
 .submit:hover {
