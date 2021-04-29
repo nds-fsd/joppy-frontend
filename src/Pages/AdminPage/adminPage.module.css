@@ -3,6 +3,7 @@
   display: grid;
   grid-template-columns: 200px auto;
   grid-template-areas: 'adminSideBar adminMain';
+  background-color: #f7f7fc;
 }
 
 h1 {
