@@ -3,7 +3,7 @@ import styles from './jobposition.module.css';
 import Tag from '../Tag';
 
 const JobPosition = ({ icon, offerData, match }) => (
-  <div className={styles.jobtag}>
+  <div className={styles.jobPosition}>
     <h2>Software Engineer</h2>
     <Tag icon={icon} match={match}>
       {offerData.title}

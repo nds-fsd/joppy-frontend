@@ -2,10 +2,16 @@ import React, { useEffect, useState } from 'react';
 import ButtonsBar from '../../Components/ButtonsBar';
 import styles from './offerPage.module.css';
 import JobOffer from '../../Components/JobOffer';
+import { ReactComponent as Plant } from '../../Images/plant.svg';
+// import { getSessionUser } from '../../Utils/Auth';
 
 const OfferPage = () => {
   const [offerArray, setOfferArray] = useState();
   const [count, setCount] = useState(0);
+
+  const nextOffer = () => {
+    setCount(count + 1);
+  };
 
   const authObject = {
     headers: {
@@ -21,11 +27,66 @@ const OfferPage = () => {
       .then((data) => setOfferArray(data))
       .catch();
   }, []);
-  const handleReject = () => setCount(count + 1);
-  const handleAccept = () => setCount(count + 1);
+
+  // const userSession = getSessionUser();
+  // console.log(userSession.id);
+
+  // const options = {
+  //   method: 'PUT',
+  //   headers: new Headers({
+  //     Accept: 'application/json',
+  //     'Content-type': 'application/json',
+  //   }),
+  //   mode: 'cors',
+  //   body: JSON.stringify(),
+  // };
+
+  const handleReject = () => {
+    // const body = {
+    //   rejected: userSession.id,
+    // };
+    // const url = `http://localhost:3001/offer/${offerArray[count]._id}`;
+
+    // fetch(url, options, body)
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       return response.json();
+    //     }
+    //     return Promise.reject();
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    nextOffer();
+  };
+
+  const handleAccept = () => {
+    // const body = {
+    //   accepted: userSession.id,
+    // };
+    // const url = `http://localhost:3001/offer/${offerArray[count]._id}`;
+
+    // fetch(url, options, body)
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       return response.json();
+    //     }
+    //     return Promise.reject();
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    nextOffer();
+  };
 
   return (
-    <div className={styles.offerPageContainer}>
+    <div className={styles.offerPage}>
       <div className={styles.offerBody}>
         {offerArray && count < offerArray.length ? (
           <JobOffer offerInfo={offerArray[count]._id} />
@@ -33,7 +94,12 @@ const OfferPage = () => {
           <p>Nothing to show</p>
         )}
       </div>
-      <ButtonsBar rejectClicked={handleReject} acceptClicked={handleAccept} />
+      <ButtonsBar
+        rejectClicked={handleReject}
+        acceptClicked={handleAccept}
+        nextClicked={nextOffer}
+      />
+      <Plant className={styles.plant} />
     </div>
   );
 };

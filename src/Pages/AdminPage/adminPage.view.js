@@ -11,23 +11,21 @@ const AdminPage = () => (
       <div className={styles.adminMain}>
         <Switch>
           <Route path={`${ADMIN_PAGE}/offers`}>
-            <h1>Offers</h1>
+            <div className={styles.link}>Offers</div>
             <div className={styles.container}>Container</div>
           </Route>
           <Route path={`${ADMIN_PAGE}/candidates`}>
-            <h1>Candidates</h1>
+            <div className={styles.link}>Candidates</div>
             <div className={styles.container}>Container</div>
           </Route>
           <Route path={`${ADMIN_PAGE}/profile`}>
-            <h1>Profile</h1>
+            <div className={styles.link}>Profile</div>
             <div className={styles.container}>Container</div>
-          </Route>
-          <Route path={`${ADMIN_PAGE}/logout`}>
-            <h1>Logout</h1>
           </Route>
         </Switch>
       </div>
     </Router>
   </div>
 );
+
 export default AdminPage;

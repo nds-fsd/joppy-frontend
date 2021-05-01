@@ -1,33 +1,26 @@
-
 .container {
-    display: flex;
+  margin-left: 5%;
+  position: relative;
+  display: flex;
 }
 
-.profile{
-    color: blue;
+.profile {
+  color: blue;
 }
-.size{
-    color: grey;
-}
-
-img{
-    margin-top: 25%;
-    margin-left: 10%;
+.size {
+  color: grey;
 }
 
-.title{
-    margin-left: 5%;
-    font-size: 16px;
+img {
+  margin-top: 25%;
+  margin-left: 10%;
 }
 
-.container > div> p {
-    font-size: 13px
+.title {
+  margin-left: 5%;
+  font-size: 16px;
 }
 
-
-
-
-
-
-
-
+.container > div > p {
+  font-size: 13px;
+}

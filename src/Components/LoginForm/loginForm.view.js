@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import styles from './loginForm.module.css';
 import { REGISTER_PAGE, OFFER_PAGE } from '../../Routers/routers';
-import Plant from './plant.svg';
+import { setUserSession } from '../../Utils/Auth';
+import Plant from '../../Images/plant.svg';
 
 const LoginForm = () => {
   const history = useHistory();
@@ -46,6 +47,7 @@ const LoginForm = () => {
       })
       .then((response) => {
         setErrorMessage(JSON.stringify(response));
+        setUserSession(response);
       })
       .catch((error) => {
         console.log(error);
