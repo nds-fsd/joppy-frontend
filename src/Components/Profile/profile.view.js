@@ -4,23 +4,23 @@ import Tag from '../Tag';
 
 const Profile = ({ userData }) => (
   <div className={styles.profile}>
-    <h3>Short bio</h3>
-    {userData ? <p>{userData.bio}</p> : null}
-    <h3>Roles</h3>
-    {userData ? userData.positions.map((position) => <Tag name={position.name} />) : null}
+    <div className={styles.headline}>Short bio</div>
+    {userData ? <p className={styles.infoText}>{userData.bio}</p> : null}
+    <div className={styles.headline}>Roles</div>
+    {userData ? userData.positions.map((position) => <Tag name={position.name} isActive />) : null}
 
-    <h3>Skills</h3>
+    <div className={styles.headline}>Skills</div>
 
-    {userData ? userData.skills.map((skill) => <Tag name={skill.name} />) : null}
+    {userData ? userData.skills.map((skill) => <Tag name={skill.name} isActive />) : null}
 
-    <h3>Work Experience</h3>
-    {userData ? <p>{userData.workExperiences}</p> : null}
-    <h3>Education</h3>
-    {userData ? <p>{userData.education}</p> : null}
-    <h3>Languages</h3>
-    {userData ? userData.languages.map((language) => <Tag name={language.name} />) : null}
+    <div className={styles.headline}>Work Experience</div>
+    {userData ? <p className={styles.infoText}>{userData.workExperiences}</p> : null}
+    <div className={styles.headline}>Education</div>
+    {userData ? <p className={styles.infoText}>{userData.education}</p> : null}
+    <div className={styles.headline}>Languages</div>
+    {userData ? userData.languages.map((language) => <Tag name={language.name} isActive />) : null}
 
-    <h3>Q&A</h3>
+    <div className={styles.headline}>Q&A</div>
   </div>
 );
 

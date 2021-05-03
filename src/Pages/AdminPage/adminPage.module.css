@@ -5,7 +5,7 @@
   grid-template-areas: 'adminSideBar adminMain';
 }
 
-h1 {
+.link {
   margin-top: 3%;
   margin-left: 7%;
   font-weight: 500;

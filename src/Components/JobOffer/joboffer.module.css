@@ -1,5 +1,10 @@
-.scroll {
-  overflow: scroll;
+.jobOffer {
+  position: relative;
+  height: 100%;
+  overflow-y: scroll;
   overflow-x: hidden;
-  height: 400px;
+}
+
+::-webkit-scrollbar {
+  width: 0;
 }
