@@ -4,6 +4,7 @@ import styles from './profilePage.module.css';
 import { PROFILE_PAGE } from '../../Routers/routers'; //eslint-disable-line
 import Profile from '../../Components/Profile';
 import ProfileIntro from '../../Components/ProfileIntro';
+import { ReactComponent as Plant } from '../../Images/plant.svg';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState();
@@ -34,9 +35,12 @@ const ProfilePage = () => {
     <div className={styles.profilePage}>
       <ProfileIntro userData={userData} />
       <div className={styles.profileNavBar}>
-        <Link to={PROFILE_PAGE}>Profile</Link>
-        <span> | </span>
-        <Link to={`${PROFILE_PAGE}/preferences`}>Preferences</Link>
+        <Link to={PROFILE_PAGE} className={styles.link}>
+          Profile
+        </Link>
+        <Link to={`${PROFILE_PAGE}/preferences`} className={styles.link}>
+          Preferences
+        </Link>
       </div>
       <Router>
         <Switch>
@@ -48,6 +52,7 @@ const ProfilePage = () => {
           </Route>
         </Switch>
       </Router>
+      <Plant className={styles.plant} />
     </div>
   );
 };

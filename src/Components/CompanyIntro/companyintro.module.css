@@ -4,21 +4,39 @@
   display: flex;
 }
 
+.companyname {
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 38px;
+
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.75px;
+
+  color: #4e4b66;
+}
+
 .profile {
   color: blue;
 }
 .size {
-  color: grey;
+  color: #bca4ff;
+  right: 3%;
 }
 
 img {
   margin-top: 25%;
   margin-left: 10%;
+  width: 65px;
+  height: 65px;
 }
 
 .title {
   margin-left: 5%;
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 34px;
+  font-weight: 600;
+  color: #4e4b66;
 }
 
 .container > div > p {

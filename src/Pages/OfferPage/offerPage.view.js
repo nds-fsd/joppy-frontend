@@ -3,7 +3,7 @@ import ButtonsBar from '../../Components/ButtonsBar';
 import styles from './offerPage.module.css';
 import JobOffer from '../../Components/JobOffer';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
-// import { getSessionUser } from '../../Utils/Auth';
+import { getSessionUser } from '../../Utils/Auth';
 
 const OfferPage = () => {
   const [offerArray, setOfferArray] = useState();
@@ -28,46 +28,54 @@ const OfferPage = () => {
       .catch();
   }, []);
 
-  // const userSession = getSessionUser();
-  // console.log(userSession.id);
+  let url;
 
-  // const options = {
-  //   method: 'PUT',
-  //   headers: new Headers({
-  //     Accept: 'application/json',
-  //     'Content-type': 'application/json',
-  //   }),
-  //   mode: 'cors',
-  //   body: JSON.stringify(),
-  // };
+  if (offerArray) {
+    url = `http://localhost:3001/offer/${offerArray[count]._id}`;
+  }
+
+  const userSession = getSessionUser();
+
+  const updateOffer = (body) => {
+    const options = {
+      method: 'PUT',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+      }),
+      mode: 'cors',
+      body: JSON.stringify(body),
+    };
+    fetch(url, options, body)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const handleReject = () => {
-    // const body = {
-    //   rejected: userSession.id,
-    // };
-    // const url = `http://localhost:3001/offer/${offerArray[count]._id}`;
-
-    // fetch(url, options, body)
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       return response.json();
-    //     }
-    //     return Promise.reject();
-    //   })
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    const body = {
+      rejected: userSession.id,
+    };
+    updateOffer(body);
     nextOffer();
   };
 
   const handleAccept = () => {
-    // const body = {
-    //   accepted: userSession.id,
-    // };
-    // const url = `http://localhost:3001/offer/${offerArray[count]._id}`;
+    const body = {
+      accepted: userSession.id,
+    };
+    updateOffer(body);
 
     // fetch(url, options, body)
     //   .then((response) => {
@@ -76,8 +84,8 @@ const OfferPage = () => {
     //     }
     //     return Promise.reject();
     //   })
-    //   .then((response) => {
-    //     console.log(response);
+    //   .then((data) => {
+    //     console.log(data);
     //   })
     //   .catch((error) => {
     //     console.log(error);

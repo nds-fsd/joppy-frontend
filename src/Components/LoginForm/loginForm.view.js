@@ -5,6 +5,7 @@ import styles from './loginForm.module.css';
 import { REGISTER_PAGE, OFFER_PAGE } from '../../Routers/routers';
 import { setUserSession } from '../../Utils/Auth';
 import Plant from '../../Images/plant.svg';
+import { ReactComponent as AppLogo } from '../../Images/Logo_first_draft.svg';
 
 const LoginForm = () => {
   const history = useHistory();
@@ -56,6 +57,7 @@ const LoginForm = () => {
 
   return (
     <div className={styles.loginForm}>
+      <AppLogo className={styles.logo} />
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className={styles.inputBox}>
           <h2>Email</h2>

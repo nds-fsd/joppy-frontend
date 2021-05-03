@@ -5,11 +5,6 @@
   width: 50%;
 }
 
-.form {
-  margin-top: 37%;
-  margin-left: 18%;
-}
-
 .inputBox {
   padding-top: 1px;
   padding-left: 15px;
@@ -86,4 +81,15 @@ h2 {
   height: 180.47px;
   left: -9%;
   bottom: 0px;
+}
+
+.logo {
+  width: 380px;
+  height: 15%;
+  margin-top: 25%;
+  margin-left: 25%;
+}
+
+.form {
+  margin-left: 25%;
 }
