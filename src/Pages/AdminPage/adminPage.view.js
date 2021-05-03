@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styles from './adminPage.module.css';
 import AdminSideBar from '../../Components/AdminSideBar';
 import { ADMIN_PAGE } from '../../Routers/routers';
+import AdminCandidates from '../../Components/AdminCandidates';
 
 const AdminPage = () => (
   <div className={styles.adminPage}>
@@ -16,7 +17,7 @@ const AdminPage = () => (
           </Route>
           <Route path={`${ADMIN_PAGE}/candidates`}>
             <div className={styles.link}>Candidates</div>
-            <div className={styles.container}>Container</div>
+            <AdminCandidates className={styles.container} />
           </Route>
           <Route path={`${ADMIN_PAGE}/profile`}>
             <div className={styles.link}>Profile</div>
