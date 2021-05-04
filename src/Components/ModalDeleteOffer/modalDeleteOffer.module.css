@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.5em;
+}
+
+.cancelButton {
+  border: none;
+  background: none;
+  outline: none;
+  border: 0.1em solid #5f2eea;
+  color: #fcfcfc;
+  background: #5f2eea;
+  font-size: 1.5em;
+  height: 2em;
+  padding: 0 1em;
+  cursor: pointer;
+  margin: 0.25em;
+  border-radius: 1em;
+}
+
+.deleteButton {
+  color: #5f2eea;
+  background: white;
+  font-size: 1em;
+}

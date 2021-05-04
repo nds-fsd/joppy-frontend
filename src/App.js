@@ -17,6 +17,7 @@ import {
   faCircleNotch,
   faLayerGroup,
   faTimes,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
@@ -54,7 +55,8 @@ library.add(
   faCircleNotch,
   faLayerGroup,
   faCommentAlt,
-  faTimes
+  faTimes,
+  faSearch
 );
 
 function App() {
