@@ -23,8 +23,9 @@ const AdminCandidates = () => {
     <div className={styles.adminCandidates}>
       <div className={styles.headline}>
         <p>Name</p>
-        <p>Skills</p>
+        <p>Offer</p>
         <p>Position</p>
+        <p>Skills</p>
         <p>Location</p>
         <p>Enrolled</p>
       </div>
@@ -38,7 +39,7 @@ const AdminCandidates = () => {
         {userData ? userData.map((user) => <div>{user.positions.name}</div>) : null}
       </div>
       <div className={styles.userCity}>
-        {userData ? userData.map((user) => <div>{user.location}</div>) : null}
+        {userData ? userData.map((user) => <div>{user.location.name}</div>) : null}
       </div>
       <div className={styles.userStatus}>
         {userData ? userData.map((user) => <div>{user.createdAt}</div>) : null}
