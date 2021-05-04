@@ -4,6 +4,7 @@ import styles from './adminPage.module.css';
 import AdminSideBar from '../../Components/AdminSideBar';
 import { ADMIN_PAGE } from '../../Routers/routers';
 import AdminTable from '../../Components/AdminTable';
+import AdminCandidates from '../../Components/AdminCandidates';
 
 const AdminPage = () => (
   <div className={styles.adminPage}>
@@ -16,19 +17,17 @@ const AdminPage = () => (
             <AdminTable endpoint="offer" />
           </Route>
           <Route path={`${ADMIN_PAGE}/candidates`}>
-            <h1>Candidates</h1>
-            <div className={styles.container}>Container</div>
+            <div className={styles.link}>Candidates</div>
+            <AdminCandidates className={styles.container} />
           </Route>
           <Route path={`${ADMIN_PAGE}/profile`}>
-            <h1>Profile</h1>
+            <div className={styles.link}>Profile</div>
             <div className={styles.container}>Container</div>
-          </Route>
-          <Route path={`${ADMIN_PAGE}/logout`}>
-            <h1>Logout</h1>
           </Route>
         </Switch>
       </div>
     </Router>
   </div>
 );
+
 export default AdminPage;

@@ -23,15 +23,7 @@ import {
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 import { getUserToken } from './Utils/Auth';
 import styles from './App.css';
-import {
-  OFFER_PAGE,
-  PROFILE_PAGE,
-  CHALLENGES_PAGE,
-  CONVERSATIONS_PAGE,
-  REGISTER_PAGE,
-  LOGIN_PAGE,
-  ADMIN_PAGE,
-} from './Routers/routers'; //eslint-disable-line
+import { OFFER_PAGE, PROFILE_PAGE, REGISTER_PAGE, LOGIN_PAGE, ADMIN_PAGE } from './Routers/routers'; //eslint-disable-line
 import OfferPage from './Pages/OfferPage';
 import ProfilePage from './Pages/ProfilePage';
 import RegisterPage from './Pages/RegisterPage';
@@ -77,7 +69,7 @@ function App() {
           <Route path={ADMIN_PAGE}>
             <AdminPage />
           </Route>
-          <div className={styles.container}>
+          <div>
             <NavBar />
             <div className={styles.main}>
               <Switch>
@@ -86,12 +78,6 @@ function App() {
                 </Route>
                 <Route path={PROFILE_PAGE}>
                   <ProfilePage />
-                </Route>
-                <Route path={CHALLENGES_PAGE}>
-                  <h1>Challenges</h1>
-                </Route>
-                <Route path={CONVERSATIONS_PAGE}>
-                  <h1>Conversations</h1>
                 </Route>
               </Switch>
             </div>

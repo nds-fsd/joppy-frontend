@@ -30,7 +30,7 @@ const JobOffer = ({ offerInfo }) => {
   }, [offerInfo]);
 
   return (
-    <div className={styles.scroll}>
+    <div className={styles.jobOffer}>
       {offerData ? <CompanyIntro companyInfo={offerData.companyInfo} /> : null}
       {offerData ? <JobPosition offerData={offerData} /> : null}
       {offerData ? (

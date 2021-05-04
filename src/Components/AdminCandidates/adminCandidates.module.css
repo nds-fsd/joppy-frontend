@@ -1,0 +1,16 @@
+.adminCandidates {
+  width: 900px;
+  border-width: 2px;
+  border-color: #4e4b66;
+  margin: auto;
+}
+
+.headline {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 34px;
+  letter-spacing: 0.75px;
+  color: #4e4b66;
+  display: flex;
+  justify-content: space-evenly;
+}
