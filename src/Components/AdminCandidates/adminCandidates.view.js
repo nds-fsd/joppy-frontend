@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styles from './adminCandidates.module.css';
+import { getUserToken } from '../../Utils/Auth';
 
 const AdminCandidates = () => {
   const [userData, setUserData] = useState();
+  const userToken = getUserToken();
+  // const userSession = getSessionUser();
 
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+      Authorization: `Bearer ${userToken}`,
     },
   };
 
@@ -21,28 +23,28 @@ const AdminCandidates = () => {
 
   return (
     <div className={styles.adminCandidates}>
-      <div className={styles.headline}>
-        <p>Name</p>
-        <p>Offer</p>
-        <p>Position</p>
-        <p>Skills</p>
-        <p>Location</p>
-        <p>Enrolled</p>
+      <div className={styles.searchbarRow}>Searchbar</div>
+      <div className={styles.firstTableRow}>
+        <p className={styles.firstTableRowItem}>Name</p>
+        <p className={styles.firstTableRowItem}>Offer</p>
+        <p className={styles.firstTableRowItem}>Position</p>
+        <p className={styles.firstTableRowItem}>Skills</p>
+        <p className={styles.firstTableRowItem}>Location</p>
+        <p className={styles.firstTableRowItem}>Enrolled</p>
       </div>
-      <div className={styles.userNames}>
-        {userData ? userData.map((user) => <div>{user.name}</div>) : null}
-      </div>
-      <div className={styles.userOffer}>
-        {userData ? userData.map((user) => <div>{user.skills.name}</div>) : null}
-      </div>
-      <div className={styles.userPosition}>
-        {userData ? userData.map((user) => <div>{user.positions.name}</div>) : null}
-      </div>
-      <div className={styles.userCity}>
-        {userData ? userData.map((user) => <div>{user.location.name}</div>) : null}
-      </div>
-      <div className={styles.userStatus}>
-        {userData ? userData.map((user) => <div>{user.createdAt}</div>) : null}
+      <div className={styles.tableContent}>
+        {userData
+          ? userData.map((user) => (
+              <div className={styles.tableRow}>
+                <div className={styles.tableRowItem}>{user.name}</div>
+                <div className={styles.tableRowItem}>Offer</div>
+                <div className={styles.tableRowItem}>{user.skills.skill}</div>
+                <div className={styles.tableRowItem}>{user.positions.name}</div>
+                <div className={styles.tableRowItem}>{user.location}</div>
+                <div className={styles.tableRowItem}>{user.updatedAt}</div>
+              </div>
+            ))
+          : null}
       </div>
     </div>
   );
