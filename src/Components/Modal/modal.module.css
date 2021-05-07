@@ -20,7 +20,8 @@
 .modalBody {
   position: absolute;
   width: 40vw;
-  height: 40vh;
+  min-height: 30vh;
+  max-height: 80vh;
   opacity: 1;
   background: #fcfcfc;
   border-radius: 1em;

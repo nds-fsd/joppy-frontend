@@ -1,12 +1,54 @@
 .container {
   display: flex;
   flex-direction: column;
-  width: 90%;
-  overflow-y: scroll;
+  width: 100%;
+  height: 100%;
 }
 
 .block {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.tagContainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.formSection {
+  background: #fcfcfc;
+  border-radius: 1em;
+  box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
+  margin: 1em 0;
+  padding: 1.5em;
+}
+
+.mainTitle {
+  color: #14142b;
+  font-size: 2em;
+  margin: 0;
+  margin-bottom: 1em;
+  padding: 0;
+}
+
+.formSectionTitle {
+  color: #14142b;
+  font-size: 1.4em;
+  margin: 0;
+  padding: 0;
+}
+
+.formSectionSubtitle {
+  color: #a0a3bd;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 2em;
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: center;
 }

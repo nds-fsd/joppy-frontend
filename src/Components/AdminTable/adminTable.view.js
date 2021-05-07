@@ -75,7 +75,10 @@ const AdminTable = ({ endpoint }) => {
         />
       )}
       {openModal && whichModal === 'create' && (
-        <ModalCreateOffer handleClose={() => setOpenModal(false)} />
+        <ModalCreateOffer
+          handleClose={() => setOpenModal(false)}
+          handleOfferCreated={offerDeleted}
+        />
       )}
       <div className={styles.topRow}>
         <SearchBar handleQuery={(q) => setSearchQuery(q)} />
@@ -102,7 +105,9 @@ const AdminTable = ({ endpoint }) => {
           responseArray.map((object) => (
             <div className={styles.tableRow}>
               <p className={styles.tableRowItem}>{object.title}</p>
-              <p className={styles.tableRowItemColor}>Position</p>
+              <p className={styles.tableRowItemColor}>
+                {object.position.length > 0 ? object.position[0].name : 'Position'}
+              </p>
               <p className={styles.tableRowItemTool}>{object.description}</p>
               <p className={styles.tooltip}>{object.description}</p>
               <p className={styles.tableRowItem}>Status</p>

@@ -116,7 +116,6 @@ const ProfileForm = () => {
 
   const onSubmit = (data) => {
     const allData = { ...userData, ...data };
-    console.log(allData);
 
     const options = {
       method: 'POST',

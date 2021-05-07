@@ -24,7 +24,8 @@
 }
 
 .deleteButton {
-  color: #5f2eea;
+  border-color: #e43737;
+  color: #e43737;
   background: white;
   font-size: 1em;
 }
