@@ -1,0 +1,69 @@
+.adminProfileModal {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  background: rgba(38, 35, 41, 0.692);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow-x: scroll;
+}
+
+.adminModal {
+  width: 50%;
+  height: 58vh;
+  margin: auto;
+  margin-top: 8%;
+  padding: 2%;
+  padding-right: 4%;
+  overflow: scroll;
+  overflow-x: hidden;
+  border-radius: 15px;
+  background-color: #fcfcfc;
+}
+
+.inputBio {
+  border-radius: 5px;
+  border-width: thin;
+  border-color: rgb(197, 194, 194);
+  border-style: solid;
+  height: 130px;
+  width: 100%;
+  padding: 1.5%;
+}
+
+.cancelButton {
+  color: rgb(99, 12, 12);
+  background: rgb(172, 91, 91);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 2%;
+}
+
+.saveButton {
+  color: rgb(99, 12, 12);
+  background: rgb(172, 91, 91);
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 2%;
+  margin-top: 3%;
+  align-items: center;
+}
+
+.input {
+  font-size: 16px;
+  font-style: rgb(197, 194, 194);
+  width: 100%;
+  border-radius: 5px;
+  border-width: thin;
+  border-color: rgb(197, 194, 194);
+  border-style: solid;
+  padding: 1.5%;
+}
+.Select {
+  color: rgba(38, 35, 41, 0.692);
+  width: 100%;
+}

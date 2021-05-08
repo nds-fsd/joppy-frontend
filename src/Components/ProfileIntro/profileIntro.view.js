@@ -7,7 +7,7 @@ const ProfileIntro = ({ userData }) => (
     {userData ? <p className={styles.userName}>{userData.name}</p> : null}
     {userData ? (
       <p className={styles.userIntro}>
-        {userData.location.name}. Worked at {userData.workExperiences}.
+        {userData.location.name}. Worked at {userData.workExperiences[0]}.
       </p>
     ) : null}
   </div>

@@ -7,11 +7,13 @@ const Profile = ({ userData }) => (
     <div className={styles.headline}>Short bio</div>
     {userData ? <p className={styles.infoText}>{userData.bio}</p> : null}
     <div className={styles.headline}>Roles</div>
-    {userData ? userData.positions.map((position) => <Tag name={position.name} isActive />) : null}
+    {userData
+      ? userData.positions.map((position) => <Tag name={position.name.name} isActive />)
+      : null}
 
     <div className={styles.headline}>Skills</div>
 
-    {userData ? userData.skills.map((skill) => <Tag name={skill.name} isActive />) : null}
+    {userData ? userData.skills.map((skill) => <Tag name={skill.name.skill} isActive />) : null}
 
     <div className={styles.headline}>Work Experience</div>
     {userData ? <p className={styles.infoText}>{userData.workExperiences}</p> : null}

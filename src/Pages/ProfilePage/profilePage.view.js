@@ -25,18 +25,22 @@ const ProfilePage = () => {
   }
 
   useEffect(() => {
-    fetch(url, authObject)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject();
-      })
-      .then((data) => {
-        setUserData(data);
-      })
-      .catch();
+    if (userToken) {
+      fetch(url, authObject)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          return Promise.reject();
+        })
+        .then((data) => {
+          setUserData(data);
+        })
+        .catch();
+    }
   }, []);
+
+  console.log(userData);
 
   return (
     <div className={styles.profilePage}>
@@ -59,6 +63,7 @@ const ProfilePage = () => {
           </Route>
         </Switch>
       </Router>
+
       <Plant className={styles.plant} />
     </div>
   );

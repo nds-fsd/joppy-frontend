@@ -23,10 +23,12 @@ const OfferPage = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/offer', authObject)
-      .then((res) => res.json())
-      .then((data) => setOfferArray(data))
-      .catch();
+    if (userToken) {
+      fetch('http://localhost:3001/offer', authObject)
+        .then((res) => res.json())
+        .then((data) => setOfferArray(data))
+        .catch();
+    }
   }, []);
 
   if (offerArray) {
