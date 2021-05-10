@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { fetchMeStuff } from '../../Utils/functions';
 import InputText from '../InputText';
+// import InputTextarea from '../InputTextarea';
 import SalarySlider from '../SalarySlider';
 import Tag from '../Tag';
 import styles from './offerForm.module.css';
 
-const OfferForm = ({ handleClose, handleOfferCreated }) => {
+const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
   const [skillData, setSkillData] = useState([]);
   const [positionData, setPositionData] = useState([]);
   const [offerData, setOfferData] = useState({
@@ -26,6 +27,17 @@ const OfferForm = ({ handleClose, handleOfferCreated }) => {
   };
 
   useEffect(() => {
+    if (offerId) {
+      fetchMeStuff(`http://localhost:3001/offer/${offerId}/raw`, authObject, (o) =>
+        setOfferData({
+          title: o.title,
+          salary: o.salary,
+          position: o.position[0],
+          skills: o.skills,
+          description: o.description,
+        })
+      );
+    }
     fetchMeStuff('http://localhost:3001/skill', authObject, setSkillData);
     fetchMeStuff('http://localhost:3001/position', authObject, setPositionData);
   }, []);
@@ -62,17 +74,36 @@ const OfferForm = ({ handleClose, handleOfferCreated }) => {
     fetchMeStuff('http://localhost:3001/offer', options, handleOfferCreated);
   };
 
+  const handleEdit = () => {
+    const options = {
+      method: 'PUT',
+      headers: new Headers({
+        Accept: 'apllication/json',
+        'Content-type': 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+      }),
+      mode: 'cors',
+      body: JSON.stringify(offerData),
+    };
+
+    fetchMeStuff(`http://localhost:3001/offer/${offerId}`, options, handleOfferCreated);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.formSection}>
-        <p className={styles.mainTitle}>Create a new offer</p>
+        {!offerId && <p className={styles.mainTitle}>Create a new offer</p>}
+        {offerId && <p className={styles.mainTitle}>Edit offer</p>}
         <InputText
           labelText="Offer title"
+          value={offerData.title}
           width="20vw"
           handleOnChange={(text) => setOfferData({ ...offerData, title: text })}
         />
         <InputText
           labelText="Offer description"
+          value={offerData.description}
           width="30vw"
           handleOnChange={(des) => setOfferData({ ...offerData, description: des })}
         />
@@ -118,12 +149,26 @@ const OfferForm = ({ handleClose, handleOfferCreated }) => {
         </div>
       </div>
       <div className={styles.buttonRow}>
-        <button className={styles.cancelButton} type="button" onClick={handleClose}>
+        <button className={styles.button} type="button" onClick={handleClose}>
           Cancel
         </button>
-        <button className={styles.createButton} type="button" onClick={handleSubmit}>
-          Create
-        </button>
+        {!offerId ? (
+          <button
+            className={`${styles.button} ${styles.actionButton}`}
+            type="button"
+            onClick={handleSubmit}
+          >
+            Create
+          </button>
+        ) : (
+          <button
+            className={`${styles.button} ${styles.actionButton}`}
+            type="button"
+            onClick={handleEdit}
+          >
+            Save
+          </button>
+        )}
       </div>
     </div>
   );

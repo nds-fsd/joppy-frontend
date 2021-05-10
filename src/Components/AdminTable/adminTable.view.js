@@ -6,6 +6,7 @@ import { fetchMeStuff } from '../../Utils/functions';
 // import Modal from '../Modal/modal.view';
 import ModalDeleteOffer from '../ModalDeleteOffer';
 import ModalCreateOffer from '../ModalCreateOffer';
+import ModalEditOffer from '../ModalEditOffer';
 
 const AdminTable = ({ endpoint }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,6 +81,13 @@ const AdminTable = ({ endpoint }) => {
           handleOfferCreated={offerDeleted}
         />
       )}
+      {openModal && whichModal === 'edit' && (
+        <ModalEditOffer
+          handleClose={() => setOpenModal(false)}
+          offerId={whichOffer}
+          handleOfferEdit={offerDeleted}
+        />
+      )}
       <div className={styles.topRow}>
         <SearchBar handleQuery={(q) => setSearchQuery(q)} />
         <button
@@ -97,7 +105,7 @@ const AdminTable = ({ endpoint }) => {
         <p className={styles.firstTableRowItem}>Title</p>
         <p className={styles.firstTableRowItem}>Position</p>
         <p className={styles.firstTableRowItem}>Description</p>
-        <p className={styles.firstTableRowItem}>Status</p>
+        <p className={styles.firstTableRowItem}>Salary</p>
         <p className={styles.firstTableRowItem}>Creation Date</p>
       </div>
       <div className={styles.tableContents}>
@@ -110,7 +118,7 @@ const AdminTable = ({ endpoint }) => {
               </p>
               <p className={styles.tableRowItemTool}>{object.description}</p>
               <p className={styles.tooltip}>{object.description}</p>
-              <p className={styles.tableRowItem}>Status</p>
+              <p className={styles.tableRowItem}>{`${object.salary}€`}</p>
               <p className={styles.tableRowItem}>{object.createdAt.substring(0, 10)}</p>
               <Dropdown drop="up" className={styles.dropdowndiv}>
                 <Dropdown.Toggle variant="success" className={styles.options}>
@@ -118,7 +126,16 @@ const AdminTable = ({ endpoint }) => {
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu className={styles.dropdown}>
-                  <Dropdown.Item className={styles.dropdownElement}>Edit offer</Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownElement}
+                    onClick={() => {
+                      setWhichModal('edit');
+                      setWhichOffer(object._id);
+                      setOpenModal(true);
+                    }}
+                  >
+                    Edit offer
+                  </Dropdown.Item>
                   <Dropdown.Item className={styles.dropdownElement}>View offer</Dropdown.Item>
                   <Dropdown.Item className={styles.dropdownElement}>See candidates</Dropdown.Item>
                   <Dropdown.Item

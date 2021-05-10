@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import styles from './inputText.module.css';
+/* eslint-disable react/self-closing-comp */
 
-const InputText = ({ labelText, handleOnChange, width, value }) => {
+import React, { useEffect, useState } from 'react';
+import styles from './inputTextarea.module.css';
+
+const InputTextarea = ({ labelText, handleOnChange, width, value }) => {
   const [labelStyle, setLabelStyle] = useState(`${styles.inputLabel}`);
   const [bodyStyle, setBodyStyle] = useState(`${styles.inputBody}`);
   const [fieldStyle, setFieldStyle] = useState(`${styles.inputField}`);
@@ -23,17 +25,18 @@ const InputText = ({ labelText, handleOnChange, width, value }) => {
     <div style={{ width: `${width}` }} className={bodyStyle}>
       <p className={labelStyle}>{labelText}</p>
       <br />
-      <input
+      <textarea
         className={fieldStyle}
         type="text"
+        rows="3"
         value={value}
         onChange={(e) => {
           setFieldValue(e.target.value);
           handleOnChange(e.target.value);
         }}
-      />
+      ></textarea>
     </div>
   );
 };
 
-export default InputText;
+export default InputTextarea;
