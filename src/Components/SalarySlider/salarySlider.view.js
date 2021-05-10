@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './salarySlider.module.css';
 
-const SalarySlider = ({ value, onChange }) => (
+const SalarySlider = ({ value, onChange, style }) => (
   <div className={styles.slider}>
     <div className={styles.sliderAndNumbers}>
       <span className={styles.numberLeft}>14.000€</span>
       <input
+        style={style}
         className={styles.sliderItself}
         type="range"
         min="14000"

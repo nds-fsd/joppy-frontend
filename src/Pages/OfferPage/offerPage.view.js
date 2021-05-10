@@ -3,38 +3,37 @@ import ButtonsBar from '../../Components/ButtonsBar';
 import styles from './offerPage.module.css';
 import JobOffer from '../../Components/JobOffer';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
-import { getSessionUser } from '../../Utils/Auth';
+import { getSessionUser, getUserToken } from '../../Utils/Auth';
 
 const OfferPage = () => {
   const [offerArray, setOfferArray] = useState();
   const [count, setCount] = useState(0);
+  const userSession = getSessionUser();
+  const userToken = getUserToken();
+  let url;
+  const authObject = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${userToken}`,
+    },
+  };
 
   const nextOffer = () => {
     setCount(count + 1);
   };
 
-  const authObject = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
-    },
-  };
-
   useEffect(() => {
-    fetch('http://localhost:3001/offer', authObject)
-      .then((res) => res.json())
-      .then((data) => setOfferArray(data))
-      .catch();
+    if (userToken) {
+      fetch('http://localhost:3001/offer', authObject)
+        .then((res) => res.json())
+        .then((data) => setOfferArray(data))
+        .catch();
+    }
   }, []);
-
-  let url;
 
   if (offerArray) {
     url = `http://localhost:3001/offer/${offerArray[count]._id}`;
   }
-
-  const userSession = getSessionUser();
 
   const updateOffer = (body) => {
     const options = {
@@ -42,8 +41,7 @@ const OfferPage = () => {
       headers: new Headers({
         Accept: 'application/json',
         'Content-type': 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+        Authorization: `Bearer ${userToken}`,
       }),
       mode: 'cors',
       body: JSON.stringify(body),
@@ -58,9 +56,7 @@ const OfferPage = () => {
       .then((data) => {
         console.log(data);
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch();
   };
 
   const handleReject = () => {
@@ -76,20 +72,6 @@ const OfferPage = () => {
       accepted: userSession.id,
     };
     updateOffer(body);
-
-    // fetch(url, options, body)
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       return response.json();
-    //     }
-    //     return Promise.reject();
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     nextOffer();
   };
 
