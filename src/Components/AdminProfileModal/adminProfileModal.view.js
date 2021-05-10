@@ -4,9 +4,10 @@ import styles from './adminProfileModal.module.css';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 
 const AdminProfileModal = ({ open, close, userData, locations }) => {
-  const [newName, setNewName] = useState();
-  const [newBio, setNewBio] = useState();
-  const [newLocation, setNewLocation] = useState({});
+  console.log(userData);
+  const [newName, setNewName] = useState(userData.name);
+  const [newBio, setNewBio] = useState(userData.bio);
+  const [newLocation, setNewLocation] = useState(userData.location._id);
   if (!open) {
     return null;
   }
@@ -19,7 +20,7 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
 
   const updateUser = () => {
     const url = `http://localhost:3001/user/${getSessionUser().id}`;
-    const body = {
+    const bodyInfo = {
       name: newName,
       bio: newBio,
       location: newLocation,
@@ -32,7 +33,7 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
         Authorization: `Bearer ${getUserToken()}`,
       }),
       mode: 'cors',
-      body: JSON.stringify(body),
+      body: JSON.stringify(bodyInfo),
     };
     if (getUserToken()) {
       fetch(url, options)
@@ -44,6 +45,7 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
         })
         .then((res) => {
           console.log(res);
+          console.log(bodyInfo);
         })
         .then(close())
         .catch();
@@ -57,19 +59,25 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
           <p>Company name</p>
           <input
             type="text"
-            placeholder={userData.name}
+            value={newName}
             onChange={(e) => setNewName(e.target.value)}
             className={styles.input}
           />
           <p>Location</p>
-          {locations ? <Select options={selectOptions} onChange={setNewLocation} /> : null}
+          {locations ? (
+            <Select
+              options={selectOptions}
+              value={newLocation}
+              onChange={(option) => setNewLocation(option.value)}
+            />
+          ) : null}
           <p>Bio</p>
           <textarea
             id="bio"
             name="bio"
             rows="4"
             cols="40"
-            defaultValue={userData.bio}
+            value={newBio}
             className={styles.inputBio}
             onChange={(e) => setNewBio(e.target.value)}
           />

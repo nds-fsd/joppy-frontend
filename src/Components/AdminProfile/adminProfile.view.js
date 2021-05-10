@@ -94,15 +94,14 @@ const AdminProfile = () => {
               <img src={userData.photo} alt="user pic" className={styles.userPhoto} />
             </div>
           </FormBlock>
+          <AdminProfileModal
+            open={openModal}
+            close={() => setOpenModal(false)}
+            userData={userData}
+            locations={locations}
+          />
         </>
       ) : null}
-
-      <AdminProfileModal
-        open={openModal}
-        close={() => setOpenModal(false)}
-        userData={userData}
-        locations={locations}
-      />
     </div>
   );
 };

@@ -28,7 +28,7 @@ const AdminProfSkills = ({ userSkills, close }) => {
       });
     } else {
       newSkills.push(skillId);
-      setUpdatedSkills({ ...updatedSkills.updatedSkills, tech: [...userTech, ...newSkills] });
+      setUpdatedSkills({ tech: [...userTech, ...newSkills] });
     }
   };
 

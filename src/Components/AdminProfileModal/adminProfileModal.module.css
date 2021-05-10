@@ -1,6 +1,6 @@
 .adminProfileModal {
   position: absolute;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   background: rgba(38, 35, 41, 0.692);
   top: 0;
