@@ -18,6 +18,7 @@ import {
   faLayerGroup,
   faTimes,
   faEdit,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
@@ -48,7 +49,8 @@ library.add(
   faLayerGroup,
   faCommentAlt,
   faTimes,
-  faEdit
+  faEdit,
+  faSearch
 );
 
 function App() {

@@ -24,14 +24,15 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
 
   const updateUser = () => {
     const url = `http://localhost:3001/user/${getSessionUser().id}`;
+    const body = {
+      name: newName,
+      bio: newBio,
+      location: newLocation,
+    };
     const options = {
       method: 'PUT',
       mode: 'cors',
-      body: JSON.stringify({
-        name: newName,
-        bio: newBio,
-        location: newLocation,
-      }),
+      body: JSON.stringify(body),
     };
     fetch(url, authObject, options)
       .then((response) => {
@@ -40,8 +41,8 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
         }
         return Promise.reject();
       })
-      .then((data) => {
-        console.log(data);
+      .then((res) => {
+        console.log(res);
       })
       .catch();
   };
