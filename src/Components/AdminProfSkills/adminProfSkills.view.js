@@ -5,8 +5,11 @@ import { getUserToken, getSessionUser } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 
 const AdminProfSkills = ({ userSkills, close }) => {
+  const userTech = userSkills;
+  const newSkills = [];
   const [skills, setSkills] = useState([]);
   const [updatedSkills, setUpdatedSkills] = useState({ tech: [] });
+
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
@@ -18,26 +21,35 @@ const AdminProfSkills = ({ userSkills, close }) => {
   }, []);
 
   const addSkill = (skillId) => {
-    if (userSkills.some((e) => e._id === skillId)) {
-      setUpdatedSkills({ ...userSkills, ...userSkills.filter((s) => s !== skillId) });
+    if (userTech.some((skill) => skill._id === skillId)) {
+      setUpdatedSkills({
+        ...updatedSkills,
+        tech: [...userTech.filter((skill) => skill._id !== skillId), ...newSkills],
+      });
     } else {
-      setUpdatedSkills({ tech: [...userSkills, skillId] });
+      newSkills.push(skillId);
+      setUpdatedSkills({ ...updatedSkills.updatedSkills, tech: [...userTech, ...newSkills] });
     }
   };
 
-  console.log(updatedSkills);
+  console.log('updatedSkills', updatedSkills);
 
   const saveSkills = () => {
     const options = {
       method: 'PUT',
-      headers: new Headers({ Accept: 'application/json', 'Content-type': 'application/json' }),
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getUserToken()}`,
+      }),
       mode: 'cors',
       body: JSON.stringify(updatedSkills),
     };
+
     const url = `http://localhost:3001/user/${getSessionUser().id}`;
 
     if (getUserToken()) {
-      fetch(url, authObject, options)
+      fetch(url, options)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -51,6 +63,7 @@ const AdminProfSkills = ({ userSkills, close }) => {
         .catch();
     }
   };
+
   return (
     <div className={styles.adminProfSkills}>
       <p>Select your technology stack</p>
@@ -60,7 +73,7 @@ const AdminProfSkills = ({ userSkills, close }) => {
               name={skill.skill}
               value={skill._id}
               onClick={addSkill}
-              isActive={userSkills.some((e) => e._id === skill._id)}
+              isActive={userTech.some((e) => e._id === skill._id)}
             />
           ))
         : null}

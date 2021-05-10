@@ -10,13 +10,8 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
   if (!open) {
     return null;
   }
-  getSessionUser();
-  const authObject = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${getUserToken()}`,
-    },
-  };
+  getUserToken();
+
   const selectOptions = Object.values(locations).map((location) => ({
     value: location._id,
     label: location.name,
@@ -31,20 +26,28 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
     };
     const options = {
       method: 'PUT',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getUserToken()}`,
+      }),
       mode: 'cors',
       body: JSON.stringify(body),
     };
-    fetch(url, authObject, options)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject();
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch();
+    if (getUserToken()) {
+      fetch(url, options)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          return Promise.reject();
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .then(close())
+        .catch();
+    }
   };
 
   return (

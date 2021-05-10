@@ -6,6 +6,7 @@ import { fetchMeStuff } from '../../Utils/functions';
 
 const AdminProfLanguages = ({ userLanguages, close }) => {
   const [languages, setLanguages] = useState([]);
+  const newLanguages = [];
   const [updatedLanguages, setUpdatedLanguages] = useState({ languages: [] });
   const authObject = {
     headers: {
@@ -16,24 +17,29 @@ const AdminProfLanguages = ({ userLanguages, close }) => {
   useEffect(() => {
     fetchMeStuff('http://localhost:3001/language', authObject, setLanguages);
   }, []);
-  // const addLanguage = (languageId) => {
-  //   if (userLanguages.some((e) => e._id === languageId)) {
-  //     setUpdatedLanguages({ ...userLanguages, ...userLanguages.filter((s) => s !== languageId) });
-  //   } else {
-  //     setUpdatedLanguages({ languages: [...userLanguages, languageId] });
-  //   }
-  // };
 
   const addLanguage = (languageId) => {
-    const array = [...userLanguages, { ...languageId }];
-    array.push(languageId);
-    console.log(array);
+    if (userLanguages.some((language) => language._id === languageId)) {
+      setUpdatedLanguages({
+        languages: [
+          ...userLanguages.filter((language) => language._id !== languageId),
+          ...newLanguages,
+        ],
+      });
+    } else {
+      newLanguages.push(languageId);
+      setUpdatedLanguages({ languages: [...userLanguages, ...newLanguages] });
+    }
   };
 
   console.log(updatedLanguages);
   const options = {
     method: 'PUT',
-    headers: new Headers({ Accept: 'application/json', 'Content-type': 'application/json' }),
+    headers: new Headers({
+      Accept: 'application/json',
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${getUserToken()}`,
+    }),
     mode: 'cors',
     body: JSON.stringify(updatedLanguages),
   };
@@ -41,7 +47,7 @@ const AdminProfLanguages = ({ userLanguages, close }) => {
 
   const saveLanguages = () => {
     if (getUserToken()) {
-      fetch(url, authObject, options)
+      fetch(url, options)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -49,7 +55,6 @@ const AdminProfLanguages = ({ userLanguages, close }) => {
           return Promise.reject();
         })
         .then((res) => {
-          setUpdatedLanguages(res);
           console.log(res);
         })
         .then(close())
