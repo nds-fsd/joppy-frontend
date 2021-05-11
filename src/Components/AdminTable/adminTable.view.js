@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import SearchBar from '../SearchBar/searchBar.view';
 import styles from './adminTable.module.css';
@@ -7,6 +7,7 @@ import { fetchMeStuff } from '../../Utils/functions';
 import ModalDeleteOffer from '../ModalDeleteOffer';
 import ModalCreateOffer from '../ModalCreateOffer';
 import ModalEditOffer from '../ModalEditOffer';
+import UserContext from '../../Contexts/userContext';
 
 const AdminTable = ({ endpoint }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,6 +19,7 @@ const AdminTable = ({ endpoint }) => {
   const [whichOffer, setWhichOffer] = useState('');
   const [pageLimit, setPageLimit] = useState('5');
   const [triggerRefresh, setTriggerRefresh] = useState(false);
+  const userInfo = useContext(UserContext);
 
   const pageLimitNum = parseInt(pageLimit, 10);
   const sortBy = 'title';
@@ -51,7 +53,7 @@ const AdminTable = ({ endpoint }) => {
         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
     }),
     mode: 'cors',
-    body: JSON.stringify({ search: searchQuery }),
+    body: JSON.stringify({ companyInfo: userInfo.id, search: searchQuery }),
   };
 
   useEffect(() => {

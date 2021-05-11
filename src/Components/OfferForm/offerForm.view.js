@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import UserContext from '../../Contexts/userContext';
 import { fetchMeStuff } from '../../Utils/functions';
 import InputText from '../InputText';
 // import InputTextarea from '../InputTextarea';
@@ -16,7 +17,10 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
     position: '',
     skills: [],
     description: '',
+    companyInfo: '',
   });
+
+  const userInfo = useContext(UserContext);
 
   const authObject = {
     headers: {
@@ -40,6 +44,7 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
     }
     fetchMeStuff('http://localhost:3001/skill', authObject, setSkillData);
     fetchMeStuff('http://localhost:3001/position', authObject, setPositionData);
+    setOfferData({ ...offerData, companyInfo: userInfo.id });
   }, []);
 
   const addSkill = (skillId) => {
