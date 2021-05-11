@@ -31,6 +31,8 @@ import RegisterPage from './Pages/RegisterPage';
 import LoginPage from './Pages/LoginPage';
 import NavBar from './Components/NavBar';
 import AdminPage from './Pages/AdminPage';
+import UserContext from './Contexts/userContext';
+import { fetchMeStuff } from './Utils/functions';
 
 library.add(
   faCheck,
@@ -55,38 +57,48 @@ library.add(
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState();
 
   useEffect(() => {
     const userToken = getUserToken();
     if (userToken) {
       setIsLoggedIn(true);
+      const options = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${userToken}`,
+        },
+      };
+      fetchMeStuff('http://localhost:3001/verify', options, setUserInfo);
     }
   }, []);
   return (
-    <Router>
-      <div className={styles.App}>
-        <Switch>
-          <Route path={REGISTER_PAGE}>{isLoggedIn ? <Redirect to="/" /> : <RegisterPage />}</Route>
-          <Route path={LOGIN_PAGE}>{isLoggedIn ? <Redirect to="/" /> : <LoginPage />}</Route>
-          <Route path={ADMIN_PAGE}>
-            <AdminPage />
-          </Route>
-          <div>
-            <NavBar />
-            <div className={styles.main}>
-              <Switch>
-                <Route exact path={OFFER_PAGE}>
-                  <OfferPage />
-                </Route>
-                <Route path={PROFILE_PAGE}>
-                  <ProfilePage />
-                </Route>
-              </Switch>
+    <UserContext.Provider value={userInfo}>
+      <Router>
+        <div className={styles.App}>
+          <Switch>
+            <Route path={REGISTER_PAGE}>
+              {isLoggedIn ? <Redirect to="/" /> : <RegisterPage />}
+            </Route>
+            <Route path={LOGIN_PAGE}>{isLoggedIn ? <Redirect to="/" /> : <LoginPage />}</Route>
+            <Route path={ADMIN_PAGE}>{userInfo ? <AdminPage /> : <h1>Nope</h1>}</Route>
+            <div>
+              <NavBar />
+              <div className={styles.main}>
+                <Switch>
+                  <Route exact path={OFFER_PAGE}>
+                    <OfferPage />
+                  </Route>
+                  <Route path={PROFILE_PAGE}>
+                    <ProfilePage />
+                  </Route>
+                </Switch>
+              </div>
             </div>
-          </div>
-        </Switch>
-      </div>
-    </Router>
+          </Switch>
+        </div>
+      </Router>
+    </UserContext.Provider>
   );
 }
 

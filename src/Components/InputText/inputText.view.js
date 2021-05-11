@@ -5,10 +5,9 @@ const InputText = ({ labelText, handleOnChange, width, value }) => {
   const [labelStyle, setLabelStyle] = useState(`${styles.inputLabel}`);
   const [bodyStyle, setBodyStyle] = useState(`${styles.inputBody}`);
   const [fieldStyle, setFieldStyle] = useState(`${styles.inputField}`);
-  const [fieldValue, setFieldValue] = useState('');
 
   useEffect(() => {
-    if (fieldValue === '') {
+    if (value === '') {
       setLabelStyle(`${styles.inputLabel}`);
       setBodyStyle(`${styles.inputBody}`);
       setFieldStyle(`${styles.inputField}`);
@@ -17,7 +16,7 @@ const InputText = ({ labelText, handleOnChange, width, value }) => {
       setBodyStyle(`${styles.inputBody} ${styles.inputBodyFilled}`);
       setFieldStyle(`${styles.inputField} ${styles.inputFieldFilled}`);
     }
-  }, [fieldValue]);
+  }, [value]);
 
   return (
     <div style={{ width: `${width}` }} className={bodyStyle}>
@@ -28,7 +27,6 @@ const InputText = ({ labelText, handleOnChange, width, value }) => {
         type="text"
         value={value}
         onChange={(e) => {
-          setFieldValue(e.target.value);
           handleOnChange(e.target.value);
         }}
       />
