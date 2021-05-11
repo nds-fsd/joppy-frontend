@@ -1,0 +1,37 @@
+.icon {
+  font-size: 30px;
+  margin-bottom: -15px;
+}
+
+.saveButton {
+  border: none;
+  background: none;
+  outline: none;
+  border: 0.1em solid #5f2eea;
+  color: #fcfcfc;
+  background: #5f2eea;
+  font-size: 1.5em;
+  height: 2em;
+  padding: 0 1em;
+  cursor: pointer;
+  display: flex;
+  border-radius: 1em;
+}
+
+.cancelButton {
+  border-color: #e43737;
+  color: #e43737;
+  background: white;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 2%;
+  margin-top: 10%;
+}
+
+.buttons {
+  width: fit-content;
+  margin: auto;
+  display: flow-root;
+  align-content: center;
+}
