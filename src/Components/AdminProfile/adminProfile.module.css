@@ -1,0 +1,29 @@
+.adminProfile {
+  height: 100vh;
+  overflow: scroll;
+}
+
+.name {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 3%;
+}
+.firstBlock {
+  margin-bottom: 3%;
+}
+
+.adminProfile::-webkit-scrollbar {
+  width: 0;
+}
+
+.icon {
+  position: absolute;
+  right: 5vw;
+}
+
+.logo {
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 3%;
+}

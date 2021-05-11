@@ -1,10 +1,12 @@
 import React from 'react';
 import styles from './loginPage.module.css';
 import LoginForm from '../../Components/LoginForm';
+import { ReactComponent as RightStyle } from '../../Images/rightStyle.svg';
 
 const LoginPage = () => (
   <div className={styles.loginPage}>
-    <LoginForm />
+    <LoginForm className={styles.loginForm} />
+    <RightStyle className={styles.rightStyle} />
   </div>
 );
 

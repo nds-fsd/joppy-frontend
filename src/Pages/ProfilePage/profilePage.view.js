@@ -4,39 +4,54 @@ import styles from './profilePage.module.css';
 import { PROFILE_PAGE } from '../../Routers/routers'; //eslint-disable-line
 import Profile from '../../Components/Profile';
 import ProfileIntro from '../../Components/ProfileIntro';
+import { ReactComponent as Plant } from '../../Images/plant.svg';
+import { getSessionUser, getUserToken } from '../../Utils/Auth';
 
 const ProfilePage = () => {
   const [userData, setUserData] = useState();
+  const userToken = getUserToken();
+  const userSession = getSessionUser();
 
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+      Authorization: `Bearer ${userToken}`,
     },
   };
 
+  let url;
+  if (userSession) {
+    url = `http://localhost:3001/user/${userSession.id}`;
+  }
+
   useEffect(() => {
-    fetch('http://localhost:3001/user/60841b03bd945a22ea17224a', authObject)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        return Promise.reject();
-      })
-      .then((data) => {
-        setUserData(data);
-      })
-      .catch();
+    if (userToken) {
+      fetch(url, authObject)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          return Promise.reject();
+        })
+        .then((data) => {
+          setUserData(data);
+        })
+        .catch();
+    }
   }, []);
+
+  console.log(userData);
 
   return (
     <div className={styles.profilePage}>
       <ProfileIntro userData={userData} />
       <div className={styles.profileNavBar}>
-        <Link to={PROFILE_PAGE}>Profile</Link>
-        <span> | </span>
-        <Link to={`${PROFILE_PAGE}/preferences`}>Preferences</Link>
+        <Link to={PROFILE_PAGE} className={styles.link}>
+          Profile
+        </Link>
+        <Link to={`${PROFILE_PAGE}/preferences`} className={styles.link}>
+          Preferences
+        </Link>
       </div>
       <Router>
         <Switch>
@@ -48,6 +63,8 @@ const ProfilePage = () => {
           </Route>
         </Switch>
       </Router>
+
+      <Plant className={styles.plant} />
     </div>
   );
 };

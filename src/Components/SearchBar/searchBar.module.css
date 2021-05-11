@@ -1,0 +1,20 @@
+.searchBarContainer {
+  position: relative;
+  width: 20%;
+}
+
+.searchBarIcon {
+  position: absolute;
+  left: 0.5em;
+  top: 0.5em;
+  color: rgb(160, 160, 160);
+}
+
+.searchBar {
+  border: none;
+  border: 0.15em solid rgb(160, 160, 160);
+  border-radius: 0.25em;
+  padding-left: 2em;
+  height: 2em;
+  width: 100%;
+}

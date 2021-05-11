@@ -1,0 +1,48 @@
+.menuButton {
+  position: absolute;
+  margin-top: -3px;
+  right: 20%;
+  color: #fcfcfc;
+  background-color: #5f2eea;
+  height: 48px;
+  width: 48px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 50px;
+  border-color: #5f2eea;
+}
+
+.menuContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 12px;
+
+  position: absolute;
+  width: 90px;
+  height: 80px;
+  right: 14%;
+  top: 60px;
+
+  background: #d9dbe9;
+  border-radius: 16px;
+
+  color: #2a00a2;
+  font-size: 18px;
+  line-height: 34px;
+
+  letter-spacing: 0.75px;
+
+  flex: none;
+  order: 1;
+  flex-grow: 0;
+  margin: 0px 8px;
+}
+
+.Link {
+  position: absolute;
+  color: #2a00a2;
+  font-size: 18px;
+  line-height: 34px;
+}

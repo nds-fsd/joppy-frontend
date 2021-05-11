@@ -1,0 +1,40 @@
+.logo {
+  position: absolute;
+  width: 200px;
+  margin-top: -80px;
+  margin-left: 10px;
+}
+
+.adminSideBar {
+  background-color: #602eea28;
+}
+
+.nav {
+  margin-top: 130px;
+  margin-left: 10%;
+}
+
+.link {
+  margin-bottom: 25px;
+  text-decoration: none;
+  color: black;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 19px;
+  width: 84px;
+}
+
+.link:focus {
+  text-decoration: none;
+  color: #5f2eea;
+}
+
+.link:hover {
+  text-decoration: none;
+  color: #5f2eea;
+}
+
+h3 {
+  margin-top: 40px;
+}

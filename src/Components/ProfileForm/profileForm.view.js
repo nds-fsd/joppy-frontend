@@ -116,7 +116,6 @@ const ProfileForm = () => {
 
   const onSubmit = (data) => {
     const allData = { ...userData, ...data };
-    console.log(allData);
 
     const options = {
       method: 'POST',
@@ -211,7 +210,7 @@ const ProfileForm = () => {
             <form onSubmit={handleSubmit(onSubmit)} className={styles.inputForm}>
               <div className={styles.inputWrapper}>
                 <h2>Name</h2>
-                <input type="text" {...register('name', { required: true, maxLength: 15 })} />
+                <input type="text" {...register('name', { required: true, maxLength: 30 })} />
                 {errors.name && errors.name.type === 'required' && <p>First name is required</p>}
                 {errors.name && errors.name.type === 'maxLength' && (
                   <p>Name cant be longer than 15 characters</p>

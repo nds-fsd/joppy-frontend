@@ -1,16 +1,12 @@
 import React from 'react';
 import styles from './buttonsBar.module.css';
-import ButtonAccept from '../ButtonAccept';
-import ButtonSnooze from '../ButtonSnooze';
-import ButtonReject from '../ButtonReject';
-import ButtonShare from '../ButtonShare';
+import Button from '../Button';
 
-const ButtonsBar = ({ rejectClicked, acceptClicked }) => (
+const ButtonsBar = ({ rejectClicked, acceptClicked, nextClicked }) => (
   <div className={styles.buttonsBar}>
-    <ButtonReject onClick={rejectClicked} icon="thumbs-down" />
-    <ButtonSnooze icon="history" />
-    <ButtonShare icon="share" />
-    <ButtonAccept onClick={acceptClicked} icon="thumbs-up" />
+    <Button className={styles.accept} handle="Yay" onClick={acceptClicked} icon="thumbs-down" />
+    <Button className={styles.snooze} handle="Later" onClick={nextClicked} icon="history" />
+    <Button className={styles.reject} handle="Nay" onClick={rejectClicked} icon="thumbs-up" />
   </div>
 );
 

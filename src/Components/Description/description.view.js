@@ -4,13 +4,13 @@ import styles from './description.module.css';
 
 const Description = ({ offerData, companyInfo }) => (
   <div className={styles.jobdescription}>
-    <h2>Job Description</h2>
-    {offerData ? <p>{offerData.description}</p> : null}
+    <div className={styles.headline}>Full job description</div>
+    {offerData ? <p className={styles.infoText}>{offerData.description}</p> : null}
     <hr />
     {companyInfo ? <img src={companyInfo.logo} alt="company logo" width="80" height="80" /> : null}
-    {companyInfo ? <h2>All about {companyInfo.name}</h2> : null}
+    {companyInfo ? <div className={styles.headline}>All about {companyInfo.name}</div> : null}
     {companyInfo ? <p>{companyInfo.companySize}</p> : null}
-    {companyInfo ? <p>{companyInfo.bio}</p> : null}
+    {companyInfo ? <p className={styles.infoText}>{companyInfo.bio}</p> : null}
 
     {/* {companyInfo.tech ? <h2>Main tech stack</h2> : null} */}
     {/* {companyInfo.tech
