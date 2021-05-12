@@ -3,13 +3,12 @@ import styles from './adminProfSkills.module.css';
 import Tag from '../Tag';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
+// import UserContext from '../../Contexts/userContext';
 
 const AdminProfSkills = ({ userSkills, close }) => {
-  const userTech = userSkills;
-  const newSkills = [];
+  // const userInfo = useContext(UserContext);
   const [skills, setSkills] = useState([]);
-  const [updatedSkills, setUpdatedSkills] = useState({ tech: [] });
-
+  const [updatedSkills, setUpdatedSkills] = useState(userSkills);
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
@@ -21,14 +20,10 @@ const AdminProfSkills = ({ userSkills, close }) => {
   }, []);
 
   const addSkill = (skillId) => {
-    if (userTech.some((skill) => skill._id === skillId)) {
-      setUpdatedSkills({
-        ...updatedSkills,
-        tech: [...userTech.filter((skill) => skill._id !== skillId), ...newSkills],
-      });
+    if (updatedSkills.some((skill) => skill._id === skillId._id)) {
+      setUpdatedSkills([...updatedSkills.filter((skill) => skill._id !== skillId._id)]);
     } else {
-      newSkills.push(skillId);
-      setUpdatedSkills({ tech: [...userTech, ...newSkills] });
+      setUpdatedSkills([...updatedSkills, skillId]);
     }
   };
 
@@ -43,7 +38,7 @@ const AdminProfSkills = ({ userSkills, close }) => {
         Authorization: `Bearer ${getUserToken()}`,
       }),
       mode: 'cors',
-      body: JSON.stringify(updatedSkills),
+      body: JSON.stringify({ tech: updatedSkills }),
     };
 
     const url = `http://localhost:3001/user/${getSessionUser().id}`;
@@ -71,9 +66,9 @@ const AdminProfSkills = ({ userSkills, close }) => {
         ? skills.map((skill) => (
             <Tag
               name={skill.skill}
-              value={skill._id}
+              value={skill}
               onClick={addSkill}
-              isActive={userTech.some((e) => e._id === skill._id)}
+              isActive={updatedSkills.some((e) => e._id === skill._id)}
             />
           ))
         : null}

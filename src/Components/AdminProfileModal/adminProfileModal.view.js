@@ -7,7 +7,7 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
   console.log(userData);
   const [newName, setNewName] = useState(userData.name);
   const [newBio, setNewBio] = useState(userData.bio);
-  const [newLocation, setNewLocation] = useState(userData.location._id);
+  const [newLocation, setNewLocation] = useState(userData.location);
   if (!open) {
     return null;
   }
@@ -66,9 +66,10 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
           <p>Location</p>
           {locations ? (
             <Select
+              placeholder={userData.location.name}
               options={selectOptions}
-              value={newLocation}
-              onChange={(option) => setNewLocation(option.value)}
+              value={newLocation.label}
+              onChange={(e) => setNewLocation(e.value)}
             />
           ) : null}
           <p>Bio</p>

@@ -6,8 +6,7 @@ import { fetchMeStuff } from '../../Utils/functions';
 
 const AdminProfLanguages = ({ userLanguages, close }) => {
   const [languages, setLanguages] = useState([]);
-  const newLanguages = [];
-  const [updatedLanguages, setUpdatedLanguages] = useState({ languages: [] });
+  const [updatedLanguages, setUpdatedLanguages] = useState(userLanguages);
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
@@ -19,16 +18,12 @@ const AdminProfLanguages = ({ userLanguages, close }) => {
   }, []);
 
   const addLanguage = (languageId) => {
-    if (userLanguages.some((language) => language._id === languageId)) {
-      setUpdatedLanguages({
-        languages: [
-          ...userLanguages.filter((language) => language._id !== languageId),
-          ...newLanguages,
-        ],
-      });
+    if (updatedLanguages.some((language) => language._id === languageId._id)) {
+      setUpdatedLanguages([
+        ...updatedLanguages.filter((language) => language._id !== languageId._id),
+      ]);
     } else {
-      newLanguages.push(languageId);
-      setUpdatedLanguages({ languages: [...userLanguages, ...newLanguages] });
+      setUpdatedLanguages([...updatedLanguages, languageId]);
     }
   };
 
@@ -41,7 +36,7 @@ const AdminProfLanguages = ({ userLanguages, close }) => {
       Authorization: `Bearer ${getUserToken()}`,
     }),
     mode: 'cors',
-    body: JSON.stringify(updatedLanguages),
+    body: JSON.stringify({ languages: updatedLanguages }),
   };
   const url = `http://localhost:3001/user/${getSessionUser().id}`;
 
@@ -68,9 +63,9 @@ const AdminProfLanguages = ({ userLanguages, close }) => {
         ? languages.map((language) => (
             <Tag
               name={language.name}
-              value={language._id}
+              value={language}
               onClick={addLanguage}
-              isActive={userLanguages.some((e) => e._id === language._id)}
+              isActive={updatedLanguages.some((e) => e._id === language._id)}
             />
           ))
         : null}

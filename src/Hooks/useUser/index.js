@@ -14,7 +14,7 @@ const authObject = {
 
 const KEY = 'user';
 
-export const useUser = () => {
+const useUser = () => {
   const [userData, setUserData] = useState();
   const [error, setError] = useState({});
   const [loaded, setLoaded] = useState(false);
@@ -62,3 +62,5 @@ export const useUser = () => {
     loaded,
   };
 };
+
+export default useUser;

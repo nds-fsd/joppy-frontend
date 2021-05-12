@@ -59,7 +59,7 @@ const ProfilePage = () => {
             <Profile userData={userData} />
           </Route>
           <Route path={`${PROFILE_PAGE}/preferences`}>
-            <p>Preferr</p>
+            <p>AQUI VA CHAAAT</p>
           </Route>
         </Switch>
       </Router>
