@@ -10,7 +10,7 @@ const OfferPage = () => {
   const [count, setCount] = useState(0);
   const userSession = getSessionUser();
   const userToken = getUserToken();
-  let url;
+  // let url;
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
@@ -31,13 +31,14 @@ const OfferPage = () => {
     }
   }, []);
 
-  if (offerArray) {
-    url = `http://localhost:3001/offer/${offerArray[count]._id}`;
-  }
+  // if (offerArray) {
+  //   url = `http://localhost:3001/offer/${offerArray[count]._id}`;
+  // }
 
-  const updateOffer = (body) => {
+  const updateOfferStatus = (body) => {
+    const urlOfferStatus = `http://localhost:3001/offerstatus/`;
     const options = {
-      method: 'PUT',
+      method: 'POST',
       headers: new Headers({
         Accept: 'application/json',
         'Content-type': 'application/json',
@@ -46,7 +47,7 @@ const OfferPage = () => {
       mode: 'cors',
       body: JSON.stringify(body),
     };
-    fetch(url, options, body)
+    fetch(urlOfferStatus, options, body)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -61,17 +62,30 @@ const OfferPage = () => {
 
   const handleReject = () => {
     const body = {
-      rejected: userSession.id,
+      userId: userSession.id,
+      offerId: offerArray[count]._id,
+      rejected: true,
     };
-    updateOffer(body);
+    updateOfferStatus(body);
     nextOffer();
   };
 
   const handleAccept = () => {
     const body = {
-      accepted: userSession.id,
+      userId: userSession.id,
+      offerId: offerArray[count]._id,
+      accepted: true,
     };
-    updateOffer(body);
+    updateOfferStatus(body);
+    nextOffer();
+  };
+  const handleSnooze = () => {
+    const body = {
+      userId: userSession.id,
+      offerId: offerArray[count]._id,
+      snoozed: true,
+    };
+    updateOfferStatus(body);
     nextOffer();
   };
 
@@ -87,7 +101,7 @@ const OfferPage = () => {
       <ButtonsBar
         rejectClicked={handleReject}
         acceptClicked={handleAccept}
-        nextClicked={nextOffer}
+        snoozeClicked={handleSnooze}
       />
       <Plant className={styles.plant} />
     </div>
