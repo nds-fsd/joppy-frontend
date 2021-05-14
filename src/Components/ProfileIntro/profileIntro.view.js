@@ -5,11 +5,11 @@ const ProfileIntro = ({ userData }) => (
   <div className={styles.profileIntro}>
     {userData ? <img src={userData.photo} alt="user pic" className={styles.userPhoto} /> : null}
     {userData ? <p className={styles.userName}>{userData.name}</p> : null}
-    {userData ? (
+    {/* {userData.location ? (
       <p className={styles.userIntro}>
         {userData.location.name}. Worked at {userData.workExperiences[0]}.
       </p>
-    ) : null}
+    ) : null} */}
   </div>
 );
 

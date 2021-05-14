@@ -1,39 +1,44 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ButtonsBar from '../../Components/ButtonsBar';
 import styles from './offerPage.module.css';
 import JobOffer from '../../Components/JobOffer';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
 import { getSessionUser, getUserToken } from '../../Utils/Auth';
+import UserContext from '../../Contexts/userContext';
 
 const OfferPage = () => {
   const [offerArray, setOfferArray] = useState();
   const [count, setCount] = useState(0);
-  const userSession = getSessionUser();
   const userToken = getUserToken();
-  // let url;
-  const authObject = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${userToken}`,
-    },
-  };
+  const userSession = getSessionUser();
+  const userInfo = useContext(UserContext);
+  const [trigger, setTrigger] = useState(false);
 
   const nextOffer = () => {
     setCount(count + 1);
+    setTrigger(!trigger);
   };
 
   useEffect(() => {
-    if (userToken) {
-      fetch('http://localhost:3001/offer', authObject)
+    if (userInfo) {
+      const filterOptions = {
+        method: 'POST',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${getUserToken()}`,
+        }),
+        mode: 'cors',
+        body: JSON.stringify({ userId: userInfo.id }),
+      };
+      fetch(`http://localhost:3001/offerstatus/filter`, filterOptions)
         .then((res) => res.json())
         .then((data) => setOfferArray(data))
         .catch();
     }
-  }, []);
+  }, [userInfo, trigger]);
 
-  // if (offerArray) {
-  //   url = `http://localhost:3001/offer/${offerArray[count]._id}`;
-  // }
+  console.log(offerArray);
 
   const updateOfferStatus = (body) => {
     const urlOfferStatus = `http://localhost:3001/offerstatus/`;

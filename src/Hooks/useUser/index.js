@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getFromCache, setToCache } from '../../Utils/cache';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 
@@ -12,55 +11,32 @@ const authObject = {
   },
 };
 
-const KEY = 'user';
-
 const useUser = () => {
   const [userData, setUserData] = useState();
   const [error, setError] = useState({});
-  const [loaded, setLoaded] = useState(false);
 
   const successCallback = (payload) => {
-    setLoaded(true);
     setUserData(payload);
-    setToCache(KEY, payload);
   };
 
   useEffect(() => {
-    const userFromCache = getFromCache(KEY);
-    if (userFromCache) {
-      setLoaded(true);
-      setUserData(userFromCache);
-    } else {
-      const url = `http://localhost:3001/user/${userSession.id}`;
-      fetchMeStuff({
-        authObject,
-        url,
-        body: userData,
-        method: 'GET',
-        successCallback,
-        errorCallback: setError,
-      });
-    }
-  }, []);
-
-  const saveUser = (user) => {
-    const url = 'http://localhost:3001/user';
-
+    const url = `http://localhost:3001/user/${userSession.id}`;
     fetchMeStuff({
+      authObject,
       url,
-      body: user,
-      method: 'POST',
+      body: userData,
+      method: 'GET',
       successCallback,
       errorCallback: setError,
     });
-  };
+  }, []);
 
   return {
     userData,
-    saveUser,
     error,
-    loaded,
   };
 };
+
+console.log(userData);
 
 export default useUser;

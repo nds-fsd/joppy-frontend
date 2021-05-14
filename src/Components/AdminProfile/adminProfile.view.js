@@ -50,7 +50,9 @@ const AdminProfile = () => {
               <img src={userData.logo} alt="user pic" className={styles.logo} />
             </div>
             <div className={styles.name}>{userData.name}</div>
-            <div className={styles.firstBlock}>{userData.location.name}</div>
+            {userData.location ? (
+              <div className={styles.firstBlock}>{userData.location.name}</div>
+            ) : null}
             <div className={styles.firstBlock}>{userData.bio}</div>
           </FormBlock>
           <FormBlock

@@ -56,7 +56,7 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
     <div className={styles.adminProfileModal}>
       {userData ? (
         <div className={styles.adminModal}>
-          <p>Company name</p>
+          <p>Name</p>
           <input
             type="text"
             value={newName}
