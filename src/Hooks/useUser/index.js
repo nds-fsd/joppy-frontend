@@ -1,3 +1,5 @@
+/*eslint-disable*/
+
 import { useEffect, useState } from 'react';
 import { getFromCache, setToCache } from '../../Utils/cache';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
@@ -12,7 +14,7 @@ const authObject = {
   },
 };
 
-const KEY = 'user';
+const KEY = 'user-session';
 
 export const useUser = () => {
   const [userData, setUserData] = useState();
