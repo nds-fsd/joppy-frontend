@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import styles from './adminProfSkills.module.css';
+import styles from './adminProfSkillsProps.module.css';
 import Tag from '../Tag';
-import { getUserToken, getSessionUser } from '../../Utils/Auth';
+import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
-// import UserContext from '../../Contexts/userContext';
 
-const AdminProfSkills = ({ userSkills, close }) => {
-  // const userInfo = useContext(UserContext);
+const AdminProfSkillsProps = ({ newSkills, userSkills, close, saveSkills }) => {
   const [skills, setSkills] = useState([]);
+  // const getSkills = [];
   const [updatedSkills, setUpdatedSkills] = useState(userSkills);
   const authObject = {
     headers: {
@@ -22,45 +21,15 @@ const AdminProfSkills = ({ userSkills, close }) => {
   const addSkill = (skillId) => {
     if (updatedSkills.some((skill) => skill._id === skillId._id)) {
       setUpdatedSkills([...updatedSkills.filter((skill) => skill._id !== skillId._id)]);
+      newSkills(updatedSkills);
     } else {
       setUpdatedSkills([...updatedSkills, skillId]);
-    }
-  };
-
-  console.log('updatedSkills', updatedSkills);
-
-  const saveSkills = () => {
-    const options = {
-      method: 'PUT',
-      headers: new Headers({
-        Accept: 'application/json',
-        'Content-type': 'application/json',
-        Authorization: `Bearer ${getUserToken()}`,
-      }),
-      mode: 'cors',
-      body: JSON.stringify({ tech: updatedSkills }),
-    };
-
-    const url = `http://localhost:3001/user/${getSessionUser().id}`;
-
-    if (getUserToken()) {
-      fetch(url, options)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          return Promise.reject();
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .then(close())
-        .catch();
+      newSkills(updatedSkills);
     }
   };
 
   return (
-    <div className={styles.adminProfSkills}>
+    <div className={styles.adminProfSkillsProps}>
       <p>Select your technology stack</p>
       {skills
         ? skills.map((skill) => (
@@ -79,4 +48,4 @@ const AdminProfSkills = ({ userSkills, close }) => {
     </div>
   );
 };
-export default AdminProfSkills;
+export default AdminProfSkillsProps;

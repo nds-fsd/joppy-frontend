@@ -11,14 +11,13 @@ import AdminProfLanguages from '../AdminProfLanguages';
 
 const AdminProfile = () => {
   const [userData, setUserData] = useState();
-  const [openModal, setOpenModal] = useState(false);
-  const handleEditModal = () => setOpenModal(!openModal);
-  const [openSkills, setOpenSkills] = useState(false);
-  const handleEditSkills = () => setOpenSkills(!openModal);
-  const [openLanguages, setOpenLanguages] = useState(false);
-  const handleEditLanguages = () => setOpenLanguages(!openModal);
-
   const [locations, setLocations] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [openSkills, setOpenSkills] = useState(false);
+  const [openLanguages, setOpenLanguages] = useState(false);
+  const handleEditModal = () => setOpenModal(!openModal);
+  const handleEditSkills = () => setOpenSkills(!openModal);
+  const handleEditLanguages = () => setOpenLanguages(!openModal);
   const userSession = getSessionUser();
   const authObject = {
     headers: {
@@ -51,7 +50,9 @@ const AdminProfile = () => {
               <img src={userData.logo} alt="user pic" className={styles.logo} />
             </div>
             <div className={styles.name}>{userData.name}</div>
-            <div className={styles.firstBlock}>{userData.location.name}</div>
+            {userData.location ? (
+              <div className={styles.firstBlock}>{userData.location.name}</div>
+            ) : null}
             <div className={styles.firstBlock}>{userData.bio}</div>
           </FormBlock>
           <FormBlock

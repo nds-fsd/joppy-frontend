@@ -72,6 +72,7 @@ function App() {
       fetchMeStuff('http://localhost:3001/verify', options, setUserInfo);
     }
   }, []);
+
   return (
     <UserContext.Provider value={userInfo}>
       <Router>
