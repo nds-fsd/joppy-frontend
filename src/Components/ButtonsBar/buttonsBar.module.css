@@ -14,6 +14,7 @@
   padding-left: 5px;
   width: 55px;
   height: 60px;
+  cursor: pointer;
 }
 
 .accept:hover {
@@ -26,6 +27,7 @@
   padding-left: 5px;
   width: 55px;
   height: 60px;
+  cursor: pointer;
 }
 
 .reject:hover {
@@ -38,6 +40,7 @@
   padding-left: 5px;
   width: 55px;
   height: 60px;
+  cursor: pointer;
 }
 
 .snooze:hover {

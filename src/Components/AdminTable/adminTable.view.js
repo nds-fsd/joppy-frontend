@@ -8,6 +8,8 @@ import ModalDeleteOffer from '../ModalDeleteOffer';
 import ModalCreateOffer from '../ModalCreateOffer';
 import ModalEditOffer from '../ModalEditOffer';
 import UserContext from '../../Contexts/userContext';
+import ModalCandidates from '../ModalCandidates/modalCandidates.view';
+import { getUserToken } from '../../Utils/Auth';
 
 const AdminTable = ({ endpoint }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -49,11 +51,10 @@ const AdminTable = ({ endpoint }) => {
     headers: new Headers({
       Accept: 'apllication/json',
       'Content-type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+      Authorization: `Bearer ${getUserToken()}`,
     }),
     mode: 'cors',
-    body: JSON.stringify({ companyInfo: userInfo.id, search: searchQuery }),
+    body: JSON.stringify({ companyInfo: userInfo._id, search: searchQuery }),
   };
 
   useEffect(() => {
@@ -90,6 +91,9 @@ const AdminTable = ({ endpoint }) => {
           handleOfferEdit={offerDeleted}
         />
       )}
+      {openModal && whichModal === 'candidates' && (
+        <ModalCandidates handleClose={() => setOpenModal(false)} offer={whichOffer} />
+      )}
       <div className={styles.topRow}>
         <SearchBar handleQuery={(q) => setSearchQuery(q)} />
         <button
@@ -101,6 +105,14 @@ const AdminTable = ({ endpoint }) => {
           }}
         >
           Create +
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            console.log(userInfo);
+          }}
+        >
+          Console
         </button>
       </div>
       <div className={styles.firstTableRow}>
@@ -139,7 +151,16 @@ const AdminTable = ({ endpoint }) => {
                     Edit offer
                   </Dropdown.Item>
                   <Dropdown.Item className={styles.dropdownElement}>View offer</Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownElement}>See candidates</Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownElement}
+                    onClick={() => {
+                      setWhichModal('candidates');
+                      setWhichOffer(object._id);
+                      setOpenModal(true);
+                    }}
+                  >
+                    See candidates
+                  </Dropdown.Item>
                   <Dropdown.Item
                     className={styles.delete}
                     onClick={() => {

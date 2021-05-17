@@ -16,3 +16,5 @@ export const setToCache = (key, skills) => {
   };
   setStorageObject(key, objetToCache);
 };
+
+//  && objectFromCache.expirationDate > new Date().getTime()

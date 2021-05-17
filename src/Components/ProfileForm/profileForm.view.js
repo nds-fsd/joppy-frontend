@@ -238,7 +238,7 @@ const ProfileForm = () => {
                 <h2>Password</h2>
                 <input
                   type="password"
-                  {...register('password', { required: true, minLength: 8 })}
+                  {...register('password', { required: true, minLength: 3 })}
                 />
                 {errors.password && 'Password is required'}
               </div>

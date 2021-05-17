@@ -8,7 +8,7 @@
   width: 100%;
   background: #fcfcfc;
   mix-blend-mode: normal;
-  box-shadow: 3px 8px 5px 3px rgb(180, 180, 180);
+  box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
   display: flex;
 }
 

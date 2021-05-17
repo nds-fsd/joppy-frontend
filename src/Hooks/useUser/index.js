@@ -1,3 +1,5 @@
+/*eslint-disable*/
+
 import { useEffect, useState } from 'react';
 import { getFromCache, setToCache } from '../../Utils/cache';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
