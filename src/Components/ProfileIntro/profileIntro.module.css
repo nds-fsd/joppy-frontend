@@ -37,3 +37,11 @@
   letter-spacing: 0.75px;
   color: #4e4b66;
 }
+
+.icon {
+  position: relative;
+  color: #2b00a2;
+  margin-left: 12%;
+  top: 4vh;
+  left: 75%;
+}

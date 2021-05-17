@@ -17,7 +17,7 @@ const ProfileForm = () => {
   const [userData, setUserData] = useState({
     skills: [],
     positions: [],
-    city: '',
+    location: '',
     salary: '40000',
   });
 
@@ -75,10 +75,10 @@ const ProfileForm = () => {
   };
 
   const addCity = (cityId) => {
-    if (userData.city === cityId) {
-      setUserData({ ...userData, city: '' });
+    if (userData.location === cityId) {
+      setUserData({ ...userData, location: '' });
     } else {
-      setUserData({ ...userData, city: cityId });
+      setUserData({ ...userData, location: cityId });
     }
   };
 
@@ -155,17 +155,19 @@ const ProfileForm = () => {
             otherArrayRoles={userData.positions}
             cityData={cityData}
             addCity={addCity}
-            userDataCity={userData.city}
+            userDataCity={userData.location}
             roleYearsOnChange={addPositionYears}
             skillYearsOnChange={addSkillYears}
             buttonEnabled={
-              userData.skills.length > 0 && userData.positions.length > 0 && userData.city !== ''
+              userData.skills.length > 0 &&
+              userData.positions.length > 0 &&
+              userData.location !== ''
             }
             nextClicked={() => {
               if (
                 userData.positions.length > 0 &&
                 userData.skills.length > 0 &&
-                userData.city !== ''
+                userData.location !== ''
               ) {
                 setIsFirstPage(false);
                 setIsSecondPage(true);
@@ -186,7 +188,9 @@ const ProfileForm = () => {
             </p>
             <p className={styles.listText}>
               · You want to work at:{' '}
-              <span className={styles.purpleSpan}>{nameById(userData.city, cityData, 'name')}</span>
+              <span className={styles.purpleSpan}>
+                {nameById(userData.location, cityData, 'name')}
+              </span>
             </p>
             <p className={styles.listText}>· The positions you want:</p>
             <div className={styles.tagContainer}>

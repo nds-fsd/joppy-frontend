@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getFromCache, setToCache } from '../../Utils/cache';
 import { getUserToken } from '../../Utils/Auth';
-import { fetchMeStuff } from '../../Utils/functions';
 
 const userToken = getUserToken();
 const authObject = {
@@ -15,7 +14,6 @@ const KEY = 'skills';
 
 const useSkills = () => {
   const [skillsData, setSkillsData] = useState();
-  const [error, setError] = useState({});
 
   const successCallback = (payload) => {
     setSkillsData(payload);
@@ -27,21 +25,25 @@ const useSkills = () => {
     if (skillsFromCache) {
       setSkillsData(skillsFromCache);
     } else {
-      const url = `http://localhost:3001/skills/`;
-      fetchMeStuff({
-        authObject,
-        url,
-        body: skillsData,
-        method: 'GET',
-        successCallback,
-        errorCallback: setError,
-      });
+      const url = `http://localhost:3001/skill/`;
+      if (userToken) {
+        fetch(url, authObject)
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            return Promise.reject();
+          })
+          .then((payload) => {
+            successCallback(payload);
+          })
+          .catch();
+      }
     }
   }, []);
 
   return {
-    SkillsData,
-    error,
+    skillsData,
   };
 };
 

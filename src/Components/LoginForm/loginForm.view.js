@@ -22,8 +22,6 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState();
 
   const onSubmit = (data) => {
-    console.log(data);
-
     const url = 'http://localhost:3001/login';
     const options = {
       method: 'POST',

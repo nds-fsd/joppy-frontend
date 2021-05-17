@@ -27,8 +27,6 @@ const AdminProfSkills = ({ userSkills, close }) => {
     }
   };
 
-  console.log('updatedSkills', updatedSkills);
-
   const saveSkills = () => {
     const options = {
       method: 'PUT',

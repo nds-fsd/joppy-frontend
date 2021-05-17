@@ -1,19 +1,18 @@
 import { getStorageObject, setStorageObject } from './Storage';
 
-const TIME_IN_CACHE = 48 * 60 * 60 * 1000;
+// const TIME_IN_CACHE = 48 * 60 * 60 * 1000;
 
 export const getFromCache = (key) => {
   const objectFromCache = getStorageObject(key);
-  if (objectFromCache && objectFromCache.expirationDate > new Date().getTime()) {
-    return objectFromCache.data;
+  if (objectFromCache) {
+    return objectFromCache.skills;
   }
   return undefined;
 };
 
-export const setToCache = (key, data, timeInCache = TIME_IN_CACHE) => {
+export const setToCache = (key, skills) => {
   const objetToCache = {
-    data,
-    expirationDate: new Date().getTime() + timeInCache,
+    skills,
   };
   setStorageObject(key, objetToCache);
 };

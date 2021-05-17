@@ -21,7 +21,6 @@
   background: #fcfcfc;
   box-shadow: 3px 3px 5px 3px rgb(180, 180, 180);
   display: flex;
-  justify-content: space-around;
 }
 
 .link {
@@ -31,4 +30,13 @@
   font-weight: 600;
   letter-spacing: 0.75px;
   text-decoration: none;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.icon {
+  color: #2b00a2;
+  margin-left: -12%;
+  margin-right: 12%;
+  margin-top: 0.5%;
 }
