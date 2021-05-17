@@ -19,6 +19,8 @@ import {
   faTimes,
   faEdit,
   faSearch,
+  faMapMarkerAlt,
+  faEuroSign,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
@@ -52,7 +54,9 @@ library.add(
   faCommentAlt,
   faTimes,
   faEdit,
-  faSearch
+  faSearch,
+  faMapMarkerAlt,
+  faEuroSign
 );
 
 function App() {

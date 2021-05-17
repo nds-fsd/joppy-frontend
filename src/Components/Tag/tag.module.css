@@ -28,14 +28,34 @@
   background: #e4daff;
 }
 
+.tagContainerMatch {
+  display: inline-flex;
+  border: 0.1em solid #00966d;
+  width: fit-content;
+  padding: 0.4em 1em;
+  color: #00966d;
+  border-radius: 1em;
+  text-align: center;
+  line-height: 1em;
+  margin: 0.4em 0.3em;
+  font-size: 17px;
+  cursor: pointer;
+  background: #dffff6;
+}
+
 .tagIcon {
   margin-right: 0.3em;
-  color: #b5b5b5;
+  color: #2a00a2;
+}
+
+.tagIconMatch {
+  margin-right: 0.3em;
+  color: #00966d;
 }
 
 .tagCheck {
   margin-left: 0.3em;
-  color: #007aff;
+  color: #00966d;
 }
 
 .tagCross {

@@ -5,6 +5,7 @@ import JobOffer from '../../Components/JobOffer';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
 import { getSessionUser, getUserToken } from '../../Utils/Auth';
 import UserContext from '../../Contexts/userContext';
+import NoMoreOffers from '../../Components/NoMoreOffers';
 
 const OfferPage = () => {
   const [offerArray, setOfferArray] = useState();
@@ -29,16 +30,16 @@ const OfferPage = () => {
           Authorization: `Bearer ${getUserToken()}`,
         }),
         mode: 'cors',
-        body: JSON.stringify({ userId: userInfo.id }),
+        body: JSON.stringify({ userId: userInfo._id }),
       };
       fetch(`http://localhost:3001/offerstatus/filter`, filterOptions)
         .then((res) => res.json())
         .then((data) => setOfferArray(data))
         .catch();
     }
-  }, [userInfo, trigger]);
+  }, [userInfo]);
 
-  console.log(offerArray);
+  useEffect(() => {}, [trigger]);
 
   const updateOfferStatus = (body) => {
     const urlOfferStatus = `http://localhost:3001/offerstatus/`;
@@ -100,7 +101,7 @@ const OfferPage = () => {
         {offerArray && count < offerArray.length ? (
           <JobOffer offerInfo={offerArray[count]._id} />
         ) : (
-          <p>Nothing to show</p>
+          <NoMoreOffers />
         )}
       </div>
       <ButtonsBar

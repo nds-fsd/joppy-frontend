@@ -54,7 +54,7 @@ const AdminTable = ({ endpoint }) => {
       Authorization: `Bearer ${getUserToken()}`,
     }),
     mode: 'cors',
-    body: JSON.stringify({ companyInfo: userInfo.id, search: searchQuery }),
+    body: JSON.stringify({ companyInfo: userInfo._id, search: searchQuery }),
   };
 
   useEffect(() => {
@@ -105,6 +105,14 @@ const AdminTable = ({ endpoint }) => {
           }}
         >
           Create +
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            console.log(userInfo);
+          }}
+        >
+          Console
         </button>
       </div>
       <div className={styles.firstTableRow}>
