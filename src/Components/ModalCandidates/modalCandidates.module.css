@@ -1,0 +1,96 @@
+.container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wrapperContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 55vh;
+  overflow-y: auto;
+}
+
+.rowWrapper {
+  background: #fcfcfc;
+  display: flex;
+  align-items: center;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  width: 90%;
+  box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
+  transition: transform 150ms ease-in-out;
+  margin: 0.2em 0;
+}
+
+.rowWrapper:hover {
+  transform: scale(1.04);
+}
+
+.companyAccepted {
+  background: #dffff6;
+}
+
+.companyRejected {
+  background: #ffd7d7;
+}
+
+.closeButton {
+  border: none;
+  background: none;
+  outline: none;
+  border: 0.1em solid #5f2eea;
+  color: #5f2eea;
+  background: #fcfcfc;
+  font-size: 1.5em;
+  height: 2em;
+  padding: 0 1em;
+  cursor: pointer;
+  margin: 1em 0.25em;
+  border-radius: 1em;
+}
+
+.optionsDiv {
+  margin-left: auto;
+}
+
+.icon {
+  font-size: 1.2em;
+  margin: 0 0.2em;
+  cursor: pointer;
+}
+
+.user {
+  color: #3f3f3f;
+}
+
+.accept {
+  color: #00966d;
+}
+
+.reject {
+  color: #e43737;
+}
+
+.noCandidatesDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.halfLogoDiv {
+  margin-top: 2em;
+  height: 6em;
+}
+
+.halfLogo {
+  height: inherit;
+  width: inherit;
+}
+
+.noCandidates {
+  font-size: 1.2em;
+}
