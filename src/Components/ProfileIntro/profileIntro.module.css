@@ -1,8 +1,9 @@
 .profileIntro {
   margin: auto;
+  margin-top: 7%;
   width: 60%;
   height: 300px;
-  padding-top: 7%;
+  padding-top: 2%;
   background: #fcfcfc;
   box-shadow: 3px 3px 5px 3px rgb(180, 180, 180);
   margin-bottom: 2px;

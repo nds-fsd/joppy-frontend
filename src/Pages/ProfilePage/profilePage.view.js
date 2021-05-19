@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './profilePage.module.css';
@@ -7,11 +7,13 @@ import Profile from '../../Components/Profile';
 import ProfileIntro from '../../Components/ProfileIntro';
 import ProfileEdit from '../../Components/ProfileEdit';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
-import { getUserToken, getSessionUser } from '../../Utils/Auth';
+import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
+import UserContext from '../../Contexts/userContext';
 
 const ProfilePage = () => {
-  const [userData, setUserData] = useState();
+  const userData = useContext(UserContext);
+  const [userDataRaw, setUserDataRaw] = useState();
   const [skills, setSkills] = useState([]);
   const [languages, setLanguages] = useState([]);
   const [positions, setPositions] = useState([]);
@@ -35,12 +37,23 @@ const ProfilePage = () => {
   }, []);
 
   useEffect(() => {
-    fetchMeStuff(`http://localhost:3001/user/${getSessionUser().id}`, authObject, setUserData);
-  }, [openEdit]);
+    const url = 'http://localhost:3001/verify/raw';
+    fetch(url, authObject)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject();
+      })
+      .then((d) => {
+        setUserDataRaw(d);
+      })
+      .catch();
+  }, []);
 
   return (
     <div className={styles.profilePage}>
-      {userData ? (
+      {userData && userDataRaw ? (
         <>
           <ProfileIntro userData={userData} locations={locations} />
           <div className={styles.profileNavBar}>
@@ -57,10 +70,11 @@ const ProfilePage = () => {
               <Route path={PROFILE_PAGE}>
                 {openEdit ? (
                   <ProfileEdit
-                    userData={userData}
+                    userDataRaw={userDataRaw}
                     skills={skills}
                     positions={positions}
                     languages={languages}
+                    close={openEdit}
                   />
                 ) : (
                   <Profile userData={userData} />

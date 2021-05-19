@@ -1,33 +1,33 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import styles from './profileEdit.module.css';
 import { getSessionUser, getUserToken } from '../../Utils/Auth';
 import Tag from '../Tag';
+// import ProfileList from '../ProfileList';
 import SalarySlider from '../SalarySlider';
 
-const ProfileEdit = ({ userData, skills, positions, languages }) => {
-  const history = useHistory();
+const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
   const userSession = getSessionUser();
-  console.log(skills, languages, positions);
-  const [newEducation, setNewEducation] = useState(userData.education);
-  const [newWorkExperiences, setNewWorkExperiences] = useState(userData.workExperiences);
-  const [newSalary, setNewSalary] = useState(userData.salary);
-  const [newLanguages, setNewLanguages] = useState(userData.languages);
-  const [newSkills, setNewSkills] = useState(userData.skills);
-  const [newPositions, setNewPositions] = useState(userData.positions);
+
+  console.log('userRaw', userDataRaw);
+  const [newEducation, setNewEducation] = useState(userDataRaw.education);
+  const [newWorkExperiences, setNewWorkExperiences] = useState(userDataRaw.workExperiences);
+  const [newSalary, setNewSalary] = useState(userDataRaw.salary);
+  const [newLanguages, setNewLanguages] = useState(userDataRaw.languages);
+  const [newSkills, setNewSkills] = useState(userDataRaw.skills);
+  const [newPositions, setNewPositions] = useState(userDataRaw.positions);
   const updatedUser = {
-    skills: [newSkills],
-    positions: [newPositions],
+    skills: newSkills,
+    positions: newPositions,
     salary: newSalary,
-    languages: [newLanguages],
-    workExperiences: [newWorkExperiences],
-    education: [newEducation],
+    languages: newLanguages,
+    workExperiences: newWorkExperiences,
+    education: newEducation,
   };
 
   console.log(updatedUser);
 
   const updateUser = () => {
-    const url = `http://localhost:3001/user/${getSessionUser().id}`;
+    const url = `http://localhost:3001/user/${userSession.id}`;
     const options = {
       method: 'PUT',
       headers: new Headers({
@@ -38,7 +38,7 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
       mode: 'cors',
       body: JSON.stringify(updatedUser),
     };
-    if (userSession) {
+    if (getUserToken()) {
       fetch(url, options)
         .then((response) => {
           if (response.ok) {
@@ -49,64 +49,61 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
         .then((res) => {
           console.log(res);
         })
-        .then(history.push('/profile'))
+        .then(!close)
         .catch();
     }
   };
 
   const addSkill = (selSkill) => {
-    if (newSkills.some((skill) => skill._id === selSkill._id || skill.name._id === selSkill._id)) {
-      setNewSkills([
-        ...newSkills.filter(
-          (skill) => skill._id !== selSkill._id && skill.name._id !== selSkill._id
-        ),
-      ]);
+    if (newSkills.some((s) => s.name === selSkill)) {
+      setNewSkills([...newSkills.filter((skill) => skill.name !== selSkill)]);
     } else {
-      setNewSkills([...newSkills, { name: selSkill._id, years: '1' }]);
+      setNewSkills([...newSkills, { name: selSkill, years: '1' }]);
     }
   };
-  const addSkillYears = (y, skill) => {
-    const objIndex = newSkills.findIndex((obj) => obj || obj.name === skill);
-    console.log(objIndex);
-    newSkills[objIndex].years = y;
-
-    setNewSkills(newSkills);
+  const addSkillYears = (y, ski) => {
+    const skillYears = [...newSkills];
+    const objIndex = skillYears.findIndex((skill) => skill.name === ski.name);
+    skillYears[objIndex].years = y;
+    setNewSkills(skillYears);
   };
 
   const addPosition = (selPosition) => {
-    if (
-      !newPositions.some((e) => e._id === selPosition || e.name._id === selPosition) &&
-      newPositions.length === 3
-    ) {
+    if (!newPositions.some((e) => e.name === selPosition) && newPositions.length === 3) {
       return;
     }
-    if (newPositions.some((e) => e._id === selPosition || e.name._id === selPosition)) {
-      setNewPositions([
-        ...newPositions.filter((e) => e._id !== selPosition && e.name._id !== selPosition),
-      ]);
+    if (newPositions.some((e) => e.name === selPosition)) {
+      setNewPositions([...newPositions.filter((e) => e.name !== selPosition)]);
     } else {
       setNewPositions([...newPositions, { name: selPosition, years: '1' }]);
     }
   };
-  const addPositionYears = (y, positionName) => {
-    const objIndex = newPositions.findIndex(
-      (position) => position.name === positionName || position.name.name === positionName
-    );
-    newPositions[objIndex].years = y;
-
-    setNewPositions({
-      ...newPositions,
-    });
+  const addPositionYears = (y, pos) => {
+    const positionYears = [...newPositions];
+    const objIndex = positionYears.findIndex((position) => position.name === pos.name);
+    positionYears[objIndex].years = y;
+    setNewPositions(positionYears);
   };
 
-  console.log(newSkills, newPositions, newLanguages);
-
   const addLanguage = (selLanguage) => {
-    if (newLanguages.some((language) => language._id === selLanguage._id)) {
-      setNewLanguages([...newLanguages.filter((language) => language._id !== selLanguage._id)]);
+    if (
+      newLanguages.some(
+        (language) => language === selLanguage._id || language._id === selLanguage._id
+      )
+    ) {
+      setNewLanguages([
+        ...newLanguages.filter(
+          (language) => language._id !== selLanguage._id && language !== selLanguage._id
+        ),
+      ]);
     } else {
       setNewLanguages([...newLanguages, selLanguage]);
     }
+  };
+
+  const nameById = (id, arr, attribute) => {
+    const object = arr.find((item) => item._id === id);
+    return object[attribute];
   };
 
   return (
@@ -119,7 +116,7 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
                 name={position.name}
                 value={position._id}
                 onClick={addPosition}
-                isActive={newPositions.some((e) => e.name._id === position._id)}
+                isActive={newPositions.some((e) => e.name === position._id)}
               />
             ))
           : null}
@@ -129,14 +126,14 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
         {newPositions
           ? newPositions.map((position) => (
               <>
-                <Tag name={position.name.name} isActive />
+                <Tag name={nameById(position.name, positions, 'name')} isActive />
                 <input
                   type="range"
                   min="0"
                   max="11"
                   step="1"
                   value={position.years}
-                  onChange={(e) => addPositionYears(e.target.value, position.name)}
+                  onChange={(e) => addPositionYears(e.target.value, position)}
                 />
                 <span>{position.years === '0' && '<1'}</span>
                 <span>{position.years === '11' && '>10'}</span>
@@ -151,9 +148,9 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
           ? skills.map((skill) => (
               <Tag
                 name={skill.skill}
-                value={skill.name}
+                value={skill._id}
                 onClick={addSkill}
-                isActive={newSkills.some((e) => e.name._id === skill._id)}
+                isActive={newSkills.some((e) => e.name === skill._id)}
               />
             ))
           : null}
@@ -163,7 +160,7 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
         {newSkills
           ? newSkills.map((skill) => (
               <>
-                <Tag name={skill.name.skill} isActive />
+                <Tag name={nameById(skill.name, skills, 'skill')} isActive />
                 <input
                   type="range"
                   min="0"
@@ -181,6 +178,8 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
       </div>
       <div className={styles.headline}>Work Experience</div>
       <div className={styles.inputWrapper}>
+        {/* {newWorkExperiences ? newWorkExperiences.map((experience) => <p>{experience}</p>) : null} */}
+
         <input
           type="text"
           value={newWorkExperiences}
@@ -191,6 +190,7 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
 
       <div className={styles.headline}>Education</div>
       <div className={styles.inputWrapper}>
+        {/* {newEducation ? newEducation.map((education) => <p>{education}</p>) : null} */}
         <input
           type="text"
           value={newEducation}
@@ -198,6 +198,7 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
           className={styles.inputWrapper}
         />
       </div>
+      {/* <ProfileList array={newEducation} newArray={(value) => setNewEducation(value)} /> */}
       <div className={styles.headline}>Languages</div>
       <p>Select language</p>
       {languages
@@ -206,7 +207,7 @@ const ProfileEdit = ({ userData, skills, positions, languages }) => {
               name={language.name}
               value={language}
               onClick={addLanguage}
-              isActive={newLanguages.some((e) => e._id === language._id)}
+              isActive={newLanguages.some((e) => e === language._id || e._id === language._id)}
             />
           ))
         : null}
