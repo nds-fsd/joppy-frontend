@@ -106,14 +106,6 @@ const AdminTable = ({ endpoint }) => {
         >
           Create +
         </button>
-        <button
-          type="button"
-          onClick={() => {
-            console.log(userInfo);
-          }}
-        >
-          Console
-        </button>
       </div>
       <div className={styles.firstTableRow}>
         <p className={styles.firstTableRowItem}>Title</p>
