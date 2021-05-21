@@ -26,3 +26,19 @@
   letter-spacing: 0.75px;
   color: #4e4b66;
 }
+
+.itemText {
+  background: #e4daff;
+  border: 0.1em solid #2a00a2;
+  width: fit-content;
+  padding: 0.5em;
+  padding-bottom: 0em;
+  color: #2a00a2;
+  border-radius: 1em;
+  text-align: center;
+  line-height: 1.5em;
+  border-radius: 0.5em;
+  height: 2em;
+  margin-bottom: 1em;
+  margin-right: 1em;
+}

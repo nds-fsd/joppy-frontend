@@ -16,13 +16,15 @@ const Profile = ({ userData }) => (
         ? userData.skills.map((skill) => <Tag name={skill.name.skill} isActive />)
         : null}
     </div>
-
     <div className={styles.headline}>Work Experience</div>
-    {userData ? <p className={styles.infoText}>{userData.workExperiences}</p> : null}
+    {userData.workExperiences
+      ? userData.workExperiences.map((item) => <div className={styles.itemText}>{item}</div>)
+      : null}
     <div className={styles.headline}>Education</div>
-    {userData ? <p className={styles.infoText}>{userData.education}</p> : null}
+    {userData.education
+      ? userData.education.map((item) => <div className={styles.itemText}>{item}</div>)
+      : null}{' '}
     <div className={styles.headline}>Languages</div>
-
     <div>
       {userData
         ? userData.languages.map((language) => <Tag name={language.name} isActive />)

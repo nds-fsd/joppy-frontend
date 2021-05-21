@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styles from './profileEdit.module.css';
 import { getSessionUser, getUserToken } from '../../Utils/Auth';
 import Tag from '../Tag';
-// import ProfileList from '../ProfileList';
+import ProfileList from '../ProfileList';
 import SalarySlider from '../SalarySlider';
 
-const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
+const ProfileEdit = ({ userDataRaw, skills, positions, languages }) => {
   const userSession = getSessionUser();
 
   console.log('userRaw', userDataRaw);
@@ -49,7 +49,6 @@ const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
         .then((res) => {
           console.log(res);
         })
-        .then(!close)
         .catch();
     }
   };
@@ -177,28 +176,12 @@ const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
           : null}
       </div>
       <div className={styles.headline}>Work Experience</div>
-      <div className={styles.inputWrapper}>
-        {/* {newWorkExperiences ? newWorkExperiences.map((experience) => <p>{experience}</p>) : null} */}
-
-        <input
-          type="text"
-          value={newWorkExperiences}
-          onChange={(e) => setNewWorkExperiences(e.target.value)}
-          className={styles.inputWrapper}
-        />
-      </div>
-
+      <ProfileList
+        array={userDataRaw.workExperiences}
+        newArray={(value) => setNewWorkExperiences(value)}
+      />
       <div className={styles.headline}>Education</div>
-      <div className={styles.inputWrapper}>
-        {/* {newEducation ? newEducation.map((education) => <p>{education}</p>) : null} */}
-        <input
-          type="text"
-          value={newEducation}
-          onChange={(e) => setNewEducation(e.target.value)}
-          className={styles.inputWrapper}
-        />
-      </div>
-      {/* <ProfileList array={newEducation} newArray={(value) => setNewEducation(value)} /> */}
+      <ProfileList array={userDataRaw.education} newArray={(value) => setNewEducation(value)} />
       <div className={styles.headline}>Languages</div>
       <p>Select language</p>
       {languages
@@ -212,8 +195,15 @@ const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
           ))
         : null}
       <p>Choose your salary</p>
-      <SalarySlider value={newSalary} onChange={(s) => setNewSalary(s)} />
-      <input type="button" onClick={updateUser} value="Save" className={styles.saveButton} />
+      <SalarySlider style={{ width: '25vw' }} value={newSalary} onChange={(s) => setNewSalary(s)} />
+      <input
+        type="button"
+        onClick={() => {
+          updateUser();
+        }}
+        value="Save"
+        className={styles.saveButton}
+      />
     </div>
   );
 };

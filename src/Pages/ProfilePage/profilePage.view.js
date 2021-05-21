@@ -19,7 +19,9 @@ const ProfilePage = () => {
   const [positions, setPositions] = useState([]);
   const [locations, setLocations] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
-  const handleEdit = () => setOpenEdit(!openEdit);
+  const handleEdit = () => {
+    setOpenEdit(!openEdit);
+  };
   const userToken = getUserToken();
   const authObject = {
     headers: {
@@ -74,7 +76,6 @@ const ProfilePage = () => {
                     skills={skills}
                     positions={positions}
                     languages={languages}
-                    close={openEdit}
                   />
                 ) : (
                   <Profile userData={userData} />
