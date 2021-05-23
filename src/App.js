@@ -21,9 +21,10 @@ import {
   faSearch,
   faMapMarkerAlt,
   faEuroSign,
+  faComments,
+  faEnvelope,
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-
-import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 import { getUserToken } from './Utils/Auth';
 import styles from './App.css';
 import { OFFER_PAGE, PROFILE_PAGE, REGISTER_PAGE, LOGIN_PAGE, ADMIN_PAGE } from './Routers/routers'; //eslint-disable-line
@@ -51,12 +52,14 @@ library.add(
   faUser,
   faCircleNotch,
   faLayerGroup,
-  faCommentAlt,
   faTimes,
   faEdit,
   faSearch,
   faMapMarkerAlt,
-  faEuroSign
+  faEuroSign,
+  faEnvelope,
+  faComments,
+  faTrashAlt
 );
 
 function App() {
@@ -94,7 +97,7 @@ function App() {
                   <Route exact path={OFFER_PAGE}>
                     <OfferPage />
                   </Route>
-                  <Route path={PROFILE_PAGE}>
+                  <Route exact path={PROFILE_PAGE}>
                     <ProfilePage />
                   </Route>
                 </Switch>

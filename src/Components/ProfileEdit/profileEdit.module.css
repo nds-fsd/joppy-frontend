@@ -2,12 +2,12 @@
   margin: auto;
   margin-bottom: 15px;
   padding-right: 7%;
-  padding-bottom: 7%;
-  width: 46%;
+  padding-bottom: 4%;
+  width: 41%;
   padding-top: 2%;
   padding-left: 7%;
   background: #fcfcfc;
-  box-shadow: 3px 3px 5px 3px rgb(180, 180, 180);
+  box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
 }
 
 .icon {
@@ -19,6 +19,8 @@
   line-height: 34px;
   letter-spacing: 0.75px;
   color: #4e4b66;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
 }
 
 .infoText {
@@ -29,7 +31,7 @@
 }
 
 .itemSlider {
-  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;

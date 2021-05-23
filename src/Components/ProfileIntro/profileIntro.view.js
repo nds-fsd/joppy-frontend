@@ -10,7 +10,15 @@ const ProfileIntro = ({ userData, locations }) => {
   return (
     <div className={styles.profileIntro}>
       <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEditModal} />
-      {userData ? <img src={userData.logo} alt="user pic" className={styles.userPhoto} /> : null}
+      {userData.logo ? (
+        <img src={userData.logo} alt="user pic" className={styles.userPhoto} />
+      ) : (
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5E-CamT4OlC0jnxA1uqQXKdYXxDv-gak56Q&usqp=CAU"
+          alt="company logo"
+          className={styles.userPhoto}
+        />
+      )}
       {userData ? <p className={styles.userName}>{userData.name}</p> : null}
       {userData.location ? <p className={styles.userIntro}>{userData.location.name}.</p> : null}
       {openModal ? (

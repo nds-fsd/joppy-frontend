@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './profilePage.module.css';
-import { PROFILE_PAGE } from '../../Routers/routers'; //eslint-disable-line
 import Profile from '../../Components/Profile';
 import ProfileIntro from '../../Components/ProfileIntro';
 import ProfileEdit from '../../Components/ProfileEdit';
+import MyOffers from '../../Components/MyOffers';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
 import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
@@ -19,9 +18,21 @@ const ProfilePage = () => {
   const [positions, setPositions] = useState([]);
   const [locations, setLocations] = useState([]);
   const [openEdit, setOpenEdit] = useState(false);
+  const [openChat, setOpenChat] = useState(false);
+
   const handleEdit = () => {
     setOpenEdit(!openEdit);
+    setOpenChat(false);
   };
+  const handleChat = () => {
+    setOpenChat(!openChat);
+    setOpenEdit(false);
+  };
+  const handleProfile = () => {
+    setOpenEdit(false);
+    setOpenChat(false);
+  };
+  console.log(openChat);
   const userToken = getUserToken();
   const authObject = {
     headers: {
@@ -59,33 +70,21 @@ const ProfilePage = () => {
         <>
           <ProfileIntro userData={userData} locations={locations} />
           <div className={styles.profileNavBar}>
-            <Link to={PROFILE_PAGE} className={styles.link}>
-              Profile
-            </Link>
+            <input type="button" className={styles.link} onClick={handleProfile} value="Profile" />
             <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
-            <Link to={`${PROFILE_PAGE}/myoffers`} className={styles.link}>
-              My Offers
-            </Link>
+            <input type="button" className={styles.link} onClick={handleChat} value="My Offers" />
           </div>
-          <Router>
-            <Switch>
-              <Route path={PROFILE_PAGE}>
-                {openEdit ? (
-                  <ProfileEdit
-                    userDataRaw={userDataRaw}
-                    skills={skills}
-                    positions={positions}
-                    languages={languages}
-                  />
-                ) : (
-                  <Profile userData={userData} />
-                )}
-              </Route>
-              <Route path={`${PROFILE_PAGE}/myoffers`}>
-                <p>AQUI VAN OFFERS</p>
-              </Route>
-            </Switch>
-          </Router>
+          {!openEdit && !openChat ? <Profile userData={userData} /> : null}
+          {openEdit ? (
+            <ProfileEdit
+              userDataRaw={userDataRaw}
+              skills={skills}
+              positions={positions}
+              languages={languages}
+              close={handleEdit}
+            />
+          ) : null}
+          {openChat ? <MyOffers userData={userData} closeChat={handleChat} /> : null}
         </>
       ) : (
         <p>loading...</p>

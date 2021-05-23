@@ -4,19 +4,20 @@ import styles from './profileList.module.css';
 
 const ProfileList = ({ array, newArray }) => {
   const [newItem, setNewItem] = useState('');
-  const arr = array;
+  const [arr, setArr] = useState(array);
 
   const addItem = () => {
     if (newItem.length >= 3) {
       arr.push(`${newItem}`);
     }
     setNewItem('');
+    setArr(arr);
     newArray(arr);
   };
 
   const deleteItem = (e) => {
-    console.log(e.target.value);
-    arr.filter((i) => i !== e.target.value);
+    const newArr = arr.filter((i) => i !== e.target.value);
+    setArr(newArr);
     newArray(arr);
   };
 

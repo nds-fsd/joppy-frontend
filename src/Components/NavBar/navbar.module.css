@@ -1,5 +1,6 @@
 .navbar {
   position: absolute;
+  z-index: 0;
   margin: auto;
   padding-top: 1%;
   padding-bottom: 1%;

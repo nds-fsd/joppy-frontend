@@ -5,10 +5,11 @@ import Tag from '../Tag';
 import ProfileList from '../ProfileList';
 import SalarySlider from '../SalarySlider';
 
-const ProfileEdit = ({ userDataRaw, skills, positions, languages }) => {
+const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
+  const closeThis = () => {
+    close(false);
+  };
   const userSession = getSessionUser();
-
-  console.log('userRaw', userDataRaw);
   const [newEducation, setNewEducation] = useState(userDataRaw.education);
   const [newWorkExperiences, setNewWorkExperiences] = useState(userDataRaw.workExperiences);
   const [newSalary, setNewSalary] = useState(userDataRaw.salary);
@@ -23,8 +24,6 @@ const ProfileEdit = ({ userDataRaw, skills, positions, languages }) => {
     workExperiences: newWorkExperiences,
     education: newEducation,
   };
-
-  console.log(updatedUser);
 
   const updateUser = () => {
     const url = `http://localhost:3001/user/${userSession.id}`;
@@ -51,6 +50,7 @@ const ProfileEdit = ({ userDataRaw, skills, positions, languages }) => {
         })
         .catch();
     }
+    closeThis();
   };
 
   const addSkill = (selSkill) => {

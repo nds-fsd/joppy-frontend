@@ -46,9 +46,15 @@ const AdminProfile = () => {
             title="About the company"
             icon={<FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEditModal} />}
           >
-            <div>
-              <img src={userData.logo} alt="user pic" className={styles.logo} />
-            </div>
+            {userData.photo[0] ? (
+              <img src={userData.photo[0]} alt="company logo" className={styles.logo} />
+            ) : (
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5E-CamT4OlC0jnxA1uqQXKdYXxDv-gak56Q&usqp=CAU"
+                alt="company logo"
+                className={styles.logo}
+              />
+            )}
             <div className={styles.name}>{userData.name}</div>
             {userData.location ? (
               <div className={styles.firstBlock}>{userData.location.name}</div>
