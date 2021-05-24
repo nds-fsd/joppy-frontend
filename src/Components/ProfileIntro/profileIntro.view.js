@@ -3,13 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './profileIntro.module.css';
 import AdminProfileModal from '../AdminProfileModal';
 
-const ProfileIntro = ({ userData, locations }) => {
+const ProfileIntro = ({ userData, locations, style1, style2 }) => {
   const [openModal, setOpenModal] = useState(false);
   const handleEditModal = () => setOpenModal(!openModal);
   console.log(userData);
   return (
-    <div className={styles.profileIntro}>
-      <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEditModal} />
+    <div className={styles.profileIntro} style={style1}>
+      <FontAwesomeIcon
+        icon="edit"
+        style={style2}
+        className={styles.icon}
+        onClick={handleEditModal}
+      />
       {userData.logo ? (
         <img src={userData.logo} alt="user pic" className={styles.userPhoto} />
       ) : (

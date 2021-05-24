@@ -13,17 +13,17 @@ const AdminPage = () => (
       <AdminSideBar className={styles.adminSideBar} />
       <div className={styles.adminMain}>
         <Switch>
-          <Route path={`${ADMIN_PAGE}/offers`}>
-            <h1>Offers</h1>
-            <AdminTable endpoint="offer" />
-          </Route>
-          <Route path={`${ADMIN_PAGE}/candidates`}>
+          <Route exact path={`${ADMIN_PAGE}/candidates`}>
             <div className={styles.link}>Candidates</div>
             <AdminCandidates className={styles.container} />
           </Route>
-          <Route path={`${ADMIN_PAGE}/profile`}>
+          <Route exact path={`${ADMIN_PAGE}/profile`}>
             <div className={styles.link}>Profile</div>
             <AdminProfile className={styles.container} />
+          </Route>
+          <Route path={`${ADMIN_PAGE}`}>
+            <div className={styles.link}>Offers</div>
+            <AdminTable endpoint="offer" />
           </Route>
         </Switch>
       </div>

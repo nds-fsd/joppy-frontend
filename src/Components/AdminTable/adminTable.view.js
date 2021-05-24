@@ -10,6 +10,7 @@ import ModalEditOffer from '../ModalEditOffer';
 import UserContext from '../../Contexts/userContext';
 import ModalCandidates from '../ModalCandidates/modalCandidates.view';
 import { getUserToken } from '../../Utils/Auth';
+import ModalViewOffer from '../ModalViewOffer/modalViewOffer.view';
 
 const AdminTable = ({ endpoint }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -91,6 +92,9 @@ const AdminTable = ({ endpoint }) => {
           handleOfferEdit={offerDeleted}
         />
       )}
+      {openModal && whichModal === 'view' && (
+        <ModalViewOffer handleClose={() => setOpenModal(false)} offerId={whichOffer} />
+      )}
       {openModal && whichModal === 'candidates' && (
         <ModalCandidates handleClose={() => setOpenModal(false)} offer={whichOffer} />
       )}
@@ -142,7 +146,16 @@ const AdminTable = ({ endpoint }) => {
                   >
                     Edit offer
                   </Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownElement}>View offer</Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownElement}
+                    onClick={() => {
+                      setWhichModal('view');
+                      setWhichOffer(object._id);
+                      setOpenModal(true);
+                    }}
+                  >
+                    View offer
+                  </Dropdown.Item>
                   <Dropdown.Item
                     className={styles.dropdownElement}
                     onClick={() => {

@@ -17,7 +17,7 @@ const AdminSideBar = () => {
       <Logo className={styles.logo} />
       <div className={styles.nav}>
         <h3>MY LIBRARY</h3>
-        <Link to={`${ADMIN_PAGE}/offers`} className={styles.link}>
+        <Link to={`${ADMIN_PAGE}`} className={styles.link}>
           <p>Offers</p>
         </Link>
         <Link to={`${ADMIN_PAGE}/candidates`} className={styles.link}>

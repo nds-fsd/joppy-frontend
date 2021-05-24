@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './profile.module.css';
 import Tag from '../Tag';
 
-const Profile = ({ userData }) => (
-  <div className={styles.profile}>
+const Profile = ({ userData, style }) => (
+  <div className={styles.profile} style={style}>
     <div className={styles.headline}>Short bio</div>
     {userData ? <p className={styles.infoText}>{userData.bio}</p> : null}
     <div className={styles.headline}>Roles</div>
