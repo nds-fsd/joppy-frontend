@@ -26,8 +26,6 @@ const AdminProfLanguages = ({ userLanguages, close }) => {
       setUpdatedLanguages([...updatedLanguages, languageId]);
     }
   };
-
-  console.log(updatedLanguages);
   const options = {
     method: 'PUT',
     headers: new Headers({

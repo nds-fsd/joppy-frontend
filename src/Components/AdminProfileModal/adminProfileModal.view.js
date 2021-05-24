@@ -4,7 +4,6 @@ import styles from './adminProfileModal.module.css';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 
 const AdminProfileModal = ({ open, close, userData, locations }) => {
-  console.log(userData);
   const [newName, setNewName] = useState(userData.name);
   const [newBio, setNewBio] = useState(userData.bio);
   const [newLocation, setNewLocation] = useState(userData.location);
@@ -45,7 +44,6 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
         })
         .then((res) => {
           console.log(res);
-          console.log(bodyInfo);
         })
         .then(close())
         .catch();

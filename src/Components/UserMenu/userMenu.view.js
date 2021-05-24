@@ -20,7 +20,13 @@ const UserMenu = () => {
 
   return (
     <div className={styles.userMenu}>
-      <input type="button" onClick={displayMenu} className={styles.menuButton} value="AN" />
+      <input
+        type="button"
+        onClick={displayMenu}
+        onPointerOver={displayMenu}
+        className={styles.menuButton}
+        value="AN"
+      />
 
       {open === true ? (
         <div className={styles.menuContent}>

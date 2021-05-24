@@ -1,10 +1,13 @@
 .profileIntro {
   margin: auto;
-  width: 60%;
+  margin-top: 7%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 55%;
   height: 300px;
-  padding-top: 7%;
+  padding-top: 2%;
   background: #fcfcfc;
-  box-shadow: 3px 3px 5px 3px rgb(180, 180, 180);
+  box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
   margin-bottom: 2px;
   display: grid;
   grid-template-rows: 5fr 1fr 1fr;
@@ -16,6 +19,7 @@
 
 .userPhoto {
   margin: auto;
+  margin-top: -1em;
   width: 180px;
   height: 180px;
   border-radius: 50%;
@@ -36,4 +40,16 @@
   line-height: 24px;
   letter-spacing: 0.75px;
   color: #4e4b66;
+}
+
+.icon {
+  position: inherit;
+  z-index: inherit;
+  color: #2b00a2;
+  margin-left: 38em;
+  margin-top: 1em;
+}
+
+.icon:hover {
+  transform: scale(1.05);
 }

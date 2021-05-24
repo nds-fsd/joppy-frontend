@@ -1,23 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './profilePage.module.css';
-import { PROFILE_PAGE } from '../../Routers/routers'; //eslint-disable-line
 import Profile from '../../Components/Profile';
 import ProfileIntro from '../../Components/ProfileIntro';
 import ProfileEdit from '../../Components/ProfileEdit';
-// import AdminProfileModal from '../../Components/AdminProfileModal';
+import MyOffers from '../../Components/MyOffers';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
-import { getUserToken, getSessionUser } from '../../Utils/Auth';
+import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
+import UserContext from '../../Contexts/userContext';
 
 const ProfilePage = () => {
-  const [userData, setUserData] = useState();
+  const userData = useContext(UserContext);
+  const [userDataRaw, setUserDataRaw] = useState();
+  const [skills, setSkills] = useState([]);
+  const [languages, setLanguages] = useState([]);
+  const [positions, setPositions] = useState([]);
   const [locations, setLocations] = useState([]);
-  // const [openModal, setOpenModal] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  // const handleEditModal = () => setOpenModal(!openModal);
-  const handleEdit = () => setOpenEdit(!openEdit);
+  const [openChat, setOpenChat] = useState(false);
+
+  const handleEdit = () => {
+    setOpenEdit(!openEdit);
+    setOpenChat(false);
+  };
+  const handleChat = () => {
+    setOpenChat(!openChat);
+    setOpenEdit(false);
+  };
+  const handleProfile = () => {
+    setOpenEdit(false);
+    setOpenChat(false);
+  };
+  console.log(openChat);
   const userToken = getUserToken();
   const authObject = {
     headers: {
@@ -25,44 +40,55 @@ const ProfilePage = () => {
       Authorization: `Bearer ${userToken}`,
     },
   };
+  useEffect(() => {
+    if (getUserToken()) {
+      fetchMeStuff('http://localhost:3001/skill', authObject, setSkills);
+      fetchMeStuff('http://localhost:3001/position', authObject, setPositions);
+      fetchMeStuff('http://localhost:3001/language', authObject, setLanguages);
+      fetchMeStuff('http://localhost:3001/city', authObject, setLocations);
+    }
+  }, []);
 
   useEffect(() => {
-    fetchMeStuff(`http://localhost:3001/user/${getSessionUser().id}`, authObject, setUserData);
-    fetchMeStuff('http://localhost:3001/city', authObject, setLocations);
-  }, [openEdit]);
+    const url = 'http://localhost:3001/verify/raw';
+    fetch(url, authObject)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject();
+      })
+      .then((d) => {
+        setUserDataRaw(d);
+      })
+      .catch();
+  }, []);
 
   return (
     <div className={styles.profilePage}>
-      {/* {openModal ? (
-        <AdminProfileModal
-          open={openModal}
-          close={() => setOpenModal(false)}
-          userData={userData}
-          locations={locations}
-        />
-      ) : null} */}
-      <ProfileIntro userData={userData} locations={locations} />
-      <div className={styles.profileNavBar}>
-        <Link to={PROFILE_PAGE} className={styles.link}>
-          Profile
-        </Link>
-        <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
-
-        <Link to={`${PROFILE_PAGE}/myoffers`} className={styles.link}>
-          My Offers
-        </Link>
-      </div>
-      <Router>
-        <Switch>
-          <Route path={PROFILE_PAGE}>
-            {openEdit ? <ProfileEdit userData={userData} /> : <Profile userData={userData} />}
-          </Route>
-          <Route path={`${PROFILE_PAGE}/myoffers`}>
-            <p>AQUI VAN OFFERS</p>
-          </Route>
-        </Switch>
-      </Router>
-
+      {userData && userDataRaw ? (
+        <>
+          <ProfileIntro userData={userData} locations={locations} />
+          <div className={styles.profileNavBar}>
+            <input type="button" className={styles.link} onClick={handleProfile} value="Profile" />
+            <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
+            <input type="button" className={styles.link} onClick={handleChat} value="My Offers" />
+          </div>
+          {!openEdit && !openChat ? <Profile userData={userData} /> : null}
+          {openEdit ? (
+            <ProfileEdit
+              userDataRaw={userDataRaw}
+              skills={skills}
+              positions={positions}
+              languages={languages}
+              close={handleEdit}
+            />
+          ) : null}
+          {openChat ? <MyOffers userData={userData} closeChat={handleChat} /> : null}
+        </>
+      ) : (
+        <p>loading...</p>
+      )}
       <Plant className={styles.plant} />
     </div>
   );
