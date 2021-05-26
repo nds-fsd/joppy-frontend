@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getFromCache, setToCache } from '../../Utils/cache';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
+import { API_URL } from '../../Routers/routers';
 
 const userToken = getUserToken();
 const userSession = getSessionUser();
@@ -28,7 +29,7 @@ const useUser = () => {
     if (userFromCache) {
       setUserData(userFromCache);
     } else {
-      const url = `http://localhost:3001/user/${userSession.id}`;
+      const url = `${API_URL}/user/${userSession.id}`;
       if (userToken) {
         fetch(url, authObject)
           .then((response) => {

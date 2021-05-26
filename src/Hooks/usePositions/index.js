@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { API_URL } from '../../Routers/routers';
 import { getUserToken } from '../../Utils/Auth';
 import { getStorageObject, setStorageObject } from '../../Utils/Storage';
 
@@ -40,7 +41,7 @@ const usePositions = () => {
     if (positionsFromCache) {
       setPositionsData(positionsFromCache);
     } else {
-      const url = `http://localhost:3001/position/`;
+      const url = `${API_URL}/position/`;
       if (userToken) {
         fetch(url, authObject)
           .then((response) => {

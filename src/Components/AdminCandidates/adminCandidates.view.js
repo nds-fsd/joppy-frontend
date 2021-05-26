@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './adminCandidates.module.css';
 import { getUserToken } from '../../Utils/Auth';
+import { API_URL } from '../../Routers/routers';
 
 const AdminCandidates = () => {
   const [userData, setUserData] = useState();
@@ -16,14 +17,14 @@ const AdminCandidates = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/user?role=DEVELOPER_ROLE', authObject)
+    fetch(`${API_URL}/user?role=DEVELOPER_ROLE`, authObject)
       .then((res) => res.json())
       .then((data) => setUserData(data))
       .catch();
   }, []);
 
   // if (userData) {
-  //   fetch(`http://localhost:3001/offer?accepted=${userData.id}`, authObject)
+  //   fetch(`${API_URL}/offer?accepted=${userData.id}`, authObject)
   //     .then((res) => res.json())
   //     .then((data) => setAcceptedOffer(data))
   //     .catch();

@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from '../Modal';
 import { fetchMeStuff } from '../../Utils/functions';
 import styles from './modalDeleteOffer.module.css';
+import { API_URL } from '../../Routers/routers';
 
 const ModalDeleteOffer = ({ handleClose, offerId, handleOfferDeleted }) => {
   const handleDelete = () => {
@@ -16,7 +17,7 @@ const ModalDeleteOffer = ({ handleClose, offerId, handleOfferDeleted }) => {
       mode: 'cors',
     };
 
-    fetchMeStuff(`http://localhost:3001/offer/${offerId}`, options, handleOfferDeleted);
+    fetchMeStuff(`${API_URL}/offer/${offerId}`, options, handleOfferDeleted);
   };
   return (
     <Modal handleClose={handleClose}>

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './acceptedOffer.module.css';
 import { getUserToken } from '../../Utils/Auth';
 import JobPosition from '../JobPosition';
+import { API_URL } from '../../Routers/routers';
 
 const AcceptedOffer = ({ offer, userData, refresh }) => {
   console.log(offer);
@@ -24,7 +25,7 @@ const AcceptedOffer = ({ offer, userData, refresh }) => {
         body: JSON.stringify({ userId: userData._id, offerId: offer._id, accepted: true }),
       };
       console.log({ userId: userData._id, offerId: offer._id, accepted: true });
-      fetch(`http://localhost:3001/offerstatus`, options)
+      fetch(`${API_URL}/offerstatus`, options)
         .then((res) => res.json())
         .catch();
     }

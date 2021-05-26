@@ -8,6 +8,7 @@ import Tag from '../Tag';
 import AdminProfileModal from '../AdminProfileModal';
 import AdminProfSkills from '../AdminProfSkills';
 import AdminProfLanguages from '../AdminProfLanguages';
+import { API_URL } from '../../Routers/routers';
 
 const AdminProfile = () => {
   const [userData, setUserData] = useState();
@@ -25,7 +26,7 @@ const AdminProfile = () => {
       Authorization: `Bearer ${getUserToken()}`,
     },
   };
-  const url = `http://localhost:3001/user/${userSession.id}`;
+  const url = `${API_URL}/user/${userSession.id}`;
 
   useEffect(() => {
     fetch(url, authObject)
@@ -35,7 +36,7 @@ const AdminProfile = () => {
   }, [openModal, openSkills, openLanguages]);
 
   useEffect(() => {
-    fetchMeStuff('http://localhost:3001/city', authObject, setLocations);
+    fetchMeStuff(`${API_URL}/city`, authObject, setLocations);
   }, []);
 
   return (

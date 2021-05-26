@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../../Contexts/userContext';
+import { API_URL } from '../../Routers/routers';
 import { fetchMeStuff } from '../../Utils/functions';
 import InputText from '../InputText';
 // import InputTextarea from '../InputTextarea';
@@ -32,7 +33,7 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
 
   useEffect(() => {
     if (offerId) {
-      fetchMeStuff(`http://localhost:3001/offer/${offerId}/raw`, authObject, (o) =>
+      fetchMeStuff(`${API_URL}/offer/${offerId}/raw`, authObject, (o) =>
         setOfferData({
           title: o.title,
           salary: o.salary,
@@ -42,8 +43,8 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
         })
       );
     }
-    fetchMeStuff('http://localhost:3001/skill', authObject, setSkillData);
-    fetchMeStuff('http://localhost:3001/position', authObject, setPositionData);
+    fetchMeStuff(`${API_URL}/skill`, authObject, setSkillData);
+    fetchMeStuff(`${API_URL}/position`, authObject, setPositionData);
     setOfferData({ ...offerData, companyInfo: userInfo.id });
   }, []);
 
@@ -76,7 +77,7 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
       body: JSON.stringify(offerData),
     };
 
-    fetchMeStuff('http://localhost:3001/offer', options, handleOfferCreated);
+    fetchMeStuff(`${API_URL}/offer`, options, handleOfferCreated);
   };
 
   const handleEdit = () => {
@@ -92,7 +93,7 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
       body: JSON.stringify(offerData),
     };
 
-    fetchMeStuff(`http://localhost:3001/offer/${offerId}`, options, handleOfferCreated);
+    fetchMeStuff(`${API_URL}/offer/${offerId}`, options, handleOfferCreated);
   };
 
   return (

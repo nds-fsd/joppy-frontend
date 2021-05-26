@@ -8,6 +8,7 @@ import { getUserToken, setUserSession } from '../../Utils/Auth';
 import OneProfileForm from '../OneProfileForm';
 import FormBlock from '../FormBlock';
 import UserContext from '../../Contexts/userContext';
+import { API_URL } from '../../Routers/routers';
 
 const ProfileForm = () => {
   const [isFirstPage, setIsFirstPage] = useState(true);
@@ -108,9 +109,9 @@ const ProfileForm = () => {
   };
 
   useEffect(() => {
-    fetchMeStuff('http://localhost:3001/skill', authObject, setSkillData);
-    fetchMeStuff('http://localhost:3001/position', authObject, setRoleData);
-    fetchMeStuff('http://localhost:3001/city', authObject, setCityData);
+    fetchMeStuff(`${API_URL}/skill`, authObject, setSkillData);
+    fetchMeStuff(`${API_URL}/position`, authObject, setRoleData);
+    fetchMeStuff(`${API_URL}/city`, authObject, setCityData);
   }, []);
 
   useEffect(() => {
@@ -127,7 +128,7 @@ const ProfileForm = () => {
       body: JSON.stringify(allData),
     };
 
-    fetch('http://localhost:3001/register', options)
+    fetch(`${API_URL}/register`, options)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -145,7 +146,7 @@ const ProfileForm = () => {
             Authorization: `Bearer ${getUserToken()}`,
           },
         };
-        fetchMeStuff('http://localhost:3001/verify', auth, setUserInfo);
+        fetchMeStuff(`${API_URL}/verify`, auth, setUserInfo);
       })
       .then(history.push('/'))
       .catch();

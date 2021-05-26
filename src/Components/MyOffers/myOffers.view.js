@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 import styles from './myOffers.module.css';
 import AcceptedOffer from '../AcceptedOffer';
+import { API_URL } from '../../Routers/routers';
 
 const MyOffers = ({ userData }) => {
   const [offers, setOffers] = useState();
@@ -22,7 +23,7 @@ const MyOffers = ({ userData }) => {
         mode: 'cors',
         body: JSON.stringify({ userId: userData._id }),
       };
-      fetch(`http://localhost:3001/offerstatus/acceptedoffers`, options)
+      fetch(`${API_URL}/offerstatus/acceptedoffers`, options)
         .then((res) => res.json())
         .then((data) => {
           setOffers(data);

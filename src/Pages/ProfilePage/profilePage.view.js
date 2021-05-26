@@ -9,6 +9,7 @@ import { ReactComponent as Plant } from '../../Images/plant.svg';
 import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 import UserContext from '../../Contexts/userContext';
+import { API_URL } from '../../Routers/routers';
 
 const ProfilePage = () => {
   const { userInfo } = useContext(UserContext);
@@ -42,15 +43,15 @@ const ProfilePage = () => {
   };
   useEffect(() => {
     if (getUserToken()) {
-      fetchMeStuff('http://localhost:3001/skill', authObject, setSkills);
-      fetchMeStuff('http://localhost:3001/position', authObject, setPositions);
-      fetchMeStuff('http://localhost:3001/language', authObject, setLanguages);
-      fetchMeStuff('http://localhost:3001/city', authObject, setLocations);
+      fetchMeStuff(`${API_URL}/skill`, authObject, setSkills);
+      fetchMeStuff(`${API_URL}/position`, authObject, setPositions);
+      fetchMeStuff(`${API_URL}/language`, authObject, setLanguages);
+      fetchMeStuff(`${API_URL}/city`, authObject, setLocations);
     }
   }, []);
 
   useEffect(() => {
-    const url = 'http://localhost:3001/verify/raw';
+    const url = `${API_URL}/verify/raw`;
     fetch(url, authObject)
       .then((response) => {
         if (response.ok) {

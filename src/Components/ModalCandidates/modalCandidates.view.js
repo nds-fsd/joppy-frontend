@@ -3,6 +3,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { ReactComponent as HalfLogo } from '../../Images/Spinner.svg';
+import { API_URL } from '../../Routers/routers';
 import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 import CandidateProfileModal from '../CandidateProfileModal';
@@ -27,7 +28,7 @@ const ModalCandidates = ({ offer, handleClose }) => {
       body: JSON.stringify({ companyAccepted: true }),
     };
 
-    fetchMeStuff(`http://localhost:3001/offerstatus/${id}`, options, () => setTrigger(!trigger));
+    fetchMeStuff(`${API_URL}/offerstatus/${id}`, options, () => setTrigger(!trigger));
   };
 
   const handleReject = (id) => {
@@ -42,7 +43,7 @@ const ModalCandidates = ({ offer, handleClose }) => {
       body: JSON.stringify({ companyRejected: true }),
     };
 
-    fetchMeStuff(`http://localhost:3001/offerstatus/${id}`, options, () => setTrigger(!trigger));
+    fetchMeStuff(`${API_URL}/offerstatus/${id}`, options, () => setTrigger(!trigger));
   };
 
   const handleSeeCandidate = (candidateId) => {
@@ -67,7 +68,7 @@ const ModalCandidates = ({ offer, handleClose }) => {
   };
 
   useEffect(() => {
-    fetchMeStuff('http://localhost:3001/offerstatus/candidates', options, setCandidatesList);
+    fetchMeStuff(`${API_URL}/offerstatus/candidates`, options, setCandidatesList);
   }, [trigger]);
   return (
     <>

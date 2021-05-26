@@ -36,6 +36,7 @@ import NavBar from './Components/NavBar';
 import AdminPage from './Pages/AdminPage';
 import UserContext from './Contexts/userContext';
 import { fetchMeStuff } from './Utils/functions';
+import { API_URL } from './Routers/routers'; //eslint-disable-line
 // import Loader from './Components/Loader';
 
 library.add(
@@ -76,7 +77,7 @@ function App() {
           Authorization: `Bearer ${userToken}`,
         },
       };
-      fetchMeStuff('http://localhost:3001/verify', options, setUserInfo);
+      fetchMeStuff(`${API_URL}/verify`, options, setUserInfo);
     }
   }, []);
 

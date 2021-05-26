@@ -3,6 +3,7 @@ import styles from './joboffer.module.css';
 import CompanyIntro from '../CompanyIntro';
 import JobPosition from '../JobPosition';
 import Description from '../Description';
+import { API_URL } from '../../Routers/routers';
 
 const JobOffer = ({ offerInfo }) => {
   const [offerData, setOfferData] = useState();
@@ -16,7 +17,7 @@ const JobOffer = ({ offerInfo }) => {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:3001/offer/${offerInfo}`, authObject)
+    fetch(`${API_URL}/offer/${offerInfo}`, authObject)
       .then((response) => {
         if (response.ok) {
           return response.json();

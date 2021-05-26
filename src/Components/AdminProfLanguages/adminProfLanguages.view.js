@@ -3,6 +3,7 @@ import styles from './adminProfLanguages.module.css';
 import Tag from '../Tag';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
+import { API_URL } from '../../Routers/routers';
 
 const AdminProfLanguages = ({ userLanguages, close }) => {
   const [languages, setLanguages] = useState([]);
@@ -14,7 +15,7 @@ const AdminProfLanguages = ({ userLanguages, close }) => {
     },
   };
   useEffect(() => {
-    fetchMeStuff('http://localhost:3001/language', authObject, setLanguages);
+    fetchMeStuff(`${API_URL}/language`, authObject, setLanguages);
   }, []);
 
   const addLanguage = (languageId) => {
@@ -36,7 +37,7 @@ const AdminProfLanguages = ({ userLanguages, close }) => {
     mode: 'cors',
     body: JSON.stringify({ languages: updatedLanguages }),
   };
-  const url = `http://localhost:3001/user/${getSessionUser().id}`;
+  const url = `${API_URL}/user/${getSessionUser().id}`;
 
   const saveLanguages = () => {
     if (getUserToken()) {

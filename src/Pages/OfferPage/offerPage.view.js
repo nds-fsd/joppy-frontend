@@ -6,6 +6,7 @@ import { ReactComponent as Plant } from '../../Images/plant.svg';
 import { getSessionUser, getUserToken } from '../../Utils/Auth';
 import UserContext from '../../Contexts/userContext';
 import NoMoreOffers from '../../Components/NoMoreOffers';
+import { API_URL } from '../../Routers/routers';
 
 const OfferPage = () => {
   const [offerArray, setOfferArray] = useState();
@@ -32,7 +33,7 @@ const OfferPage = () => {
         mode: 'cors',
         body: JSON.stringify({ userId: userInfo._id }),
       };
-      fetch(`http://localhost:3001/offerstatus/filter`, filterOptions)
+      fetch(`${API_URL}/offerstatus/filter`, filterOptions)
         .then((res) => res.json())
         .then((data) => setOfferArray(data))
         .catch();
@@ -42,7 +43,7 @@ const OfferPage = () => {
   useEffect(() => {}, [trigger]);
 
   const updateOfferStatus = (body) => {
-    const urlOfferStatus = `http://localhost:3001/offerstatus/`;
+    const urlOfferStatus = `${API_URL}/offerstatus/`;
     const options = {
       method: 'POST',
       headers: new Headers({

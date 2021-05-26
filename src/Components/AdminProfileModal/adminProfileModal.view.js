@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import styles from './adminProfileModal.module.css';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
+import { API_URL } from '../../Routers/routers';
 
 const AdminProfileModal = ({ open, close, userData, locations }) => {
   const [newName, setNewName] = useState(userData.name);
@@ -18,7 +19,7 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
   }));
 
   const updateUser = () => {
-    const url = `http://localhost:3001/user/${getSessionUser().id}`;
+    const url = `${API_URL}/user/${getSessionUser().id}`;
     const bodyInfo = {
       name: newName,
       bio: newBio,

@@ -12,6 +12,7 @@ import ModalCandidates from '../ModalCandidates/modalCandidates.view';
 import { getUserToken } from '../../Utils/Auth';
 import ModalViewOffer from '../ModalViewOffer/modalViewOffer.view';
 import Loader from '../Loader';
+import { API_URL } from '../../Routers/routers';
 
 const AdminTable = ({ endpoint }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -61,12 +62,12 @@ const AdminTable = ({ endpoint }) => {
   };
 
   useEffect(() => {
-    fetchMeStuff(`http://localhost:3001/${endpoint}/count`, options, initializeTotalPages);
+    fetchMeStuff(`${API_URL}/${endpoint}/count`, options, initializeTotalPages);
   }, [pageLimit, triggerRefresh]);
 
   useEffect(() => {
     fetchMeStuff(
-      `http://localhost:3001/${endpoint}/search?page=${pageNum}&limit=${pageLimit}&sort=${sortBy}&dir=asc`,
+      `${API_URL}/${endpoint}/search?page=${pageNum}&limit=${pageLimit}&sort=${sortBy}&dir=asc`,
       options,
       (response) => {
         setResponseArray(response);

@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import styles from './loginForm.module.css';
-import { REGISTER_PAGE, OFFER_PAGE, ADMIN_PAGE } from '../../Routers/routers';
+import { REGISTER_PAGE, OFFER_PAGE, ADMIN_PAGE, API_URL } from '../../Routers/routers';
 import { getSessionUserRole, getUserToken, setUserSession } from '../../Utils/Auth';
 import Plant from '../../Images/plant.svg';
 import { ReactComponent as AppLogo } from '../../Images/Logo_first_draft.svg';
@@ -28,7 +28,7 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState();
 
   const onSubmit = (data) => {
-    const url = 'http://localhost:3001/login';
+    const url = `${API_URL}/login`;
     const options = {
       method: 'POST',
       headers: new Headers({
@@ -60,7 +60,7 @@ const LoginForm = () => {
             Authorization: `Bearer ${getUserToken()}`,
           },
         };
-        fetchMeStuff('http://localhost:3001/verify', auth, setUserInfo);
+        fetchMeStuff(`${API_URL}/verify`, auth, setUserInfo);
       })
       .then(() => {
         loginOK(getSessionUserRole());

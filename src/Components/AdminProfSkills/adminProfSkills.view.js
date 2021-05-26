@@ -3,6 +3,7 @@ import styles from './adminProfSkills.module.css';
 import Tag from '../Tag';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
+import { API_URL } from '../../Routers/routers';
 // import UserContext from '../../Contexts/userContext';
 
 const AdminProfSkills = ({ userSkills, close }) => {
@@ -16,7 +17,7 @@ const AdminProfSkills = ({ userSkills, close }) => {
     },
   };
   useEffect(() => {
-    fetchMeStuff('http://localhost:3001/skill', authObject, setSkills);
+    fetchMeStuff(`${API_URL}/skill`, authObject, setSkills);
   }, []);
 
   const addSkill = (skillId) => {
@@ -39,7 +40,7 @@ const AdminProfSkills = ({ userSkills, close }) => {
       body: JSON.stringify({ tech: updatedSkills }),
     };
 
-    const url = `http://localhost:3001/user/${getSessionUser().id}`;
+    const url = `${API_URL}/user/${getSessionUser().id}`;
 
     if (getUserToken()) {
       fetch(url, options)

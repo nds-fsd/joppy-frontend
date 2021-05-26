@@ -4,6 +4,7 @@ import { getSessionUser, getUserToken } from '../../Utils/Auth';
 import Tag from '../Tag';
 import ProfileList from '../ProfileList';
 import SalarySlider from '../SalarySlider';
+import { API_URL } from '../../Routers/routers';
 
 const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
   const closeThis = () => {
@@ -26,7 +27,7 @@ const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
   };
 
   const updateUser = () => {
-    const url = `http://localhost:3001/user/${userSession.id}`;
+    const url = `${API_URL}/user/${userSession.id}`;
     const options = {
       method: 'PUT',
       headers: new Headers({

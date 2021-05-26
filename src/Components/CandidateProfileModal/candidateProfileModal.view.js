@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { API_URL } from '../../Routers/routers';
 import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 import Modal from '../Modal';
@@ -19,7 +20,7 @@ const CandidateProfileModal = ({ handleClose, userId }) => {
   };
 
   useEffect(() => {
-    fetchMeStuff(`http://localhost:3001/user/${userId}`, options, setUserData);
+    fetchMeStuff(`${API_URL}/user/${userId}`, options, setUserData);
   }, []);
   return (
     <Modal handleClose={handleClose}>
