@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import styles from './profileForm.module.css';
 import Tag from '../Tag';
 import { fetchMeStuff } from '../../Utils/functions';
-import { setUserSession } from '../../Utils/Auth';
+import { getUserToken, setUserSession } from '../../Utils/Auth';
 import OneProfileForm from '../OneProfileForm';
 import FormBlock from '../FormBlock';
+import UserContext from '../../Contexts/userContext';
 
 const ProfileForm = () => {
   const [isFirstPage, setIsFirstPage] = useState(true);
@@ -22,6 +23,8 @@ const ProfileForm = () => {
   });
 
   const history = useHistory();
+
+  const { setUserInfo } = useContext(UserContext);
 
   const {
     register,
@@ -134,6 +137,15 @@ const ProfileForm = () => {
       .then((res) => {
         console.log(res);
         setUserSession(res);
+      })
+      .then(() => {
+        const auth = {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getUserToken()}`,
+          },
+        };
+        fetchMeStuff('http://localhost:3001/verify', auth, setUserInfo);
       })
       .then(history.push('/'))
       .catch();

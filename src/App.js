@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; // eslint-disable-line
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -25,7 +25,7 @@ import {
   faEnvelope,
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { getUserToken } from './Utils/Auth';
+// import { getUserToken } from './Utils/Auth';
 import styles from './App.css';
 import { OFFER_PAGE, PROFILE_PAGE, REGISTER_PAGE, LOGIN_PAGE, ADMIN_PAGE } from './Routers/routers'; //eslint-disable-line
 import OfferPage from './Pages/OfferPage';
@@ -35,7 +35,7 @@ import LoginPage from './Pages/LoginPage';
 import NavBar from './Components/NavBar';
 import AdminPage from './Pages/AdminPage';
 import UserContext from './Contexts/userContext';
-import { fetchMeStuff } from './Utils/functions';
+// import { fetchMeStuff } from './Utils/functions';
 // import Loader from './Components/Loader';
 
 library.add(
@@ -67,19 +67,19 @@ function App() {
   const [userInfo, setUserInfo] = useState();
   const value = { userInfo, setUserInfo };
 
-  useEffect(() => {
-    // const userRole = getSessionUserRole();
-    const userToken = getUserToken();
-    if (userToken) {
-      const options = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userToken}`,
-        },
-      };
-      fetchMeStuff('http://localhost:3001/verify', options, setUserInfo);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const userRole = getSessionUserRole();
+  //   const userToken = getUserToken();
+  //   if (userToken) {
+  //     const options = {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${userToken}`,
+  //       },
+  //     };
+  //     fetchMeStuff('http://localhost:3001/verify', options, setUserInfo);
+  //   }
+  // }, []);
 
   return (
     <Router>
