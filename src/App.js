@@ -36,6 +36,7 @@ import NavBar from './Components/NavBar';
 import AdminPage from './Pages/AdminPage';
 import UserContext from './Contexts/userContext';
 import { fetchMeStuff } from './Utils/functions';
+// import Loader from './Components/Loader';
 
 library.add(
   faCheck,
@@ -63,13 +64,13 @@ library.add(
 );
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState();
+  const value = { userInfo, setUserInfo };
 
   useEffect(() => {
+    // const userRole = getSessionUserRole();
     const userToken = getUserToken();
     if (userToken) {
-      setIsLoggedIn(true);
       const options = {
         headers: {
           'Content-Type': 'application/json',
@@ -81,32 +82,30 @@ function App() {
   }, []);
 
   return (
-    <UserContext.Provider value={userInfo}>
-      <Router>
+    <Router>
+      <UserContext.Provider value={value}>
         <div className={styles.App}>
           <Switch>
-            <Route path={REGISTER_PAGE}>
-              {isLoggedIn ? <Redirect to="/" /> : <RegisterPage />}
-            </Route>
-            <Route path={LOGIN_PAGE}>{isLoggedIn ? <Redirect to="/" /> : <LoginPage />}</Route>
+            <Route path={REGISTER_PAGE}>{userInfo ? <Redirect to="/" /> : <RegisterPage />}</Route>
+            <Route path={LOGIN_PAGE}>{userInfo ? <Redirect to="/" /> : <LoginPage />}</Route>
             <Route path={ADMIN_PAGE}>{userInfo ? <AdminPage /> : <h1>Nope</h1>}</Route>
-            <div>
-              <NavBar />
-              <div className={styles.main}>
-                <Switch>
-                  <Route exact path={OFFER_PAGE}>
-                    <OfferPage />
-                  </Route>
-                  <Route exact path={PROFILE_PAGE}>
-                    <ProfilePage />
-                  </Route>
-                </Switch>
-              </div>
+            <div className={styles.main}>
+              <Route exact path={PROFILE_PAGE}>
+                <NavBar />
+                <ProfilePage />
+              </Route>
+              <Route exact path={OFFER_PAGE}>
+                <NavBar />
+                <OfferPage />
+              </Route>
+              <Route path="/">
+                <h1>404</h1>
+              </Route>
             </div>
           </Switch>
         </div>
-      </Router>
-    </UserContext.Provider>
+      </UserContext.Provider>
+    </Router>
   );
 }
 

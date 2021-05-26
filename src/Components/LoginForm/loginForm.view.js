@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import styles from './loginForm.module.css';
-import { REGISTER_PAGE, OFFER_PAGE } from '../../Routers/routers';
+import { REGISTER_PAGE, OFFER_PAGE, ADMIN_PAGE } from '../../Routers/routers';
 import { setUserSession } from '../../Utils/Auth';
 import Plant from '../../Images/plant.svg';
 import { ReactComponent as AppLogo } from '../../Images/Logo_first_draft.svg';
@@ -10,8 +10,12 @@ import { ReactComponent as AppLogo } from '../../Images/Logo_first_draft.svg';
 const LoginForm = () => {
   const history = useHistory();
 
-  const loginOK = () => {
-    history.push(`${OFFER_PAGE}`);
+  const loginOK = (role) => {
+    if (role === 'DEVELOPER_ROLE') {
+      history.push(`${OFFER_PAGE}`);
+    } else {
+      history.push(`${ADMIN_PAGE}`);
+    }
   };
   const {
     register,
@@ -36,7 +40,6 @@ const LoginForm = () => {
     fetch(url, options)
       .then((response) => {
         if (response.ok) {
-          loginOK();
           return response.json();
         }
         {
@@ -47,6 +50,7 @@ const LoginForm = () => {
       .then((response) => {
         setErrorMessage(JSON.stringify(response));
         setUserSession(response);
+        loginOK(response.user.role);
       })
       .catch((error) => {
         console.log(error);

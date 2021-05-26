@@ -12,7 +12,7 @@ const OfferPage = () => {
   const [count, setCount] = useState(0);
   const userToken = getUserToken();
   const userSession = getSessionUser();
-  const userInfo = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
   const [trigger, setTrigger] = useState(false);
 
   const nextOffer = () => {

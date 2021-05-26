@@ -4,7 +4,7 @@ import Tag from '../Tag';
 import UserContext from '../../Contexts/userContext';
 
 const JobPosition = ({ offerData }) => {
-  const userInfo = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
   return (
     <div className={styles.jobPosition}>
       <p className={styles.offerTitle}>{offerData.title}</p>

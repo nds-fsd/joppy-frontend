@@ -11,7 +11,7 @@ import { fetchMeStuff } from '../../Utils/functions';
 import UserContext from '../../Contexts/userContext';
 
 const ProfilePage = () => {
-  const userData = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
   const [userDataRaw, setUserDataRaw] = useState();
   const [skills, setSkills] = useState([]);
   const [languages, setLanguages] = useState([]);
@@ -66,15 +66,15 @@ const ProfilePage = () => {
 
   return (
     <div className={styles.profilePage}>
-      {userData && userDataRaw ? (
+      {userInfo && userDataRaw ? (
         <>
-          <ProfileIntro userData={userData} locations={locations} />
+          <ProfileIntro userData={userInfo} locations={locations} />
           <div className={styles.profileNavBar}>
             <input type="button" className={styles.link} onClick={handleProfile} value="Profile" />
             <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
             <input type="button" className={styles.link} onClick={handleChat} value="My Offers" />
           </div>
-          {!openEdit && !openChat ? <Profile userData={userData} /> : null}
+          {!openEdit && !openChat ? <Profile userData={userInfo} /> : null}
           {openEdit ? (
             <ProfileEdit
               userDataRaw={userDataRaw}
@@ -84,7 +84,7 @@ const ProfilePage = () => {
               close={handleEdit}
             />
           ) : null}
-          {openChat ? <MyOffers userData={userData} closeChat={handleChat} /> : null}
+          {openChat ? <MyOffers userData={userInfo} closeChat={handleChat} /> : null}
         </>
       ) : (
         <p>loading...</p>

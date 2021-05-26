@@ -11,6 +11,7 @@ import UserContext from '../../Contexts/userContext';
 import ModalCandidates from '../ModalCandidates/modalCandidates.view';
 import { getUserToken } from '../../Utils/Auth';
 import ModalViewOffer from '../ModalViewOffer/modalViewOffer.view';
+import Loader from '../Loader';
 
 const AdminTable = ({ endpoint }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -22,7 +23,8 @@ const AdminTable = ({ endpoint }) => {
   const [whichOffer, setWhichOffer] = useState('');
   const [pageLimit, setPageLimit] = useState('5');
   const [triggerRefresh, setTriggerRefresh] = useState(false);
-  const userInfo = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const { userInfo } = useContext(UserContext);
 
   const pageLimitNum = parseInt(pageLimit, 10);
   const sortBy = 'title';
@@ -66,7 +68,10 @@ const AdminTable = ({ endpoint }) => {
     fetchMeStuff(
       `http://localhost:3001/${endpoint}/search?page=${pageNum}&limit=${pageLimit}&sort=${sortBy}&dir=asc`,
       options,
-      setResponseArray
+      (response) => {
+        setResponseArray(response);
+        setIsLoading(false);
+      }
     );
   }, [pageNum, pageLimit, searchQuery, triggerRefresh]);
 
@@ -119,7 +124,8 @@ const AdminTable = ({ endpoint }) => {
         <p className={styles.firstTableRowItem}>Creation Date</p>
       </div>
       <div className={styles.tableContents}>
-        {responseArray &&
+        {isLoading && <Loader />}
+        {!isLoading &&
           responseArray.map((object) => (
             <div className={styles.tableRow}>
               <p className={styles.tableRowItem}>{object.title}</p>

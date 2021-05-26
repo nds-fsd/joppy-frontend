@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import styles from './adminSideBar.module.css';
 import { ADMIN_PAGE, LOGIN_PAGE } from '../../Routers/routers';
 import { removeSession } from '../../Utils/Auth';
 import { ReactComponent as Logo } from '../../Images/Logo_first_draft.svg';
+import UserContext from '../../Contexts/userContext';
 
 const AdminSideBar = () => {
   const history = useHistory();
+  const { setUserInfo } = useContext(UserContext);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await setUserInfo(null);
     removeSession();
     history.push(`${LOGIN_PAGE}`);
   };
