@@ -1,8 +1,10 @@
 .jobdescription {
-  position: relative;
-  margin-top: 10%;
-  margin-left: 3%;
-  margin-right: 3%;
+  width: 95%;
+  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5em;
 }
 
 .headline {
@@ -18,4 +20,36 @@
   line-height: 24px;
   letter-spacing: 0.75px;
   color: #4e4b66;
+}
+
+.contentBox {
+  padding-left: 0.5em;
+  padding-right: 1em;
+}
+
+.logoAndTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1em;
+  width: 100%;
+}
+
+.logoLineBundle {
+  width: 100%;
+  position: relative;
+  height: 6em;
+}
+
+.line {
+  border-top: 1px solid #4e4b66;
+  width: 100%;
+  position: absolute;
+  top: 34px;
+}
+
+.logo {
+  position: absolute;
+  z-index: 1;
+  left: calc(50% - 40px);
 }

@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useHistory } from 'react-router-dom';
 import styles from './loginForm.module.css';
-import { REGISTER_PAGE, OFFER_PAGE } from '../../Routers/routers';
-import { setUserSession } from '../../Utils/Auth';
+import { REGISTER_PAGE, OFFER_PAGE, ADMIN_PAGE } from '../../Routers/routers';
+import { getSessionUserRole, getUserToken, setUserSession } from '../../Utils/Auth';
 import Plant from '../../Images/plant.svg';
 import { ReactComponent as AppLogo } from '../../Images/Logo_first_draft.svg';
+import { fetchMeStuff } from '../../Utils/functions';
+import UserContext from '../../Contexts/userContext';
 
 const LoginForm = () => {
   const history = useHistory();
-
-  const loginOK = () => {
-    history.push(`${OFFER_PAGE}`);
+  const { setUserInfo } = useContext(UserContext);
+  const loginOK = (role) => {
+    if (role === 'DEVELOPER_ROLE') {
+      history.push(`${OFFER_PAGE}`);
+    } else {
+      history.push(`${ADMIN_PAGE}`);
+    }
   };
   const {
     register,
@@ -22,8 +28,6 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState();
 
   const onSubmit = (data) => {
-    console.log(data);
-
     const url = 'http://localhost:3001/login';
     const options = {
       method: 'POST',
@@ -38,7 +42,6 @@ const LoginForm = () => {
     fetch(url, options)
       .then((response) => {
         if (response.ok) {
-          loginOK();
           return response.json();
         }
         {
@@ -49,6 +52,18 @@ const LoginForm = () => {
       .then((response) => {
         setErrorMessage(JSON.stringify(response));
         setUserSession(response);
+      })
+      .then(() => {
+        const auth = {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getUserToken()}`,
+          },
+        };
+        fetchMeStuff('http://localhost:3001/verify', auth, setUserInfo);
+      })
+      .then(() => {
+        loginOK(getSessionUserRole());
       })
       .catch((error) => {
         console.log(error);

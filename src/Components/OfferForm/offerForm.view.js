@@ -20,7 +20,7 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
     companyInfo: '',
   });
 
-  const userInfo = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
 
   const authObject = {
     headers: {

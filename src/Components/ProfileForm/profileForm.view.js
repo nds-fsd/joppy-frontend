@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import styles from './profileForm.module.css';
 import Tag from '../Tag';
 import { fetchMeStuff } from '../../Utils/functions';
-import { setUserSession } from '../../Utils/Auth';
+import { getUserToken, setUserSession } from '../../Utils/Auth';
 import OneProfileForm from '../OneProfileForm';
 import FormBlock from '../FormBlock';
+import UserContext from '../../Contexts/userContext';
 
 const ProfileForm = () => {
   const [isFirstPage, setIsFirstPage] = useState(true);
@@ -17,11 +18,13 @@ const ProfileForm = () => {
   const [userData, setUserData] = useState({
     skills: [],
     positions: [],
-    city: '',
+    location: '',
     salary: '40000',
   });
 
   const history = useHistory();
+
+  const { setUserInfo } = useContext(UserContext);
 
   const {
     register,
@@ -75,10 +78,10 @@ const ProfileForm = () => {
   };
 
   const addCity = (cityId) => {
-    if (userData.city === cityId) {
-      setUserData({ ...userData, city: '' });
+    if (userData.location === cityId) {
+      setUserData({ ...userData, location: '' });
     } else {
-      setUserData({ ...userData, city: cityId });
+      setUserData({ ...userData, location: cityId });
     }
   };
 
@@ -135,6 +138,15 @@ const ProfileForm = () => {
         console.log(res);
         setUserSession(res);
       })
+      .then(() => {
+        const auth = {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getUserToken()}`,
+          },
+        };
+        fetchMeStuff('http://localhost:3001/verify', auth, setUserInfo);
+      })
       .then(history.push('/'))
       .catch();
   };
@@ -155,17 +167,19 @@ const ProfileForm = () => {
             otherArrayRoles={userData.positions}
             cityData={cityData}
             addCity={addCity}
-            userDataCity={userData.city}
+            userDataCity={userData.location}
             roleYearsOnChange={addPositionYears}
             skillYearsOnChange={addSkillYears}
             buttonEnabled={
-              userData.skills.length > 0 && userData.positions.length > 0 && userData.city !== ''
+              userData.skills.length > 0 &&
+              userData.positions.length > 0 &&
+              userData.location !== ''
             }
             nextClicked={() => {
               if (
                 userData.positions.length > 0 &&
                 userData.skills.length > 0 &&
-                userData.city !== ''
+                userData.location !== ''
               ) {
                 setIsFirstPage(false);
                 setIsSecondPage(true);
@@ -186,7 +200,9 @@ const ProfileForm = () => {
             </p>
             <p className={styles.listText}>
               · You want to work at:{' '}
-              <span className={styles.purpleSpan}>{nameById(userData.city, cityData, 'name')}</span>
+              <span className={styles.purpleSpan}>
+                {nameById(userData.location, cityData, 'name')}
+              </span>
             </p>
             <p className={styles.listText}>· The positions you want:</p>
             <div className={styles.tagContainer}>
@@ -234,7 +250,7 @@ const ProfileForm = () => {
                 <h2>Password</h2>
                 <input
                   type="password"
-                  {...register('password', { required: true, minLength: 8 })}
+                  {...register('password', { required: true, minLength: 3 })}
                 />
                 {errors.password && 'Password is required'}
               </div>

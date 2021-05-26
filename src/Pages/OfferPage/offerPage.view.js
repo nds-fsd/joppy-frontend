@@ -1,43 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import ButtonsBar from '../../Components/ButtonsBar';
 import styles from './offerPage.module.css';
 import JobOffer from '../../Components/JobOffer';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
 import { getSessionUser, getUserToken } from '../../Utils/Auth';
+import UserContext from '../../Contexts/userContext';
+import NoMoreOffers from '../../Components/NoMoreOffers';
 
 const OfferPage = () => {
   const [offerArray, setOfferArray] = useState();
   const [count, setCount] = useState(0);
-  const userSession = getSessionUser();
   const userToken = getUserToken();
-  let url;
-  const authObject = {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${userToken}`,
-    },
-  };
+  const userSession = getSessionUser();
+  const { userInfo } = useContext(UserContext);
+  const [trigger, setTrigger] = useState(false);
 
   const nextOffer = () => {
     setCount(count + 1);
+    setTrigger(!trigger);
   };
 
   useEffect(() => {
-    if (userToken) {
-      fetch('http://localhost:3001/offer', authObject)
+    if (userInfo) {
+      const filterOptions = {
+        method: 'POST',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${getUserToken()}`,
+        }),
+        mode: 'cors',
+        body: JSON.stringify({ userId: userInfo._id }),
+      };
+      fetch(`http://localhost:3001/offerstatus/filter`, filterOptions)
         .then((res) => res.json())
         .then((data) => setOfferArray(data))
         .catch();
     }
-  }, []);
+  }, [userInfo]);
 
-  if (offerArray) {
-    url = `http://localhost:3001/offer/${offerArray[count]._id}`;
-  }
+  useEffect(() => {}, [trigger]);
 
-  const updateOffer = (body) => {
+  const updateOfferStatus = (body) => {
+    const urlOfferStatus = `http://localhost:3001/offerstatus/`;
     const options = {
-      method: 'PUT',
+      method: 'POST',
       headers: new Headers({
         Accept: 'application/json',
         'Content-type': 'application/json',
@@ -46,7 +53,7 @@ const OfferPage = () => {
       mode: 'cors',
       body: JSON.stringify(body),
     };
-    fetch(url, options, body)
+    fetch(urlOfferStatus, options, body)
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -61,17 +68,30 @@ const OfferPage = () => {
 
   const handleReject = () => {
     const body = {
-      rejected: userSession.id,
+      userId: userSession.id,
+      offerId: offerArray[count]._id,
+      rejected: true,
     };
-    updateOffer(body);
+    updateOfferStatus(body);
     nextOffer();
   };
 
   const handleAccept = () => {
     const body = {
-      accepted: userSession.id,
+      userId: userSession.id,
+      offerId: offerArray[count]._id,
+      accepted: true,
     };
-    updateOffer(body);
+    updateOfferStatus(body);
+    nextOffer();
+  };
+  const handleSnooze = () => {
+    const body = {
+      userId: userSession.id,
+      offerId: offerArray[count]._id,
+      snoozed: true,
+    };
+    updateOfferStatus(body);
     nextOffer();
   };
 
@@ -81,13 +101,13 @@ const OfferPage = () => {
         {offerArray && count < offerArray.length ? (
           <JobOffer offerInfo={offerArray[count]._id} />
         ) : (
-          <p>Nothing to show</p>
+          <NoMoreOffers />
         )}
       </div>
       <ButtonsBar
         rejectClicked={handleReject}
         acceptClicked={handleAccept}
-        nextClicked={nextOffer}
+        snoozeClicked={handleSnooze}
       />
       <Plant className={styles.plant} />
     </div>

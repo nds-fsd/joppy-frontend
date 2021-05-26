@@ -1,17 +1,28 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import styles from './companyintro.module.css';
 
 const CompanyIntro = ({ companyInfo }) => (
   <div className={styles.container}>
-    <div>
-      {companyInfo ? (
-        <img src={companyInfo.logo} alt="company logo" width="80" height="80" />
-      ) : null}
-    </div>
+    {companyInfo && (
+      <img
+        className={styles.companyLogo}
+        src={companyInfo.photo[0]}
+        alt="company logo"
+        width="80"
+        height="80"
+      />
+    )}
     <div className={styles.title}>
       {companyInfo ? <h4 className={styles.companyname}>{companyInfo.name}</h4> : null}
-      {companyInfo ? <p className={styles.size}>{companyInfo.companySize}</p> : null}
-      {companyInfo ? <p className={styles.profile}>Full Company profile</p> : null}
+      {companyInfo ? (
+        <h5 className={styles.location}>
+          <span>
+            <FontAwesomeIcon icon="map-marker-alt" />
+          </span>{' '}
+          {companyInfo.location.name}
+        </h5>
+      ) : null}
     </div>
   </div>
 );

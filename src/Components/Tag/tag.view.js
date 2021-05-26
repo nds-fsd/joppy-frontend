@@ -1,3 +1,5 @@
+/* eslint-disable no-nested-ternary */
+
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './tag.module.css';
@@ -11,12 +13,18 @@ const Tag = ({ name, icon, match, value, onClick, isActive }) => {
 
   return (
     <div
-      className={!isActive ? styles.tagContainer : styles.tagContainerActive}
+      className={
+        isActive
+          ? styles.tagContainerActive
+          : match
+          ? styles.tagContainerMatch
+          : styles.tagContainer
+      }
       onClick={handleClick}
     >
       {icon && (
-        <span className={styles.tagIcon}>
-          <FontAwesomeIcon icon={icon} />
+        <span className={match ? styles.tagIconMatch : styles.tagIcon}>
+          <FontAwesomeIcon icon={icon} size="sm" />
         </span>
       )}
 

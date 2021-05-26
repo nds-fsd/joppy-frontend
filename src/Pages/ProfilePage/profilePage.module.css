@@ -15,11 +15,11 @@
 .profileNavBar {
   margin: auto;
   margin-bottom: 2px;
-  width: 60%;
+  width: 55%;
   padding-top: 1%;
   padding-bottom: 1%;
   background: #fcfcfc;
-  box-shadow: 3px 3px 5px 3px rgb(180, 180, 180);
+  box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
   display: flex;
   justify-content: space-around;
 }
@@ -31,4 +31,24 @@
   font-weight: 600;
   letter-spacing: 0.75px;
   text-decoration: none;
+  margin-left: 13%;
+  margin-right: 13%;
+  border: none;
+  background: none;
+}
+
+.link:hover {
+  transform: scale(1.05);
+}
+
+.icon {
+  position: inherit;
+  color: #2b00a2;
+  margin-left: -27%;
+  margin-top: 0.2em;
+  z-index: inherit;
+}
+
+.icon:hover {
+  transform: scale(1.05);
 }
