@@ -8,6 +8,10 @@ import ModalDeleteOffer from '../ModalDeleteOffer';
 import ModalCreateOffer from '../ModalCreateOffer';
 import ModalEditOffer from '../ModalEditOffer';
 import UserContext from '../../Contexts/userContext';
+import ModalCandidates from '../ModalCandidates/modalCandidates.view';
+import { getUserToken } from '../../Utils/Auth';
+import ModalViewOffer from '../ModalViewOffer/modalViewOffer.view';
+import Loader from '../Loader';
 
 const AdminTable = ({ endpoint }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -19,7 +23,8 @@ const AdminTable = ({ endpoint }) => {
   const [whichOffer, setWhichOffer] = useState('');
   const [pageLimit, setPageLimit] = useState('5');
   const [triggerRefresh, setTriggerRefresh] = useState(false);
-  const userInfo = useContext(UserContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const { userInfo } = useContext(UserContext);
 
   const pageLimitNum = parseInt(pageLimit, 10);
   const sortBy = 'title';
@@ -49,11 +54,10 @@ const AdminTable = ({ endpoint }) => {
     headers: new Headers({
       Accept: 'apllication/json',
       'Content-type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+      Authorization: `Bearer ${getUserToken()}`,
     }),
     mode: 'cors',
-    body: JSON.stringify({ companyInfo: userInfo.id, search: searchQuery }),
+    body: JSON.stringify({ companyInfo: userInfo._id, search: searchQuery }),
   };
 
   useEffect(() => {
@@ -64,7 +68,10 @@ const AdminTable = ({ endpoint }) => {
     fetchMeStuff(
       `http://localhost:3001/${endpoint}/search?page=${pageNum}&limit=${pageLimit}&sort=${sortBy}&dir=asc`,
       options,
-      setResponseArray
+      (response) => {
+        setResponseArray(response);
+        setIsLoading(false);
+      }
     );
   }, [pageNum, pageLimit, searchQuery, triggerRefresh]);
 
@@ -90,6 +97,12 @@ const AdminTable = ({ endpoint }) => {
           handleOfferEdit={offerDeleted}
         />
       )}
+      {openModal && whichModal === 'view' && (
+        <ModalViewOffer handleClose={() => setOpenModal(false)} offerId={whichOffer} />
+      )}
+      {openModal && whichModal === 'candidates' && (
+        <ModalCandidates handleClose={() => setOpenModal(false)} offer={whichOffer} />
+      )}
       <div className={styles.topRow}>
         <SearchBar handleQuery={(q) => setSearchQuery(q)} />
         <button
@@ -111,7 +124,8 @@ const AdminTable = ({ endpoint }) => {
         <p className={styles.firstTableRowItem}>Creation Date</p>
       </div>
       <div className={styles.tableContents}>
-        {responseArray &&
+        {isLoading && <Loader />}
+        {!isLoading &&
           responseArray.map((object) => (
             <div className={styles.tableRow}>
               <p className={styles.tableRowItem}>{object.title}</p>
@@ -138,8 +152,26 @@ const AdminTable = ({ endpoint }) => {
                   >
                     Edit offer
                   </Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownElement}>View offer</Dropdown.Item>
-                  <Dropdown.Item className={styles.dropdownElement}>See candidates</Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownElement}
+                    onClick={() => {
+                      setWhichModal('view');
+                      setWhichOffer(object._id);
+                      setOpenModal(true);
+                    }}
+                  >
+                    View offer
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className={styles.dropdownElement}
+                    onClick={() => {
+                      setWhichModal('candidates');
+                      setWhichOffer(object._id);
+                      setOpenModal(true);
+                    }}
+                  >
+                    See candidates
+                  </Dropdown.Item>
                   <Dropdown.Item
                     className={styles.delete}
                     onClick={() => {

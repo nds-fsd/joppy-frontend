@@ -1,12 +1,18 @@
 .profile {
   margin: auto;
   margin-bottom: 15px;
-  padding-bottom: 5%;
-  width: 53%;
+  padding-right: 7%;
+  padding-bottom: 4%;
+  width: 41%;
   padding-top: 2%;
   padding-left: 7%;
   background: #fcfcfc;
-  box-shadow: 3px 3px 5px 3px rgb(180, 180, 180);
+  box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
+}
+
+.icon {
+  right: 0px;
+  z-index: 1;
 }
 .headline {
   font-weight: 600;
@@ -14,6 +20,8 @@
   line-height: 34px;
   letter-spacing: 0.75px;
   color: #4e4b66;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
 }
 
 .infoText {
@@ -21,4 +29,20 @@
   line-height: 24px;
   letter-spacing: 0.75px;
   color: #4e4b66;
+}
+
+.itemText {
+  background: #e4daff;
+  border: 0.1em solid #2a00a2;
+  width: fit-content;
+  padding: 0.5em;
+  padding-bottom: 0em;
+  color: #2a00a2;
+  border-radius: 1em;
+  text-align: center;
+  line-height: 1.5em;
+  border-radius: 0.5em;
+  height: 2em;
+  margin-bottom: 1em;
+  margin-right: 1em;
 }

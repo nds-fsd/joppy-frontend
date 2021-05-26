@@ -1,7 +1,8 @@
+/*eslint-disable*/
+
 import { useEffect, useState } from 'react';
 import { getFromCache, setToCache } from '../../Utils/cache';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
-import { fetchMeStuff } from '../../Utils/functions';
 
 const userToken = getUserToken();
 const userSession = getSessionUser();
@@ -12,15 +13,12 @@ const authObject = {
   },
 };
 
-const KEY = 'user';
+const KEY = 'user-session';
 
-export const useUser = () => {
+const useUser = () => {
   const [userData, setUserData] = useState();
-  const [error, setError] = useState({});
-  const [loaded, setLoaded] = useState(false);
 
   const successCallback = (payload) => {
-    setLoaded(true);
     setUserData(payload);
     setToCache(KEY, payload);
   };
@@ -28,37 +26,28 @@ export const useUser = () => {
   useEffect(() => {
     const userFromCache = getFromCache(KEY);
     if (userFromCache) {
-      setLoaded(true);
       setUserData(userFromCache);
     } else {
       const url = `http://localhost:3001/user/${userSession.id}`;
-      fetchMeStuff({
-        authObject,
-        url,
-        body: userData,
-        method: 'GET',
-        successCallback,
-        errorCallback: setError,
-      });
+      if (userToken) {
+        fetch(url, authObject)
+          .then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            return Promise.reject();
+          })
+          .then((payload) => {
+            successCallback(payload);
+          })
+          .catch();
+      }
     }
   }, []);
 
-  const saveUser = (user) => {
-    const url = 'http://localhost:3001/user';
-
-    fetchMeStuff({
-      url,
-      body: user,
-      method: 'POST',
-      successCallback,
-      errorCallback: setError,
-    });
-  };
-
   return {
     userData,
-    saveUser,
-    error,
-    loaded,
   };
 };
+
+export default useUser;

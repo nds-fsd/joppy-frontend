@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; // eslint-disable-line
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -19,10 +19,13 @@ import {
   faTimes,
   faEdit,
   faSearch,
+  faMapMarkerAlt,
+  faEuroSign,
+  faComments,
+  faEnvelope,
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
-
-import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
-import { getUserToken } from './Utils/Auth';
+// import { getUserToken } from './Utils/Auth';
 import styles from './App.css';
 import { OFFER_PAGE, PROFILE_PAGE, REGISTER_PAGE, LOGIN_PAGE, ADMIN_PAGE } from './Routers/routers'; //eslint-disable-line
 import OfferPage from './Pages/OfferPage';
@@ -32,7 +35,8 @@ import LoginPage from './Pages/LoginPage';
 import NavBar from './Components/NavBar';
 import AdminPage from './Pages/AdminPage';
 import UserContext from './Contexts/userContext';
-import { fetchMeStuff } from './Utils/functions';
+// import { fetchMeStuff } from './Utils/functions';
+// import Loader from './Components/Loader';
 
 library.add(
   faCheck,
@@ -49,56 +53,56 @@ library.add(
   faUser,
   faCircleNotch,
   faLayerGroup,
-  faCommentAlt,
   faTimes,
   faEdit,
-  faSearch
+  faSearch,
+  faMapMarkerAlt,
+  faEuroSign,
+  faEnvelope,
+  faComments,
+  faTrashAlt
 );
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState();
+  const value = { userInfo, setUserInfo };
 
-  useEffect(() => {
-    const userToken = getUserToken();
-    if (userToken) {
-      setIsLoggedIn(true);
-      const options = {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${userToken}`,
-        },
-      };
-      fetchMeStuff('http://localhost:3001/verify', options, setUserInfo);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const userRole = getSessionUserRole();
+  //   const userToken = getUserToken();
+  //   if (userToken) {
+  //     const options = {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${userToken}`,
+  //       },
+  //     };
+  //     fetchMeStuff('http://localhost:3001/verify', options, setUserInfo);
+  //   }
+  // }, []);
+
   return (
-    <UserContext.Provider value={userInfo}>
-      <Router>
+    <Router>
+      <UserContext.Provider value={value}>
         <div className={styles.App}>
           <Switch>
-            <Route path={REGISTER_PAGE}>
-              {isLoggedIn ? <Redirect to="/" /> : <RegisterPage />}
-            </Route>
-            <Route path={LOGIN_PAGE}>{isLoggedIn ? <Redirect to="/" /> : <LoginPage />}</Route>
+            <Route path={REGISTER_PAGE}>{userInfo ? <Redirect to="/" /> : <RegisterPage />}</Route>
+            <Route path={LOGIN_PAGE}>{userInfo ? <Redirect to="/" /> : <LoginPage />}</Route>
             <Route path={ADMIN_PAGE}>{userInfo ? <AdminPage /> : <h1>Nope</h1>}</Route>
-            <div>
-              <NavBar />
-              <div className={styles.main}>
-                <Switch>
-                  <Route exact path={OFFER_PAGE}>
-                    <OfferPage />
-                  </Route>
-                  <Route path={PROFILE_PAGE}>
-                    <ProfilePage />
-                  </Route>
-                </Switch>
-              </div>
+            <div className={styles.main}>
+              <Route exact path={PROFILE_PAGE}>
+                <NavBar />
+                <ProfilePage />
+              </Route>
+              <Route exact path={OFFER_PAGE}>
+                <NavBar />
+                <OfferPage />
+              </Route>
             </div>
           </Switch>
         </div>
-      </Router>
-    </UserContext.Provider>
+      </UserContext.Provider>
+    </Router>
   );
 }
 
