@@ -3,6 +3,7 @@ import Modal from '../Modal';
 import { fetchMeStuff } from '../../Utils/functions';
 import styles from './modalDeleteOffer.module.css';
 import { API_URL } from '../../Routers/routers';
+import { getUserToken } from '../../Utils/Auth';
 
 const ModalDeleteOffer = ({ handleClose, offerId, handleOfferDeleted }) => {
   const handleDelete = () => {
@@ -11,8 +12,7 @@ const ModalDeleteOffer = ({ handleClose, offerId, handleOfferDeleted }) => {
       headers: new Headers({
         Accept: 'apllication/json',
         'Content-type': 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+        Authorization: `Bearer ${getUserToken()}`,
       }),
       mode: 'cors',
     };
