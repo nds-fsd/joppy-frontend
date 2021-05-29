@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import ButtonsBar from '../../Components/ButtonsBar';
 import styles from './offerPage.module.css';
 import JobOffer from '../../Components/JobOffer';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
-import { getSessionUser, getUserToken } from '../../Utils/Auth';
+import { getSessionUser, getSessionUserRole, getUserToken } from '../../Utils/Auth';
 import UserContext from '../../Contexts/userContext';
 import NoMoreOffers from '../../Components/NoMoreOffers';
 import { API_URL } from '../../Routers/routers';
@@ -95,6 +96,14 @@ const OfferPage = () => {
     updateOfferStatus(body);
     nextOffer();
   };
+
+  if (!getUserToken()) {
+    return <Redirect to="/login" />;
+  }
+
+  if (getSessionUserRole() && getSessionUserRole() === 'COMPANY_ROLE') {
+    return <Redirect to="/admin" />;
+  }
 
   return (
     <div className={styles.offerPage}>

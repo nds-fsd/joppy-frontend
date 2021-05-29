@@ -147,8 +147,8 @@ const ProfileForm = () => {
         };
         fetchMeStuff(`${API_URL}/verify`, auth, setUserInfo);
       })
-      .then(history.push('/'))
-      .catch();
+      .then(() => history.push('/'))
+      .catch((error) => console.log(error));
   };
 
   return (

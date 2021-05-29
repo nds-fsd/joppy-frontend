@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './profilePage.module.css';
 import Profile from '../../Components/Profile';
@@ -6,7 +7,7 @@ import ProfileIntro from '../../Components/ProfileIntro';
 import ProfileEdit from '../../Components/ProfileEdit';
 import MyOffers from '../../Components/MyOffers';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
-import { getUserToken } from '../../Utils/Auth';
+import { getSessionUserRole, getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 import UserContext from '../../Contexts/userContext';
 import { API_URL } from '../../Routers/routers';
@@ -64,6 +65,14 @@ const ProfilePage = () => {
       })
       .catch();
   }, []);
+
+  if (!getUserToken()) {
+    return <Redirect to="/login" />;
+  }
+
+  if (getSessionUserRole() && getSessionUserRole() === 'COMPANY_ROLE') {
+    return <Redirect to="/admin" />;
+  }
 
   return (
     <div className={styles.profilePage}>

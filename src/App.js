@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCheck,
@@ -37,6 +37,7 @@ import AdminPage from './Pages/AdminPage';
 import UserContext from './Contexts/userContext';
 import { fetchMeStuff } from './Utils/functions';
 import { API_URL } from './Routers/routers'; //eslint-disable-line
+import Loader from './Components/Loader';
 // import Loader from './Components/Loader';
 
 library.add(
@@ -86,9 +87,13 @@ function App() {
       <UserContext.Provider value={value}>
         <div className={styles.App}>
           <Switch>
-            <Route path={REGISTER_PAGE}>{userInfo ? <Redirect to="/" /> : <RegisterPage />}</Route>
-            <Route path={LOGIN_PAGE}>{userInfo ? <Redirect to="/" /> : <LoginPage />}</Route>
-            <Route path={ADMIN_PAGE}>{userInfo ? <AdminPage /> : <h1>Nope</h1>}</Route>
+            <Route path={REGISTER_PAGE}>
+              <RegisterPage />
+            </Route>
+            <Route path={LOGIN_PAGE}>
+              <LoginPage />
+            </Route>
+            <Route path={ADMIN_PAGE}>{userInfo ? <AdminPage /> : <Loader />}</Route>
             <div className={styles.main}>
               <Route exact path={PROFILE_PAGE}>
                 <NavBar />
