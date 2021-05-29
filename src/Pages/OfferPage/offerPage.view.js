@@ -98,18 +98,23 @@ const OfferPage = () => {
 
   return (
     <div className={styles.offerPage}>
-      <div className={styles.offerBody}>
-        {offerArray && count < offerArray.length ? (
-          <JobOffer offerInfo={offerArray[count]._id} />
-        ) : (
+      {offerArray && count < offerArray.length ? (
+        <>
+          <div className={styles.offerBody}>
+            <JobOffer offerInfo={offerArray[count]._id} />
+          </div>
+          <ButtonsBar
+            rejectClicked={handleReject}
+            acceptClicked={handleAccept}
+            snoozeClicked={handleSnooze}
+          />
+        </>
+      ) : (
+        <div className={styles.offerBody}>
           <NoMoreOffers />
-        )}
-      </div>
-      <ButtonsBar
-        rejectClicked={handleReject}
-        acceptClicked={handleAccept}
-        snoozeClicked={handleSnooze}
-      />
+        </div>
+      )}
+
       <Plant className={styles.plant} />
     </div>
   );

@@ -55,34 +55,43 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
     <div className={styles.adminProfileModal}>
       {userData ? (
         <div className={styles.adminModal}>
-          <p>Name</p>
-          <input
-            type="text"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
-            className={styles.input}
-          />
-          <p>Location</p>
-          {locations ? (
-            <Select
-              placeholder={userData.location.name}
-              options={selectOptions}
-              value={newLocation.label}
-              onChange={(e) => setNewLocation(e.value)}
+          <div className={styles.body}>
+            <div className={styles.headline}>Name</div>
+            <input
+              type="text"
+              value={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              className={styles.input}
             />
-          ) : null}
-          <p>Bio</p>
-          <textarea
-            id="bio"
-            name="bio"
-            rows="4"
-            cols="40"
-            value={newBio}
-            className={styles.inputBio}
-            onChange={(e) => setNewBio(e.target.value)}
-          />
-          <input type="button" className={styles.saveButton} value="Save" onClick={updateUser} />
-          <input type="button" className={styles.cancelButton} value="Cancel" onClick={close} />
+          </div>
+          <div className={styles.body}>
+            <div className={styles.headline}>Location</div>
+            {locations ? (
+              <Select
+                className={styles.select}
+                placeholder={userData.location.name}
+                options={selectOptions}
+                value={newLocation.label}
+                onChange={(e) => setNewLocation(e.value)}
+              />
+            ) : null}
+          </div>
+          <div className={styles.body}>
+            <div className={styles.headline}>Bio</div>
+            <textarea
+              id="bio"
+              name="bio"
+              rows="6"
+              cols="40"
+              value={newBio}
+              className={styles.inputBio}
+              onChange={(e) => setNewBio(e.target.value)}
+            />
+          </div>
+          <div className={styles.buttons}>
+            <input type="button" className={styles.saveButton} value="Save" onClick={updateUser} />
+            <input type="button" className={styles.cancelButton} value="Cancel" onClick={close} />
+          </div>
         </div>
       ) : null}
     </div>

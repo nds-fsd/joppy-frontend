@@ -35,7 +35,11 @@ const MyOffers = ({ userData }) => {
 
   return (
     <div className={styles.myOffers}>
-      <p>Take a look at the offers you are interested in and start contacting the companies!</p>
+      {offers === undefined || offers.length < 1 ? (
+        <p>You have no accepted offers. Go back to the offers page to find your ideal job!</p>
+      ) : (
+        <p>Take a look at the offers you are interested in and start contacting the companies!</p>
+      )}
       <div className={styles.chat}>
         {offers ? (
           offers.map((offer) => (

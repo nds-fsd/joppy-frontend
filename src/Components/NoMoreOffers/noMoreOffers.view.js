@@ -10,8 +10,9 @@ const NoMoreOffers = () => (
     <p className={styles.pageText}>
       We‘re out of job opportunities to show you <br /> at this time.
     </p>
+    <p className={styles.pageText}>Check out your snoozed offers</p>
     <p className={styles.pageText}>
-      Come back later too see if any new <br /> ones have been added
+      or come back later too see if any new <br /> ones have been added
     </p>
   </div>
 );

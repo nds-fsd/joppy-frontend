@@ -21,7 +21,7 @@
   background: #fcfcfc;
   box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .link {
@@ -40,11 +40,13 @@
 .link:hover {
   transform: scale(1.05);
 }
+.profandedit {
+  display: inline-flex;
+}
 
 .icon {
   position: inherit;
   color: #2b00a2;
-  margin-left: -27%;
   margin-top: 0.2em;
   z-index: inherit;
 }

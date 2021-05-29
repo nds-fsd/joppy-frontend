@@ -67,6 +67,7 @@ library.add(
 function App() {
   const [userInfo, setUserInfo] = useState();
   const value = { userInfo, setUserInfo };
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const userToken = getUserToken();
@@ -79,7 +80,7 @@ function App() {
       };
       fetchMeStuff(`${API_URL}/verify`, options, setUserInfo);
     }
-  }, []);
+  }, [refresh]);
 
   return (
     <Router>
@@ -92,7 +93,11 @@ function App() {
             <div className={styles.main}>
               <Route exact path={PROFILE_PAGE}>
                 <NavBar />
-                <ProfilePage />
+                <ProfilePage
+                  refresh={(ref) => {
+                    setRefresh(ref);
+                  }}
+                />
               </Route>
               <Route exact path={OFFER_PAGE}>
                 <NavBar />

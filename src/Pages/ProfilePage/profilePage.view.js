@@ -11,7 +11,7 @@ import { fetchMeStuff } from '../../Utils/functions';
 import UserContext from '../../Contexts/userContext';
 import { API_URL } from '../../Routers/routers';
 
-const ProfilePage = () => {
+const ProfilePage = ({ refresh }) => {
   const { userInfo } = useContext(UserContext);
   const [userDataRaw, setUserDataRaw] = useState();
   const [skills, setSkills] = useState([]);
@@ -71,8 +71,15 @@ const ProfilePage = () => {
         <>
           <ProfileIntro userData={userInfo} locations={locations} />
           <div className={styles.profileNavBar}>
-            <input type="button" className={styles.link} onClick={handleProfile} value="Profile" />
-            <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
+            <div className={styles.profandedit}>
+              <input
+                type="button"
+                className={styles.link}
+                onClick={handleProfile}
+                value="Profile"
+              />
+              <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
+            </div>
             <input type="button" className={styles.link} onClick={handleChat} value="My Offers" />
           </div>
           {!openEdit && !openChat ? <Profile userData={userInfo} /> : null}
@@ -83,6 +90,7 @@ const ProfilePage = () => {
               positions={positions}
               languages={languages}
               close={handleEdit}
+              refresh={refresh}
             />
           ) : null}
           {openChat ? <MyOffers userData={userInfo} closeChat={handleChat} /> : null}

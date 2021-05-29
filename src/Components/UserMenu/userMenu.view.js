@@ -1,6 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './userMenu.module.css';
 import { PROFILE_PAGE, LOGIN_PAGE, OFFER_PAGE } from '../../Routers/routers';
 import { removeSession } from '../../Utils/Auth';
@@ -32,23 +31,20 @@ const UserMenu = () => {
       />
 
       {open === true ? (
-        <div className={styles.menuContent}>
-          {{ OFFER_PAGE } && (
-            <Link to={PROFILE_PAGE}>
-              <FontAwesomeIcon icon="user" />
+        <>
+          <div className={styles.menuContent}>
+            <span className={styles.tip} />
+            <Link to={PROFILE_PAGE} className={styles.Link}>
               Profile
             </Link>
-          )}
-          {{ PROFILE_PAGE } && (
-            <Link to={OFFER_PAGE}>
-              <FontAwesomeIcon icon="user" />
+            <Link to={OFFER_PAGE} className={styles.Link}>
               Offers
             </Link>
-          )}
-          <Link to={LOGIN_PAGE}>
-            <div onClick={logOut}>Logout</div>
-          </Link>
-        </div>
+            <Link to={LOGIN_PAGE} className={styles.Link}>
+              <div onClick={logOut}>Logout</div>
+            </Link>
+          </div>
+        </>
       ) : null}
     </div>
   );
