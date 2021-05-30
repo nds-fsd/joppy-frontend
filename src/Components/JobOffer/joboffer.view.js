@@ -5,6 +5,7 @@ import JobPosition from '../JobPosition';
 import Description from '../Description';
 import Loader from '../Loader';
 import { API_URL } from '../../Routers/routers';
+import { getUserToken } from '../../Utils/Auth';
 
 const JobOffer = ({ offerInfo }) => {
   const [offerData, setOfferData] = useState();
@@ -12,8 +13,7 @@ const JobOffer = ({ offerInfo }) => {
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+      Authorization: `Bearer ${getUserToken()}`,
     },
   };
 

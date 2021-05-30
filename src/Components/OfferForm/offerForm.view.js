@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import UserContext from '../../Contexts/userContext';
 import { API_URL } from '../../Routers/routers';
+import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 import InputText from '../InputText';
 // import InputTextarea from '../InputTextarea';
@@ -26,8 +27,7 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+      Authorization: `Bearer ${getUserToken()}`,
     },
   };
 
@@ -45,7 +45,7 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
     }
     fetchMeStuff(`${API_URL}/skill`, authObject, setSkillData);
     fetchMeStuff(`${API_URL}/position`, authObject, setPositionData);
-    setOfferData({ ...offerData, companyInfo: userInfo.id });
+    setOfferData({ ...offerData, companyInfo: userInfo._id });
   }, []);
 
   const addSkill = (skillId) => {
@@ -70,8 +70,7 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
       headers: new Headers({
         Accept: 'apllication/json',
         'Content-type': 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+        Authorization: `Bearer ${getUserToken()}`,
       }),
       mode: 'cors',
       body: JSON.stringify(offerData),
@@ -86,8 +85,7 @@ const OfferForm = ({ handleClose, handleOfferCreated, offerId }) => {
       headers: new Headers({
         Accept: 'apllication/json',
         'Content-type': 'application/json',
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+        Authorization: `Bearer ${getUserToken()}`,
       }),
       mode: 'cors',
       body: JSON.stringify(offerData),

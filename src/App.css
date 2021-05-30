@@ -6,3 +6,10 @@
 .main {
   width: 100%;
 }
+
+.loaderDiv {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 12%;
+}

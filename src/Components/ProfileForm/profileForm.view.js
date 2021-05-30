@@ -36,8 +36,7 @@ const ProfileForm = () => {
   const authObject = {
     headers: {
       'Content-Type': 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTg4NTA1MjZ9.zWaG0bpB2EyKhBJA-f4Njki1Kxugvxo1uIx6kDO5ie8',
+      Authorization: `Bearer ${getUserToken()}`,
     },
   };
 
@@ -148,8 +147,8 @@ const ProfileForm = () => {
         };
         fetchMeStuff(`${API_URL}/verify`, auth, setUserInfo);
       })
-      .then(history.push('/'))
-      .catch();
+      .then(() => history.push('/'))
+      .catch((error) => console.log(error));
   };
 
   return (

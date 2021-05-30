@@ -125,7 +125,11 @@ const AdminTable = ({ endpoint }) => {
         <p className={styles.firstTableRowItem}>Creation Date</p>
       </div>
       <div className={styles.tableContents}>
-        {isLoading && <Loader />}
+        {isLoading && (
+          <div className={styles.loaderDiv}>
+            <Loader />
+          </div>
+        )}
         {!isLoading &&
           responseArray.map((object) => (
             <div className={styles.tableRow}>
