@@ -5,11 +5,16 @@ import { getUserToken } from '../../Utils/Auth';
 import JobPosition from '../JobPosition';
 import { API_URL } from '../../Routers/routers';
 import Description from '../Description';
+import ChatModal from '../ChatModal';
 
 const AcceptedOffer = ({ offer, refresh }) => {
   const [openOffer, setOpenOffer] = useState(false);
   const handleOffer = () => {
     setOpenOffer(!openOffer);
+  };
+  const [openChat, setOpenChat] = useState(false);
+  const handleChat = () => {
+    setOpenChat(!openChat);
   };
   console.log(offer);
 
@@ -73,7 +78,7 @@ const AcceptedOffer = ({ offer, refresh }) => {
           <div className={styles.iconBlock}>
             {offer.companyAccepted ? (
               <>
-                <FontAwesomeIcon icon="comments" className={styles.icon} />
+                <FontAwesomeIcon icon="comments" className={styles.icon} onClick={handleChat} />
                 <FontAwesomeIcon icon="envelope" className={styles.icon} />
               </>
             ) : null}
@@ -89,6 +94,7 @@ const AcceptedOffer = ({ offer, refresh }) => {
           </div>
         </div>
       ) : null}
+      {openChat ? <ChatModal handleClose={handleChat} /> : null}
     </div>
   );
 };
