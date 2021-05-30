@@ -24,6 +24,7 @@ import {
   faComments,
   faEnvelope,
   faTrashAlt,
+  faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 import { getUserToken } from './Utils/Auth';
 import './App.css';
@@ -62,7 +63,8 @@ library.add(
   faEuroSign,
   faEnvelope,
   faComments,
-  faTrashAlt
+  faTrashAlt,
+  faPaperPlane
 );
 
 function App() {

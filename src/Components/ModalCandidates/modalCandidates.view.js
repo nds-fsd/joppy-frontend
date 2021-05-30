@@ -8,12 +8,14 @@ import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 import CandidateProfileModal from '../CandidateProfileModal';
 import Modal from '../Modal';
+import ChatModal from '../ChatModal';
 import styles from './modalCandidates.module.css';
 
 const ModalCandidates = ({ offer, handleClose }) => {
   const [candidatesList, setCandidatesList] = useState();
   const [trigger, setTrigger] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [openChat, setOpenChat] = useState(false);
   const [whichUserId, setWhichUserId] = useState();
 
   const handleAccept = (id) => {
@@ -51,8 +53,14 @@ const ModalCandidates = ({ offer, handleClose }) => {
     setWhichUserId(candidateId);
   };
 
+  const handleOpenChat = (candidateId) => {
+    setOpenChat(true);
+    setWhichUserId(candidateId);
+  };
+
   const handleModalClose = () => {
     setOpenModal(false);
+    setOpenChat(false);
     setWhichUserId(undefined);
   };
 
@@ -75,7 +83,8 @@ const ModalCandidates = ({ offer, handleClose }) => {
       {openModal && whichUserId && (
         <CandidateProfileModal handleClose={handleModalClose} userId={whichUserId} />
       )}
-      {!openModal && (
+      {openChat && whichUserId && <ChatModal handleClose={handleModalClose} userId={whichUserId} />}
+      {!openModal && !openChat && (
         <Modal>
           <div className={styles.container}>
             <div className={styles.wrapperContainer}>
@@ -91,6 +100,13 @@ const ModalCandidates = ({ offer, handleClose }) => {
                     <div className={wrapperStyle} onClick={() => console.log(candidate)}>
                       <p>{candidate.userId.name}</p>
                       <div className={styles.optionsDiv}>
+                        {candidate.companyAccepted && (
+                          <FontAwesomeIcon
+                            icon="comments"
+                            className={`${styles.icon} ${styles.user}`}
+                            onClick={() => handleOpenChat(candidate.userId._id)}
+                          />
+                        )}
                         <FontAwesomeIcon
                           className={`${styles.icon} ${styles.user}`}
                           icon="user"
