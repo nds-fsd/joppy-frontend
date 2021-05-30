@@ -39,7 +39,6 @@ import { fetchMeStuff } from './Utils/functions';
 import { API_URL } from './Routers/routers'; //eslint-disable-line
 import Loader from './Components/Loader';
 import NotFound from './Pages/NotFound';
-import Loader from './Components/Loader';
 
 library.add(
   faCheck,
@@ -107,7 +106,7 @@ function App() {
             <NavBar />
             <ProfilePage
               refresh={(ref) => {
-                serRefresh(ref);
+                setRefresh(ref);
               }}
             />
           </Route>
