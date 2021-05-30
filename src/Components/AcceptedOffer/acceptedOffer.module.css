@@ -15,6 +15,7 @@
 }
 
 .acceptedOffer:hover {
+  position: inherit;
   transform: scale(1.05);
   box-shadow: 0 4px 10px 0 #602eea91;
 }
@@ -29,15 +30,11 @@
 
 .options {
   display: grid;
-  grid-template-rows: 50% auto;
-  grid-template-areas:
-    'seeOffer'
-    'iconBlock';
 }
 .seeOffer {
   position: inherit;
   z-index: inherit;
-  margin-left: 45%;
+  margin-left: 39%;
   margin-top: 0.5em;
   font-weight: 400;
   font-size: 14px;
@@ -81,10 +78,10 @@
 }
 
 .iconBlock {
-  position: relative;
+  position: inherit;
   z-index: inherit;
   margin-top: 1em;
-  right: -50%;
+  margin-left: 4.5em;
   width: 35%;
   display: inline-flex;
   justify-content: flex-end;
@@ -104,7 +101,7 @@
 .delete {
   font-size: 1.2em;
   color: #5f2eea;
-  position: relative;
+  position: inherit;
   z-index: inherit;
 }
 .delete:hover {
