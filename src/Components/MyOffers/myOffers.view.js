@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 import styles from './myOffers.module.css';
 import AcceptedOffer from '../AcceptedOffer';
+import Loader from '../Loader';
 import { API_URL } from '../../Routers/routers';
 
 const MyOffers = ({ userData }) => {
@@ -46,7 +47,7 @@ const MyOffers = ({ userData }) => {
             <AcceptedOffer offer={offer} userData={userData} refresh={refresh} />
           ))
         ) : (
-          <p>loading...</p>
+          <Loader />
         )}
       </div>
     </div>

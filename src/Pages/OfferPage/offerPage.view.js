@@ -5,11 +5,12 @@ import JobOffer from '../../Components/JobOffer';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
 import { getSessionUser, getUserToken } from '../../Utils/Auth';
 import UserContext from '../../Contexts/userContext';
-import NoMoreOffers from '../../Components/NoMoreOffers';
+import SnoozedPage from '../../Components/SnoozedPage';
 import { API_URL } from '../../Routers/routers';
 
 const OfferPage = () => {
   const [offerArray, setOfferArray] = useState();
+  const [snoozedOfferArray, setSnoozedOfferArray] = useState();
   const [count, setCount] = useState(0);
   const userToken = getUserToken();
   const userSession = getSessionUser();
@@ -36,6 +37,25 @@ const OfferPage = () => {
       fetch(`${API_URL}/offerstatus/filter`, filterOptions)
         .then((res) => res.json())
         .then((data) => setOfferArray(data))
+        .catch();
+    }
+  }, [userInfo]);
+
+  useEffect(() => {
+    if (userInfo) {
+      const snoozedOptions = {
+        method: 'POST',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-type': 'application/json',
+          Authorization: `Bearer ${getUserToken()}`,
+        }),
+        mode: 'cors',
+        body: JSON.stringify({ userId: userInfo._id, snoozed: true }),
+      };
+      fetch(`${API_URL}/offerstatus/snoozedoffers`, snoozedOptions)
+        .then((res) => res.json())
+        .then((data) => setSnoozedOfferArray(data))
         .catch();
     }
   }, [userInfo]);
@@ -111,7 +131,7 @@ const OfferPage = () => {
         </>
       ) : (
         <div className={styles.offerBody}>
-          <NoMoreOffers />
+          <SnoozedPage snoozedOfferArray={snoozedOfferArray} />
         </div>
       )}
 

@@ -3,6 +3,7 @@ import styles from './joboffer.module.css';
 import CompanyIntro from '../CompanyIntro';
 import JobPosition from '../JobPosition';
 import Description from '../Description';
+import Loader from '../Loader';
 import { API_URL } from '../../Routers/routers';
 
 const JobOffer = ({ offerInfo }) => {
@@ -38,7 +39,7 @@ const JobOffer = ({ offerInfo }) => {
       {offerData ? (
         <Description offerData={offerData} companyInfo={offerData.companyInfo} />
       ) : (
-        <p>loading</p>
+        <Loader />
       )}
     </div>
   );
