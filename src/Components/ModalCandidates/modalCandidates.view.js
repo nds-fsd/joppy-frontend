@@ -85,7 +85,7 @@ const ModalCandidates = ({ offer, handleClose }) => {
       )}
       {openChat && whichUserId && <ChatModal handleClose={handleModalClose} userId={whichUserId} />}
       {!openModal && !openChat && (
-        <Modal>
+        <Modal style={{ width: '40vw', 'max-height': '90vh' }}>
           <div className={styles.container}>
             <div className={styles.wrapperContainer}>
               {candidatesList &&
