@@ -10,6 +10,7 @@ import CandidateProfileModal from '../CandidateProfileModal';
 import Modal from '../Modal';
 import ChatModal from '../ChatModal';
 import styles from './modalCandidates.module.css';
+import { useChatContext } from '../../Contexts/chatContext';
 
 const ModalCandidates = ({ offer, handleClose }) => {
   const [candidatesList, setCandidatesList] = useState();
@@ -97,7 +98,7 @@ const ModalCandidates = ({ offer, handleClose }) => {
                     wrapperStyle = `${wrapperStyle} ${styles.companyRejected}`;
                   }
                   return (
-                    <div className={wrapperStyle} onClick={() => console.log(candidate)}>
+                    <div className={wrapperStyle}>
                       <p>{candidate.userId.name}</p>
                       <div className={styles.optionsDiv}>
                         {candidate.companyAccepted && (

@@ -94,7 +94,9 @@ const AcceptedOffer = ({ offer, refresh }) => {
           </div>
         </div>
       ) : null}
-      {openChat ? <ChatModal handleClose={handleChat} /> : null}
+      {openChat ? (
+        <ChatModal handleClose={handleChat} userId={offer.offerId.companyInfo._id} />
+      ) : null}
     </div>
   );
 };

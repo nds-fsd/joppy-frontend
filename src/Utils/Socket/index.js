@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { createContext, useEffect, useContext } from 'react';
 import { io } from 'socket.io-client';
 import { getUserToken } from '../Auth';
