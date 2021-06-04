@@ -68,7 +68,6 @@ const ModalCandidates = ({ offer, handleClose }) => {
         return Promise.reject();
       })
       .catch();
-    console.log(mailOptions);
   };
 
   const handleReject = (id) => {
