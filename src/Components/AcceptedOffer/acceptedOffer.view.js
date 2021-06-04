@@ -6,6 +6,8 @@ import JobPosition from '../JobPosition';
 import { API_URL } from '../../Routers/routers';
 import Description from '../Description';
 import ChatModal from '../ChatModal';
+import { useChatContext } from '../../Contexts/chatContext';
+import { fetchMeStuff } from '../../Utils/functions';
 
 const AcceptedOffer = ({ offer, refresh }) => {
   const [openOffer, setOpenOffer] = useState(false);
@@ -13,10 +15,33 @@ const AcceptedOffer = ({ offer, refresh }) => {
     setOpenOffer(!openOffer);
   };
   const [openChat, setOpenChat] = useState(false);
-  const handleChat = () => {
-    setOpenChat(!openChat);
+
+  const { setActiveChat } = useChatContext();
+
+  const options2 = {
+    method: 'POST',
+    headers: new Headers({
+      Accept: 'apllication/json',
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${getUserToken()}`,
+    }),
+    mode: 'cors',
+    body: JSON.stringify({ chatMembers: [offer.offerId.companyInfo._id] }),
   };
-  console.log(offer);
+
+  const handleChat = () => {
+    fetchMeStuff(`${API_URL}/chat/search`, options2, (responseExisting) => {
+      if (responseExisting.length > 0) {
+        setActiveChat(responseExisting[0]);
+        setOpenChat(!openChat);
+      } else {
+        fetchMeStuff(`${API_URL}/chat`, options2, (responseNew) => {
+          setActiveChat(responseNew);
+          setOpenChat(!openChat);
+        });
+      }
+    });
+  };
 
   const rejectStatus = () => {
     if (getUserToken()) {

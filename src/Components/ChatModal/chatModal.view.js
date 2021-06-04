@@ -7,27 +7,18 @@ import { API_URL } from '../../Routers/routers';
 import { getUserToken } from '../../Utils/Auth';
 import UserContext from '../../Contexts/userContext';
 import { useSocket } from '../../Utils/Socket';
+import { useChatContext } from '../../Contexts/chatContext';
 // import { useChatContext } from '../../Contexts/chatContext';
 
+// eslint-disable-next-line
 const ChatModal = ({ handleClose, userId }) => {
   const [messageArray, setMessageArray] = useState();
-  const [activeChat, setActiveChat] = useState();
+  const { activeChat } = useChatContext();
   const [refresh, setRefresh] = useState(true);
   const [userName, setUserName] = useState('');
   const { userInfo } = useContext(UserContext);
   const { subscribeIncomingMessage, joinChat } = useSocket();
   const [messageText, setMessageText] = useState();
-
-  const options = {
-    method: 'POST',
-    headers: new Headers({
-      Accept: 'apllication/json',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${getUserToken()}`,
-    }),
-    mode: 'cors',
-    body: JSON.stringify({ chatMembers: [userId] }),
-  };
 
   const options2 = {
     headers: new Headers({
@@ -52,7 +43,7 @@ const ChatModal = ({ handleClose, userId }) => {
   useEffect(() => {
     if (activeChat) {
       joinChat(activeChat._id);
-
+      console.log(activeChat._id);
       subscribeIncomingMessage(() => {
         setRefresh(true);
       });
@@ -60,19 +51,8 @@ const ChatModal = ({ handleClose, userId }) => {
   }, []);
 
   useEffect(() => {
-    fetchMeStuff(`${API_URL}/chat/search`, options, (responseExisting) => {
-      if (responseExisting.length > 0) {
-        setActiveChat(responseExisting[0]);
-        setUserName(responseExisting[0].users.filter((u) => u._id !== userInfo._id)[0].name);
-        fetchMeStuff(`${API_URL}/message/${responseExisting[0]._id}`, options2, setMessageArray);
-      } else {
-        fetchMeStuff(`${API_URL}/chat`, options, (responseNew) => {
-          setActiveChat(responseNew);
-          setUserName(responseNew.users.filter((u) => u._id !== userInfo._id)[0].name);
-          fetchMeStuff(`${API_URL}/message/${responseNew._id}`, options2, setMessageArray);
-        });
-      }
-    });
+    setUserName(activeChat.users.filter((u) => u._id !== userInfo._id)[0].name);
+    fetchMeStuff(`${API_URL}/message/${activeChat._id}`, options2, setMessageArray);
   }, []);
 
   useEffect(() => {
