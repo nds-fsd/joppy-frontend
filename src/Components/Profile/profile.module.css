@@ -46,3 +46,8 @@
   margin-bottom: 1em;
   margin-right: 1em;
 }
+
+.Loader {
+  position: inherit;
+  width: 50%;
+}

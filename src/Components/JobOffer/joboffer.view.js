@@ -39,7 +39,9 @@ const JobOffer = ({ offerInfo }) => {
       {offerData ? (
         <Description offerData={offerData} companyInfo={offerData.companyInfo} />
       ) : (
-        <Loader />
+        <div className={styles.Loader}>
+          <Loader />
+        </div>
       )}
     </div>
   );

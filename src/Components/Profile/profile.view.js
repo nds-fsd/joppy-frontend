@@ -35,7 +35,7 @@ const Profile = ({ userData, style }) => (
         </div>
       </>
     ) : (
-      <Loader />
+      <Loader className={styles.Loader} />
     )}
   </div>
 );

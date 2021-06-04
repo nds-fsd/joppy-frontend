@@ -17,8 +17,6 @@ const SnoozedOffers = ({ snoozedOfferArray }) => {
     setTrigger(!trigger);
   };
 
-  // ESTAS TRAYENDO LOS IDS DE LAS OFERTAS, NO DE LOS OFFER STATUS -_-
-
   const updateOfferStatus = (body) => {
     const urlOfferStatus = `${API_URL}/offerstatus/${snoozedOfferArray[count]._id}`;
     const options = {

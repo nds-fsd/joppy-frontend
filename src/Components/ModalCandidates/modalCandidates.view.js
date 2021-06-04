@@ -14,13 +14,23 @@ import { useChatContext } from '../../Contexts/chatContext';
 
 const ModalCandidates = ({ offer, handleClose }) => {
   const [candidatesList, setCandidatesList] = useState();
+  const [offerInfo, setOfferInfo] = useState();
   const [trigger, setTrigger] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openChat, setOpenChat] = useState(false);
   const [whichUserId, setWhichUserId] = useState();
   const { setActiveChat } = useChatContext();
+  const fetchOptions = {
+    headers: new Headers({
+      Accept: 'apllication/json',
+      'Content-type': 'application/json',
+      Authorization: `Bearer ${getUserToken()}`,
+    }),
+    mode: 'cors',
+  };
+  fetchMeStuff(`${API_URL}/offer/${offer}`, fetchOptions, setOfferInfo);
 
-  const handleAccept = (id) => {
+  const handleAccept = (offerStatusObject) => {
     const options = {
       method: 'PUT',
       headers: new Headers({
@@ -32,7 +42,33 @@ const ModalCandidates = ({ offer, handleClose }) => {
       body: JSON.stringify({ companyAccepted: true }),
     };
 
-    fetchMeStuff(`${API_URL}/offerstatus/${id}`, options, () => setTrigger(!trigger));
+    fetchMeStuff(`${API_URL}/offerstatus/${offerStatusObject._id}`, options, () =>
+      setTrigger(!trigger)
+    );
+
+    const mailOptions = {
+      method: 'POST',
+      headers: new Headers({
+        Accept: 'apllication/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getUserToken()}`,
+      }),
+      mode: 'cors',
+      body: JSON.stringify({
+        name: offerInfo.companyInfo.name,
+        email: offerStatusObject.userId.email,
+        title: offerInfo.title,
+      }),
+    };
+    fetch(`${API_URL}/send-email/accepted`, mailOptions)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject();
+      })
+      .catch();
+    console.log(mailOptions);
   };
 
   const handleReject = (id) => {
@@ -140,7 +176,7 @@ const ModalCandidates = ({ offer, handleClose }) => {
                             <FontAwesomeIcon
                               className={`${styles.icon} ${styles.accept}`}
                               icon="check"
-                              onClick={() => handleAccept(candidate._id)}
+                              onClick={() => handleAccept(candidate)}
                             />
                             <FontAwesomeIcon
                               className={`${styles.icon} ${styles.reject}`}
