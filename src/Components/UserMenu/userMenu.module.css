@@ -10,6 +10,7 @@
   font-weight: 600;
   border-radius: 50px;
   border-color: #5f2eea;
+  cursor: pointer;
 }
 
 .menuButton:hover {
