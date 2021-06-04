@@ -23,7 +23,7 @@ const CandidateProfileModal = ({ handleClose, userId }) => {
     fetchMeStuff(`${API_URL}/user/${userId}`, options, setUserData);
   }, []);
   return (
-    <Modal handleClose={handleClose}>
+    <Modal handleClose={handleClose} style={{ width: '40vw', 'max-height': '90vh' }}>
       <div className={styles.container}>
         <div className={styles.profileContainer}>
           {userData && (

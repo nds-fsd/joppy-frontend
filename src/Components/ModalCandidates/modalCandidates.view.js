@@ -10,6 +10,7 @@ import CandidateProfileModal from '../CandidateProfileModal';
 import Modal from '../Modal';
 import ChatModal from '../ChatModal';
 import styles from './modalCandidates.module.css';
+import { useChatContext } from '../../Contexts/chatContext';
 
 const ModalCandidates = ({ offer, handleClose }) => {
   const [candidatesList, setCandidatesList] = useState();
@@ -17,6 +18,7 @@ const ModalCandidates = ({ offer, handleClose }) => {
   const [openModal, setOpenModal] = useState(false);
   const [openChat, setOpenChat] = useState(false);
   const [whichUserId, setWhichUserId] = useState();
+  const { setActiveChat } = useChatContext();
 
   const handleAccept = (id) => {
     const options = {
@@ -54,8 +56,29 @@ const ModalCandidates = ({ offer, handleClose }) => {
   };
 
   const handleOpenChat = (candidateId) => {
-    setOpenChat(true);
-    setWhichUserId(candidateId);
+    const options2 = {
+      method: 'POST',
+      headers: new Headers({
+        Accept: 'apllication/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getUserToken()}`,
+      }),
+      mode: 'cors',
+      body: JSON.stringify({ chatMembers: [candidateId] }),
+    };
+    fetchMeStuff(`${API_URL}/chat/search`, options2, (responseExisting) => {
+      if (responseExisting.length > 0) {
+        setActiveChat(responseExisting[0]);
+        setOpenChat(true);
+        setWhichUserId(candidateId);
+      } else {
+        fetchMeStuff(`${API_URL}/chat`, options2, (responseNew) => {
+          setActiveChat(responseNew);
+          setOpenChat(true);
+          setWhichUserId(candidateId);
+        });
+      }
+    });
   };
 
   const handleModalClose = () => {
@@ -85,7 +108,7 @@ const ModalCandidates = ({ offer, handleClose }) => {
       )}
       {openChat && whichUserId && <ChatModal handleClose={handleModalClose} userId={whichUserId} />}
       {!openModal && !openChat && (
-        <Modal>
+        <Modal style={{ width: '40vw', 'max-height': '90vh' }}>
           <div className={styles.container}>
             <div className={styles.wrapperContainer}>
               {candidatesList &&
@@ -97,7 +120,7 @@ const ModalCandidates = ({ offer, handleClose }) => {
                     wrapperStyle = `${wrapperStyle} ${styles.companyRejected}`;
                   }
                   return (
-                    <div className={wrapperStyle} onClick={() => console.log(candidate)}>
+                    <div className={wrapperStyle}>
                       <p>{candidate.userId.name}</p>
                       <div className={styles.optionsDiv}>
                         {candidate.companyAccepted && (

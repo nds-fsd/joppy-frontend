@@ -11,6 +11,8 @@ import { getSessionUserRole, getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 import UserContext from '../../Contexts/userContext';
 import { API_URL } from '../../Routers/routers';
+import { ChatContextProvider } from '../../Contexts/chatContext';
+import { SocketContextProvider } from '../../Utils/Socket';
 
 const ProfilePage = ({ refresh }) => {
   const { userInfo } = useContext(UserContext);
@@ -75,40 +77,49 @@ const ProfilePage = ({ refresh }) => {
   }
 
   return (
-    <div className={styles.profilePage}>
-      {userInfo && userDataRaw ? (
-        <>
-          <ProfileIntro userData={userInfo} locations={locations} />
-          <div className={styles.profileNavBar}>
-            <div className={styles.profandedit}>
-              <input
-                type="button"
-                className={styles.link}
-                onClick={handleProfile}
-                value="Profile"
-              />
-              <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
-            </div>
-            <input type="button" className={styles.link} onClick={handleChat} value="My Offers" />
-          </div>
-          {!openEdit && !openChat ? <Profile userData={userInfo} /> : null}
-          {openEdit ? (
-            <ProfileEdit
-              userDataRaw={userDataRaw}
-              skills={skills}
-              positions={positions}
-              languages={languages}
-              close={handleEdit}
-              refresh={refresh}
-            />
-          ) : null}
-          {openChat ? <MyOffers userData={userInfo} closeChat={handleChat} /> : null}
-        </>
-      ) : (
-        <p>loading...</p>
-      )}
-      <Plant className={styles.plant} />
-    </div>
+    <ChatContextProvider>
+      <SocketContextProvider>
+        <div className={styles.profilePage}>
+          {userInfo && userDataRaw ? (
+            <>
+              <ProfileIntro userData={userInfo} locations={locations} />
+              <div className={styles.profileNavBar}>
+                <div className={styles.profandedit}>
+                  <input
+                    type="button"
+                    className={styles.link}
+                    onClick={handleProfile}
+                    value="Profile"
+                  />
+                  <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
+                </div>
+                <input
+                  type="button"
+                  className={styles.link}
+                  onClick={handleChat}
+                  value="My Offers"
+                />
+              </div>
+              {!openEdit && !openChat ? <Profile userData={userInfo} /> : null}
+              {openEdit ? (
+                <ProfileEdit
+                  userDataRaw={userDataRaw}
+                  skills={skills}
+                  positions={positions}
+                  languages={languages}
+                  close={handleEdit}
+                  refresh={refresh}
+                />
+              ) : null}
+              {openChat ? <MyOffers userData={userInfo} closeChat={handleChat} /> : null}
+            </>
+          ) : (
+            <p>loading...</p>
+          )}
+          <Plant className={styles.plant} />
+        </div>
+      </SocketContextProvider>
+    </ChatContextProvider>
   );
 };
 
