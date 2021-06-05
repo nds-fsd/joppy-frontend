@@ -6,8 +6,8 @@
   background-color: #5f2eea;
   height: 48px;
   width: 48px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   border-radius: 50px;
   border-color: #5f2eea;
   cursor: pointer;
@@ -23,7 +23,7 @@
   height: 15px;
   background: #d9dbe9;
   position: absolute;
-  z-index: 1;
+  z-index: 0;
   top: -0.4em;
   left: 2.2em;
   transform: rotate(45deg);
@@ -31,11 +31,10 @@
 
 .menuContent {
   z-index: 1;
-  padding: 12px;
+  padding: 2%;
   position: absolute;
-  width: 90px;
-  height: 80px;
-  right: 16%;
+  min-height: 110%;
+  right: 15.8%;
   top: 4em;
   background: #d9dbe9;
   border-radius: 16px;

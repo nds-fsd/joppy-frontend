@@ -3,10 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './profileIntro.module.css';
 import AdminProfileModal from '../AdminProfileModal';
 
-const ProfileIntro = ({ userData, locations, style1, style2 }) => {
+const ProfileIntro = ({ userData, locations, style1, style2, refresh }) => {
   const [openModal, setOpenModal] = useState(false);
   const handleEditModal = () => setOpenModal(!openModal);
-  console.log(userData);
+
   return (
     <div className={styles.profileIntro} style={style1}>
       <FontAwesomeIcon
@@ -32,6 +32,7 @@ const ProfileIntro = ({ userData, locations, style1, style2 }) => {
           close={() => setOpenModal(false)}
           userData={userData}
           locations={locations}
+          refresh={refresh}
         />
       ) : null}
     </div>

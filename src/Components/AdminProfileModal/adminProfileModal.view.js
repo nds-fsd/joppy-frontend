@@ -4,8 +4,7 @@ import styles from './adminProfileModal.module.css';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 import { API_URL } from '../../Routers/routers';
 
-const AdminProfileModal = ({ open, close, userData, locations }) => {
-  const [newImage, setNewImage] = useState(userData.photo);
+const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
   const [newName, setNewName] = useState(userData.name);
   const [newBio, setNewBio] = useState(userData.bio);
   const [newLocation, setNewLocation] = useState(userData.location);
@@ -25,57 +24,29 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
       bio: newBio,
       location: newLocation,
     };
-    // const imageData = new FormData();
-    // Object.values(newImage).forEach((image, index) => {
-    //   imageData.append(index, image);
-    // });
-
-    const imageOptions = {
-      method: 'POST',
+    const options = {
+      method: 'PUT',
       headers: new Headers({
         Accept: 'application/json',
         'Content-type': 'application/json',
         Authorization: `Bearer ${getUserToken()}`,
       }),
       mode: 'cors',
-      body: newImage,
+      body: JSON.stringify(bodyInfo),
     };
-    console.log(newImage);
+
     if (getUserToken()) {
-      fetch(`${API_URL}/image`, imageOptions)
+      fetch(`${API_URL}/user/${getSessionUser().id}`, options)
         .then((response) => {
           if (response.ok) {
             return response.json();
           }
           return Promise.reject();
         })
-        .then((images) => {
-          const imageIds = images.map((img) => img.id);
-          const finalData = { ...bodyInfo, images: imageIds };
-          fetch(`${API_URL}/user/${getSessionUser().id}`, {
-            method: 'PUT',
-            headers: new Headers({
-              Accept: 'application/json',
-              'Content-type': 'application/json',
-              Authorization: `Bearer ${getUserToken()}`,
-            }),
-            mode: 'cors',
-            body: JSON.stringify(finalData),
-          });
-        })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          return Promise.reject();
-        })
-        .then((res) => {
-          console.log(res);
-        })
+        .then(refresh())
         .then(close())
         .catch();
     }
-    console.log(newImage);
   };
 
   return (
@@ -91,12 +62,7 @@ const AdminProfileModal = ({ open, close, userData, locations }) => {
               className={styles.input}
             />
           </div>
-          <input
-            type="file"
-            onChange={(e) => {
-              setNewImage(e.target.value);
-            }}
-          />
+          <input type="file" />
           <div className={styles.body}>
             <div className={styles.headline}>Location</div>
             {locations ? (

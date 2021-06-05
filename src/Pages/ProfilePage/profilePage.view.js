@@ -6,6 +6,7 @@ import Profile from '../../Components/Profile';
 import ProfileIntro from '../../Components/ProfileIntro';
 import ProfileEdit from '../../Components/ProfileEdit';
 import MyOffers from '../../Components/MyOffers';
+import Loader from '../../Components/Loader';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
 import { getSessionUserRole, getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
@@ -82,7 +83,7 @@ const ProfilePage = ({ refresh }) => {
         <div className={styles.profilePage}>
           {userInfo && userDataRaw ? (
             <>
-              <ProfileIntro userData={userInfo} locations={locations} />
+              <ProfileIntro userData={userInfo} locations={locations} refresh={refresh} />
               <div className={styles.profileNavBar}>
                 <div className={styles.profandedit}>
                   <input
@@ -114,7 +115,9 @@ const ProfilePage = ({ refresh }) => {
               {openChat ? <MyOffers userData={userInfo} closeChat={handleChat} /> : null}
             </>
           ) : (
-            <p>loading...</p>
+            <div className={styles.LoaderContainer}>
+              <Loader />
+            </div>
           )}
           <Plant className={styles.plant} />
         </div>

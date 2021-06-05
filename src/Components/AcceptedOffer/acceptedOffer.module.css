@@ -13,6 +13,11 @@
   grid-template-columns: 65% auto;
   grid-template-areas: 'info' 'options';
 }
+@media (max-width: 600px) {
+  .acceptedOffer {
+    width: 70%;
+  }
+}
 
 .acceptedOffer:hover {
   position: inherit;

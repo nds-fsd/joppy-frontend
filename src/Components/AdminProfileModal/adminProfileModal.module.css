@@ -23,6 +23,11 @@
   border-radius: 15px;
   background-color: #fcfcfc;
 }
+@media (max-width: 600px) {
+  .adminModal {
+    width: 90%;
+  }
+}
 
 .headline {
   color: #5f2eea;

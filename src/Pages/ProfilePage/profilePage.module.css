@@ -56,3 +56,22 @@
 .icon:hover {
   transform: scale(1.05);
 }
+
+.LoaderContainer {
+  position: relative;
+  top: 25%;
+  margin: auto;
+  max-width: 5%;
+}
+
+@media (max-width: 630px) {
+  .plant {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .profileNavBar {
+    width: 100%;
+  }
+}

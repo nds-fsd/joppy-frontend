@@ -46,9 +46,6 @@ const ProfileEdit = ({ userDataRaw, skills, positions, languages, close, refresh
           }
           return Promise.reject();
         })
-        .then((res) => {
-          console.log(res);
-        })
         .catch();
     }
     closeThis();

@@ -28,7 +28,6 @@ const MyOffers = ({ userData }) => {
         .then((res) => res.json())
         .then((data) => {
           setOffers(data);
-          console.log(offers);
         })
         .catch();
     }
@@ -49,7 +48,7 @@ const MyOffers = ({ userData }) => {
           </p>
         </div>
       )}
-      <div className={styles.chat}>
+      <div className={styles.jobOffer}>
         {offers ? (
           offers.map((offer) => (
             <AcceptedOffer offer={offer} userData={userData} refresh={refresh} />
