@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './chatModal.module.css';
 import Modal from '../Modal';
@@ -19,6 +19,11 @@ const ChatModal = ({ handleClose, userId }) => {
   const { userInfo } = useContext(UserContext);
   const { subscribeIncomingMessage, joinChat } = useSocket();
   const [messageText, setMessageText] = useState();
+  const setRef = useCallback((node) => {
+    if (node !== null) {
+      node.scrollIntoView({ smooth: true });
+    }
+  }, []);
 
   const options2 = {
     headers: new Headers({
@@ -70,8 +75,18 @@ const ChatModal = ({ handleClose, userId }) => {
     setMessageText(e.target.value);
   };
 
-  const handleSendMessage = (e) => {
+  const handleSendMessageClick = (e) => {
     if (messageText !== '') {
+      e.preventDefault();
+      fetchMeStuff(`${API_URL}/message/${activeChat._id}`, options3, () => {
+        setMessageText('');
+        setRefresh(true);
+      });
+    }
+  };
+
+  const handleSendMessageKey = (e) => {
+    if (messageText !== '' && e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault();
       fetchMeStuff(`${API_URL}/message/${activeChat._id}`, options3, () => {
         setMessageText('');
@@ -91,17 +106,23 @@ const ChatModal = ({ handleClose, userId }) => {
         </div>
         <div className={styles.chatWindow}>
           {messageArray &&
-            messageArray.map((message) => (
-              <div
-                className={
-                  message.user._id !== userInfo._id
-                    ? `${styles.message}`
-                    : `${styles.message} ${styles.mine}`
-                }
-              >
-                {message.text}
-              </div>
-            ))}
+            messageArray.map((message, index) => {
+              const lastMessage = messageArray.length - 1 === index;
+              return (
+                <div
+                  key={message._id}
+                  ref={lastMessage ? setRef : null}
+                  className={
+                    message.user._id !== userInfo._id
+                      ? `${styles.message}`
+                      : `${styles.message} ${styles.mine}`
+                  }
+                >
+                  {message.text}
+                  <p className={styles.timeSent}>{message.createdAt.substring(11, 16)}</p>
+                </div>
+              );
+            })}
         </div>
         <div className={styles.inputRow}>
           <input
@@ -109,9 +130,10 @@ const ChatModal = ({ handleClose, userId }) => {
             placeholder="Type a message"
             value={messageText}
             onChange={handleOnChange}
+            onKeyDown={handleSendMessageKey}
             className={styles.textInput}
           />
-          <button type="button" className={styles.sendButton} onClick={handleSendMessage}>
+          <button type="button" className={styles.sendButton} onClick={handleSendMessageClick}>
             <FontAwesomeIcon icon="paper-plane" size="lg" />
           </button>
         </div>

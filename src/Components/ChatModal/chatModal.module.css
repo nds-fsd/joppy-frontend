@@ -45,26 +45,34 @@
 }
 
 .message {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   border: 0.1em solid #2a00a2;
   width: fit-content;
   max-width: 60%;
   padding: 0.4em 1em;
-  color: #2a00a2;
   border-radius: 1em;
   text-align: left;
   line-height: 1em;
   margin: 0.5em 1em;
   font-size: 1rem;
-  background: #e4daff;
+  background: #2a00a2;
+  color: #e4daff;
   align-self: flex-start;
 }
 
 .mine {
-  background: #2a00a2;
-  color: #e4daff;
   align-self: flex-end;
   text-align: right;
+  background: #e4daff;
+  color: #2a00a2;
+}
+
+.timeSent {
+  margin: 0;
+  margin-top: 0.2em;
+  opacity: 0.5;
+  font-size: 0.7em;
 }
 
 .inputRow {

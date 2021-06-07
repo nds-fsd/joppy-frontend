@@ -20,15 +20,18 @@ const ModalCandidates = ({ offer, handleClose }) => {
   const [openChat, setOpenChat] = useState(false);
   const [whichUserId, setWhichUserId] = useState();
   const { setActiveChat } = useChatContext();
-  const fetchOptions = {
-    headers: new Headers({
-      Accept: 'apllication/json',
-      'Content-type': 'application/json',
-      Authorization: `Bearer ${getUserToken()}`,
-    }),
-    mode: 'cors',
-  };
-  fetchMeStuff(`${API_URL}/offer/${offer}`, fetchOptions, setOfferInfo);
+
+  useEffect(() => {
+    const fetchOptions = {
+      headers: new Headers({
+        Accept: 'apllication/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getUserToken()}`,
+      }),
+      mode: 'cors',
+    };
+    fetchMeStuff(`${API_URL}/offer/${offer}`, fetchOptions, setOfferInfo);
+  }, []);
 
   const handleAccept = (offerStatusObject) => {
     const options = {
@@ -134,7 +137,10 @@ const ModalCandidates = ({ offer, handleClose }) => {
   };
 
   useEffect(() => {
-    fetchMeStuff(`${API_URL}/offerstatus/candidates`, options, setCandidatesList);
+    fetchMeStuff(`${API_URL}/offerstatus/candidates`, options, (res) => {
+      setCandidatesList(res);
+      console.log(res);
+    });
   }, [trigger]);
   return (
     <>
@@ -154,39 +160,42 @@ const ModalCandidates = ({ offer, handleClose }) => {
                   } else if (candidate.companyRejected === true) {
                     wrapperStyle = `${wrapperStyle} ${styles.companyRejected}`;
                   }
-                  return (
-                    <div className={wrapperStyle}>
-                      <p>{candidate.userId.name}</p>
-                      <div className={styles.optionsDiv}>
-                        {candidate.companyAccepted && (
+
+                  if (candidate.userId !== null) {
+                    return (
+                      <div className={wrapperStyle}>
+                        <p>{candidate.userId.name}</p>
+                        <div className={styles.optionsDiv}>
+                          {candidate.companyAccepted && (
+                            <FontAwesomeIcon
+                              icon="comments"
+                              className={`${styles.icon} ${styles.user}`}
+                              onClick={() => handleOpenChat(candidate.userId._id)}
+                            />
+                          )}
                           <FontAwesomeIcon
-                            icon="comments"
                             className={`${styles.icon} ${styles.user}`}
-                            onClick={() => handleOpenChat(candidate.userId._id)}
+                            icon="user"
+                            onClick={() => handleSeeCandidate(candidate.userId._id)}
                           />
-                        )}
-                        <FontAwesomeIcon
-                          className={`${styles.icon} ${styles.user}`}
-                          icon="user"
-                          onClick={() => handleSeeCandidate(candidate.userId._id)}
-                        />
-                        {!candidate.companyAccepted && !candidate.companyRejected && (
-                          <>
-                            <FontAwesomeIcon
-                              className={`${styles.icon} ${styles.accept}`}
-                              icon="check"
-                              onClick={() => handleAccept(candidate)}
-                            />
-                            <FontAwesomeIcon
-                              className={`${styles.icon} ${styles.reject}`}
-                              icon="times"
-                              onClick={() => handleReject(candidate._id)}
-                            />
-                          </>
-                        )}
+                          {!candidate.companyAccepted && !candidate.companyRejected && (
+                            <>
+                              <FontAwesomeIcon
+                                className={`${styles.icon} ${styles.accept}`}
+                                icon="check"
+                                onClick={() => handleAccept(candidate)}
+                              />
+                              <FontAwesomeIcon
+                                className={`${styles.icon} ${styles.reject}`}
+                                icon="times"
+                                onClick={() => handleReject(candidate._id)}
+                              />
+                            </>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  );
+                    );
+                  } else return null;
                 })}
               {candidatesList && candidatesList.length === 0 && (
                 <div className={styles.noCandidatesDiv}>
