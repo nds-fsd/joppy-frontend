@@ -8,21 +8,65 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
   const [newName, setNewName] = useState(userData.name);
   const [newBio, setNewBio] = useState(userData.bio);
   const [newLocation, setNewLocation] = useState(userData.location);
+  const [previewSource, setPreviewSource] = useState();
+  const [updatedImage, setUpdatedImage] = useState(userData.photo[0]);
+
   if (!open) {
     return null;
   }
-  getUserToken();
 
   const selectOptions = Object.values(locations).map((location) => ({
     value: location._id,
     label: location.name,
   }));
 
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+  };
+
+  const uploadImage = () => {
+    fetch(`${API_URL}/image/upload`, {
+      method: 'POST',
+      headers: new Headers({
+        Accept: 'application/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getUserToken()}`,
+      }),
+      body: JSON.stringify({ data: previewSource }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject();
+      })
+      .then((res) => {
+        console.log(res);
+        setUpdatedImage(res);
+      })
+      .catch();
+  };
+
+  console.log(updatedImage);
+
   const updateUser = () => {
+    if (previewSource && getUserToken()) {
+      uploadImage();
+    }
     const bodyInfo = {
       name: newName,
       bio: newBio,
       location: newLocation,
+      photo: updatedImage,
     };
     const options = {
       method: 'PUT',
@@ -47,6 +91,7 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
         .then(close())
         .catch();
     }
+    console.log(userData);
   };
 
   return (
@@ -62,7 +107,12 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
               className={styles.input}
             />
           </div>
-          <input type="file" />
+          <div className={styles.body}>
+            <div className={styles.headline}>Profile picture</div>
+            <input type="file" onChange={handleFileInputChange} />
+            <br />
+            {previewSource && <img src={previewSource} className={styles.preview} alt="chosen" />}
+          </div>
           <div className={styles.body}>
             <div className={styles.headline}>Location</div>
             {locations ? (

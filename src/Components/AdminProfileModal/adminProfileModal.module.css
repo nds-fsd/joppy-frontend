@@ -122,3 +122,12 @@
   display: grid;
   width: 7vw;
 }
+
+.preview {
+  position: relative;
+  margin-left: 50%;
+  left: -90px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+}
