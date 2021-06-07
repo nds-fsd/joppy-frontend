@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
-// import {Image} from 'cloudinary-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './profileIntro.module.css';
 import AdminProfileModal from '../AdminProfileModal';
 
 const ProfileIntro = ({ userData, locations, style1, style2, refresh }) => {
   const [openModal, setOpenModal] = useState(false);
-  const handleEditModal = () => setOpenModal(!openModal);
-
-  // {imageUrl && (
-  //   <img src={imageUrl} alt={imageAlt} className={styles.photo}/>
-  // )}
+  const handleEditModal = () => {
+    setOpenModal(!openModal);
+    refresh();
+  };
 
   return (
     <div className={styles.profileIntro} style={style1}>

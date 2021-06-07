@@ -51,17 +51,14 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
       })
       .then((res) => {
         console.log(res);
-        setUpdatedImage(res);
+        setUpdatedImage(res.url);
+        refresh();
+        console.log(updatedImage);
       })
       .catch();
   };
 
-  console.log(updatedImage);
-
   const updateUser = () => {
-    if (previewSource && getUserToken()) {
-      uploadImage();
-    }
     const bodyInfo = {
       name: newName,
       bio: newBio,
@@ -91,7 +88,6 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
         .then(close())
         .catch();
     }
-    console.log(userData);
   };
 
   return (
@@ -110,6 +106,8 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
           <div className={styles.body}>
             <div className={styles.headline}>Profile picture</div>
             <input type="file" onChange={handleFileInputChange} />
+            <input type="button" className={styles.saveButton} value="Save" onClick={uploadImage} />
+
             <br />
             {previewSource && <img src={previewSource} className={styles.preview} alt="chosen" />}
           </div>

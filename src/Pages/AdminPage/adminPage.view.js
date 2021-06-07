@@ -8,7 +8,7 @@ import AdminCandidates from '../../Components/AdminCandidates';
 import AdminProfile from '../../Components/AdminProfile';
 import { getSessionUserRole, getUserToken } from '../../Utils/Auth';
 
-const AdminPage = () => {
+const AdminPage = ({ refresh }) => {
   if (!getUserToken()) {
     return <Redirect to="/login" />;
   }
@@ -28,7 +28,7 @@ const AdminPage = () => {
           </Route>
           <Route exact path={`${ADMIN_PAGE}/profile`}>
             <div className={styles.link}>Profile</div>
-            <AdminProfile className={styles.container} />
+            <AdminProfile className={styles.container} refresh={refresh} />
           </Route>
           <Route path={`${ADMIN_PAGE}`}>
             <div className={styles.link}>Offers</div>

@@ -97,7 +97,11 @@ function App() {
           </Route>
           <Route path={ADMIN_PAGE}>
             {userInfo ? (
-              <AdminPage />
+              <AdminPage
+                refresh={() => {
+                  setRefresh(!refresh);
+                }}
+              />
             ) : (
               <div className="loaderDiv">
                 <Loader />
@@ -107,8 +111,8 @@ function App() {
           <Route exact path={PROFILE_PAGE}>
             <NavBar />
             <ProfilePage
-              refresh={(ref) => {
-                setRefresh(ref);
+              refresh={() => {
+                setRefresh(!refresh);
               }}
             />
           </Route>
