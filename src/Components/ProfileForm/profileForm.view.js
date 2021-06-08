@@ -147,8 +147,30 @@ const ProfileForm = () => {
         };
         fetchMeStuff(`${API_URL}/verify`, auth, setUserInfo);
       })
-      .then(history.push('/'))
-      .catch();
+      .then(() => {
+        const mailOptions = {
+          method: 'POST',
+          headers: new Headers({
+            Accept: 'apllication/json',
+            'Content-type': 'application/json',
+            Authorization: `Bearer ${getUserToken()}`,
+          }),
+          mode: 'cors',
+          body: JSON.stringify({
+            name: allData.name,
+            email: allData.email,
+          }),
+        };
+        fetch(`${API_URL}/send-email/register`, mailOptions).then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          return Promise.reject();
+        });
+      })
+      .catch()
+      .then(() => history.push('/'))
+      .catch((error) => console.log(error));
   };
 
   return (

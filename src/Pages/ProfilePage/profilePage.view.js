@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './profilePage.module.css';
 import Profile from '../../Components/Profile';
 import ProfileIntro from '../../Components/ProfileIntro';
 import ProfileEdit from '../../Components/ProfileEdit';
 import MyOffers from '../../Components/MyOffers';
+import Loader from '../../Components/Loader';
 import { ReactComponent as Plant } from '../../Images/plant.svg';
-import { getUserToken } from '../../Utils/Auth';
+import { getSessionUserRole, getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 import UserContext from '../../Contexts/userContext';
 import { API_URL } from '../../Routers/routers';
+import { ChatContextProvider } from '../../Contexts/chatContext';
+import { SocketContextProvider } from '../../Utils/Socket';
 
-const ProfilePage = () => {
+const ProfilePage = ({ refresh }) => {
   const { userInfo } = useContext(UserContext);
   const [userDataRaw, setUserDataRaw] = useState();
   const [skills, setSkills] = useState([]);
@@ -65,33 +69,60 @@ const ProfilePage = () => {
       .catch();
   }, []);
 
+  if (!getUserToken()) {
+    return <Redirect to="/login" />;
+  }
+
+  if (getSessionUserRole() && getSessionUserRole() === 'COMPANY_ROLE') {
+    return <Redirect to="/admin" />;
+  }
+
   return (
-    <div className={styles.profilePage}>
-      {userInfo && userDataRaw ? (
-        <>
-          <ProfileIntro userData={userInfo} locations={locations} />
-          <div className={styles.profileNavBar}>
-            <input type="button" className={styles.link} onClick={handleProfile} value="Profile" />
-            <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
-            <input type="button" className={styles.link} onClick={handleChat} value="My Offers" />
-          </div>
-          {!openEdit && !openChat ? <Profile userData={userInfo} /> : null}
-          {openEdit ? (
-            <ProfileEdit
-              userDataRaw={userDataRaw}
-              skills={skills}
-              positions={positions}
-              languages={languages}
-              close={handleEdit}
-            />
-          ) : null}
-          {openChat ? <MyOffers userData={userInfo} closeChat={handleChat} /> : null}
-        </>
-      ) : (
-        <p>loading...</p>
-      )}
-      <Plant className={styles.plant} />
-    </div>
+    <ChatContextProvider>
+      <SocketContextProvider>
+        <div className={styles.profilePage}>
+          {userInfo && userDataRaw ? (
+            <>
+              <ProfileIntro userData={userInfo} locations={locations} refresh={refresh} />
+              <div className={styles.profileNavBar}>
+                <div className={styles.profandedit}>
+                  <input
+                    type="button"
+                    className={styles.link}
+                    onClick={handleProfile}
+                    value="Profile"
+                  />
+                  <FontAwesomeIcon icon="edit" className={styles.icon} onClick={handleEdit} />
+                </div>
+                <input
+                  type="button"
+                  className={styles.link}
+                  onClick={handleChat}
+                  value="My Offers"
+                />
+              </div>
+              {!openEdit && !openChat ? <Profile userData={userInfo} /> : null}
+              {openEdit ? (
+                <ProfileEdit
+                  userDataRaw={userDataRaw}
+                  skills={skills}
+                  positions={positions}
+                  languages={languages}
+                  close={handleEdit}
+                  refresh={refresh}
+                />
+              ) : null}
+              {openChat ? <MyOffers userData={userInfo} closeChat={handleChat} /> : null}
+            </>
+          ) : (
+            <div className={styles.LoaderContainer}>
+              <Loader />
+            </div>
+          )}
+          <Plant className={styles.plant} />
+        </div>
+      </SocketContextProvider>
+    </ChatContextProvider>
   );
 };
 

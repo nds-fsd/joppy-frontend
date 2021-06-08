@@ -33,3 +33,9 @@
   color: #14142b;
   font-weight: 500;
 }
+
+@media (max-width: 600px) {
+  .logoContainer {
+    height: 8vh;
+  }
+}

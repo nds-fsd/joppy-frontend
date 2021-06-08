@@ -6,7 +6,7 @@ import ProfileList from '../ProfileList';
 import SalarySlider from '../SalarySlider';
 import { API_URL } from '../../Routers/routers';
 
-const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
+const ProfileEdit = ({ userDataRaw, skills, positions, languages, close, refresh }) => {
   const closeThis = () => {
     close(false);
   };
@@ -46,12 +46,10 @@ const ProfileEdit = ({ userDataRaw, skills, positions, languages, close }) => {
           }
           return Promise.reject();
         })
-        .then((res) => {
-          console.log(res);
-        })
         .catch();
     }
     closeThis();
+    refresh();
   };
 
   const addSkill = (selSkill) => {

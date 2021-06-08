@@ -18,6 +18,8 @@
 }
 
 .userPhoto {
+  position: inherit;
+  z-index: inherit;
   margin: auto;
   margin-top: -1em;
   width: 180px;
@@ -46,10 +48,16 @@
   position: inherit;
   z-index: inherit;
   color: #2b00a2;
-  margin-left: 38em;
+  margin-left: 85%;
   margin-top: 1em;
 }
 
 .icon:hover {
   transform: scale(1.05);
+}
+
+@media (max-width: 600px) {
+  .profileIntro {
+    width: 100%;
+  }
 }

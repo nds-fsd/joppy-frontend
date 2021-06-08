@@ -3,6 +3,7 @@ import styles from './joboffer.module.css';
 import CompanyIntro from '../CompanyIntro';
 import JobPosition from '../JobPosition';
 import Description from '../Description';
+import Loader from '../Loader';
 import { API_URL } from '../../Routers/routers';
 import { getUserToken } from '../../Utils/Auth';
 
@@ -25,7 +26,6 @@ const JobOffer = ({ offerInfo }) => {
         return Promise.reject();
       })
       .then((data) => {
-        console.log(data);
         setOfferData(data);
       })
       .catch();
@@ -38,7 +38,9 @@ const JobOffer = ({ offerInfo }) => {
       {offerData ? (
         <Description offerData={offerData} companyInfo={offerData.companyInfo} />
       ) : (
-        <p>loading</p>
+        <div className={styles.Loader}>
+          <Loader />
+        </div>
       )}
     </div>
   );

@@ -21,7 +21,7 @@
   background: #fcfcfc;
   box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 .link {
@@ -35,20 +35,43 @@
   margin-right: 13%;
   border: none;
   background: none;
+  cursor: pointer;
 }
 
 .link:hover {
   transform: scale(1.05);
 }
+.profandedit {
+  display: inline-flex;
+}
 
 .icon {
   position: inherit;
   color: #2b00a2;
-  margin-left: -27%;
   margin-top: 0.2em;
   z-index: inherit;
+  cursor: pointer;
 }
 
 .icon:hover {
   transform: scale(1.05);
+}
+
+.LoaderContainer {
+  position: relative;
+  top: 25%;
+  margin: auto;
+  max-width: 5%;
+}
+
+@media (max-width: 630px) {
+  .plant {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .profileNavBar {
+    width: 100%;
+  }
 }

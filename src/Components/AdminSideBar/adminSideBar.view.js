@@ -23,9 +23,9 @@ const AdminSideBar = () => {
         <Link to={`${ADMIN_PAGE}`} className={styles.link}>
           <p>Offers</p>
         </Link>
-        <Link to={`${ADMIN_PAGE}/candidates`} className={styles.link}>
+        {/* <Link to={`${ADMIN_PAGE}/candidates`} className={styles.link}>
           <p>Candidates</p>
-        </Link>
+        </Link> */}
 
         <h3>ACCOUNT</h3>
         <Link to={`${ADMIN_PAGE}/profile`} className={styles.link}>

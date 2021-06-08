@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './adminProfile.module.css';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
@@ -9,16 +9,27 @@ import AdminProfileModal from '../AdminProfileModal';
 import AdminProfSkills from '../AdminProfSkills';
 import AdminProfLanguages from '../AdminProfLanguages';
 import { API_URL } from '../../Routers/routers';
+import UserContext from '../../Contexts/userContext';
 
-const AdminProfile = () => {
+const AdminProfile = ({ refresh }) => {
+  const { userInfo } = useContext(UserContext);
   const [userData, setUserData] = useState();
   const [locations, setLocations] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [openSkills, setOpenSkills] = useState(false);
   const [openLanguages, setOpenLanguages] = useState(false);
-  const handleEditModal = () => setOpenModal(!openModal);
-  const handleEditSkills = () => setOpenSkills(!openModal);
-  const handleEditLanguages = () => setOpenLanguages(!openModal);
+  const handleEditModal = () => {
+    setOpenModal(!openModal);
+    refresh();
+  };
+  const handleEditSkills = () => {
+    setOpenSkills(!openModal);
+    refresh();
+  };
+  const handleEditLanguages = () => {
+    setOpenLanguages(!openModal);
+    refresh();
+  };
   const userSession = getSessionUser();
   const authObject = {
     headers: {
@@ -97,16 +108,13 @@ const AdminProfile = () => {
               </div>
             )}
           </FormBlock>
-          <FormBlock title="Media" icon={<FontAwesomeIcon icon="edit" className={styles.icon} />}>
-            <div>
-              <img src={userData.photo} alt="user pic" className={styles.userPhoto} />
-            </div>
-          </FormBlock>
+
           <AdminProfileModal
             open={openModal}
             close={() => setOpenModal(false)}
-            userData={userData}
+            userData={userInfo}
             locations={locations}
+            refresh={refresh}
           />
         </>
       ) : null}

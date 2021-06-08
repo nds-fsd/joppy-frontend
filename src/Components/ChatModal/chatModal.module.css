@@ -1,0 +1,108 @@
+.container {
+  height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  background: #2a00a2;
+  color: white;
+  width: 100%;
+  border-radius: 0.5em;
+}
+
+.userName {
+  margin-left: 1em;
+  font-size: 1.2em;
+}
+
+.closeButton {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 1em;
+  color: white;
+}
+
+.chatWindow {
+  flex-grow: 1;
+  background: #f3f3f3;
+  border-radius: 1em;
+  /* border: 1px solid black; */
+  width: 100%;
+  margin: 1em 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  border: 0.1em solid #2a00a2;
+  width: fit-content;
+  max-width: 60%;
+  padding: 0.4em 1em;
+  border-radius: 1em;
+  text-align: left;
+  line-height: 1em;
+  margin: 0.5em 1em;
+  font-size: 1rem;
+  background: #2a00a2;
+  color: #e4daff;
+  align-self: flex-start;
+}
+
+.mine {
+  align-self: flex-end;
+  text-align: right;
+  background: #e4daff;
+  color: #2a00a2;
+}
+
+.timeSent {
+  margin: 0;
+  margin-top: 0.2em;
+  opacity: 0.5;
+  font-size: 0.7em;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+  width: 100%;
+  height: 2.5em;
+}
+
+.textInput {
+  background: #eeeeee;
+  border: none;
+  flex-grow: 1;
+  height: inherit;
+  padding-left: 1em;
+  border-radius: 1em;
+  margin-right: 0.5em;
+  font-size: 1.1em;
+  outline: none;
+}
+
+.sendButton {
+  background: none;
+  border: none;
+  background-color: #2a00a2;
+  color: white;
+  margin-left: auto;
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 1.25rem;
+  cursor: pointer;
+}

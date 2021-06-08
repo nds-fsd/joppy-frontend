@@ -8,15 +8,32 @@ import { getUserToken } from '../../Utils/Auth';
 import { fetchMeStuff } from '../../Utils/functions';
 import CandidateProfileModal from '../CandidateProfileModal';
 import Modal from '../Modal';
+import ChatModal from '../ChatModal';
 import styles from './modalCandidates.module.css';
+import { useChatContext } from '../../Contexts/chatContext';
 
 const ModalCandidates = ({ offer, handleClose }) => {
   const [candidatesList, setCandidatesList] = useState();
+  const [offerInfo, setOfferInfo] = useState();
   const [trigger, setTrigger] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [openChat, setOpenChat] = useState(false);
   const [whichUserId, setWhichUserId] = useState();
+  const { setActiveChat } = useChatContext();
 
-  const handleAccept = (id) => {
+  useEffect(() => {
+    const fetchOptions = {
+      headers: new Headers({
+        Accept: 'apllication/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getUserToken()}`,
+      }),
+      mode: 'cors',
+    };
+    fetchMeStuff(`${API_URL}/offer/${offer}`, fetchOptions, setOfferInfo);
+  }, []);
+
+  const handleAccept = (offerStatusObject) => {
     const options = {
       method: 'PUT',
       headers: new Headers({
@@ -28,7 +45,32 @@ const ModalCandidates = ({ offer, handleClose }) => {
       body: JSON.stringify({ companyAccepted: true }),
     };
 
-    fetchMeStuff(`${API_URL}/offerstatus/${id}`, options, () => setTrigger(!trigger));
+    fetchMeStuff(`${API_URL}/offerstatus/${offerStatusObject._id}`, options, () =>
+      setTrigger(!trigger)
+    );
+
+    const mailOptions = {
+      method: 'POST',
+      headers: new Headers({
+        Accept: 'apllication/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getUserToken()}`,
+      }),
+      mode: 'cors',
+      body: JSON.stringify({
+        name: offerInfo.companyInfo.name,
+        email: offerStatusObject.userId.email,
+        title: offerInfo.title,
+      }),
+    };
+    fetch(`${API_URL}/send-email/accepted`, mailOptions)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        return Promise.reject();
+      })
+      .catch();
   };
 
   const handleReject = (id) => {
@@ -51,8 +93,35 @@ const ModalCandidates = ({ offer, handleClose }) => {
     setWhichUserId(candidateId);
   };
 
+  const handleOpenChat = (candidateId) => {
+    const options2 = {
+      method: 'POST',
+      headers: new Headers({
+        Accept: 'apllication/json',
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${getUserToken()}`,
+      }),
+      mode: 'cors',
+      body: JSON.stringify({ chatMembers: [candidateId] }),
+    };
+    fetchMeStuff(`${API_URL}/chat/search`, options2, (responseExisting) => {
+      if (responseExisting.length > 0) {
+        setActiveChat(responseExisting[0]);
+        setOpenChat(true);
+        setWhichUserId(candidateId);
+      } else {
+        fetchMeStuff(`${API_URL}/chat`, options2, (responseNew) => {
+          setActiveChat(responseNew);
+          setOpenChat(true);
+          setWhichUserId(candidateId);
+        });
+      }
+    });
+  };
+
   const handleModalClose = () => {
     setOpenModal(false);
+    setOpenChat(false);
     setWhichUserId(undefined);
   };
 
@@ -68,15 +137,19 @@ const ModalCandidates = ({ offer, handleClose }) => {
   };
 
   useEffect(() => {
-    fetchMeStuff(`${API_URL}/offerstatus/candidates`, options, setCandidatesList);
+    fetchMeStuff(`${API_URL}/offerstatus/candidates`, options, (res) => {
+      setCandidatesList(res);
+      console.log(res);
+    });
   }, [trigger]);
   return (
     <>
       {openModal && whichUserId && (
         <CandidateProfileModal handleClose={handleModalClose} userId={whichUserId} />
       )}
-      {!openModal && (
-        <Modal>
+      {openChat && whichUserId && <ChatModal handleClose={handleModalClose} userId={whichUserId} />}
+      {!openModal && !openChat && (
+        <Modal style={{ width: '40vw', 'max-height': '90vh' }}>
           <div className={styles.container}>
             <div className={styles.wrapperContainer}>
               {candidatesList &&
@@ -87,32 +160,42 @@ const ModalCandidates = ({ offer, handleClose }) => {
                   } else if (candidate.companyRejected === true) {
                     wrapperStyle = `${wrapperStyle} ${styles.companyRejected}`;
                   }
-                  return (
-                    <div className={wrapperStyle} onClick={() => console.log(candidate)}>
-                      <p>{candidate.userId.name}</p>
-                      <div className={styles.optionsDiv}>
-                        <FontAwesomeIcon
-                          className={`${styles.icon} ${styles.user}`}
-                          icon="user"
-                          onClick={() => handleSeeCandidate(candidate.userId._id)}
-                        />
-                        {!candidate.companyAccepted && !candidate.companyRejected && (
-                          <>
+
+                  if (candidate.userId !== null) {
+                    return (
+                      <div className={wrapperStyle}>
+                        <p>{candidate.userId.name}</p>
+                        <div className={styles.optionsDiv}>
+                          {candidate.companyAccepted && (
                             <FontAwesomeIcon
-                              className={`${styles.icon} ${styles.accept}`}
-                              icon="check"
-                              onClick={() => handleAccept(candidate._id)}
+                              icon="comments"
+                              className={`${styles.icon} ${styles.user}`}
+                              onClick={() => handleOpenChat(candidate.userId._id)}
                             />
-                            <FontAwesomeIcon
-                              className={`${styles.icon} ${styles.reject}`}
-                              icon="times"
-                              onClick={() => handleReject(candidate._id)}
-                            />
-                          </>
-                        )}
+                          )}
+                          <FontAwesomeIcon
+                            className={`${styles.icon} ${styles.user}`}
+                            icon="user"
+                            onClick={() => handleSeeCandidate(candidate.userId._id)}
+                          />
+                          {!candidate.companyAccepted && !candidate.companyRejected && (
+                            <>
+                              <FontAwesomeIcon
+                                className={`${styles.icon} ${styles.accept}`}
+                                icon="check"
+                                onClick={() => handleAccept(candidate)}
+                              />
+                              <FontAwesomeIcon
+                                className={`${styles.icon} ${styles.reject}`}
+                                icon="times"
+                                onClick={() => handleReject(candidate._id)}
+                              />
+                            </>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  );
+                    );
+                  } else return null;
                 })}
               {candidatesList && candidatesList.length === 0 && (
                 <div className={styles.noCandidatesDiv}>

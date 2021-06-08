@@ -24,4 +24,5 @@ export const setUserSession = (sessionData) => {
 
 export const removeSession = () => {
   deleteStorageObject('user-session');
+  deleteStorageObject('active-chat');
 };

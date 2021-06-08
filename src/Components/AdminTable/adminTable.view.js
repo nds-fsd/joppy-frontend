@@ -13,6 +13,8 @@ import { getUserToken } from '../../Utils/Auth';
 import ModalViewOffer from '../ModalViewOffer/modalViewOffer.view';
 import Loader from '../Loader';
 import { API_URL } from '../../Routers/routers';
+import { ChatContextProvider } from '../../Contexts/chatContext';
+import { SocketContextProvider } from '../../Utils/Socket';
 
 const AdminTable = ({ endpoint }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -102,7 +104,11 @@ const AdminTable = ({ endpoint }) => {
         <ModalViewOffer handleClose={() => setOpenModal(false)} offerId={whichOffer} />
       )}
       {openModal && whichModal === 'candidates' && (
-        <ModalCandidates handleClose={() => setOpenModal(false)} offer={whichOffer} />
+        <ChatContextProvider>
+          <SocketContextProvider>
+            <ModalCandidates handleClose={() => setOpenModal(false)} offer={whichOffer} />
+          </SocketContextProvider>
+        </ChatContextProvider>
       )}
       <div className={styles.topRow}>
         <SearchBar handleQuery={(q) => setSearchQuery(q)} />
@@ -125,7 +131,11 @@ const AdminTable = ({ endpoint }) => {
         <p className={styles.firstTableRowItem}>Creation Date</p>
       </div>
       <div className={styles.tableContents}>
-        {isLoading && <Loader />}
+        {isLoading && (
+          <div className={styles.loaderDiv}>
+            <Loader />
+          </div>
+        )}
         {!isLoading &&
           responseArray.map((object) => (
             <div className={styles.tableRow}>

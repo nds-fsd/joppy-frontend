@@ -4,6 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1em;
 }
 
 .spinnerContainer {
@@ -11,7 +12,7 @@
   animation: rotation 3s infinite linear;
 }
 
-.spinner {
+.LoaderSpinner {
   height: inherit;
   width: inherit;
 }
