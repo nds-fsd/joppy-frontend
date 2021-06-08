@@ -106,10 +106,12 @@ const LoginForm = () => {
         </div>
         <input type="submit" className={styles.submit} />
         <div className={styles.noAccount}>
-          <p>No account? Create one </p>
-          <Link to={REGISTER_PAGE} className={styles.link}>
-            here
-          </Link>
+          <p>
+            No account? Create one
+            <Link to={REGISTER_PAGE} className={styles.link}>
+              here
+            </Link>
+          </p>
         </div>
       </form>
       <img src={Plant} alt="plant" className={styles.plant} />

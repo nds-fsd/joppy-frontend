@@ -26,7 +26,6 @@ const JobOffer = ({ offerInfo }) => {
         return Promise.reject();
       })
       .then((data) => {
-        console.log(data);
         setOfferData(data);
       })
       .catch();
