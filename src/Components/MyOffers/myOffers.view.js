@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getUserToken, getSessionUser } from '../../Utils/Auth';
 import styles from './myOffers.module.css';
 import AcceptedOffer from '../AcceptedOffer';
+import Loader from '../Loader';
 import { API_URL } from '../../Routers/routers';
 
 const MyOffers = ({ userData }) => {
@@ -27,7 +28,6 @@ const MyOffers = ({ userData }) => {
         .then((res) => res.json())
         .then((data) => {
           setOffers(data);
-          console.log(offers);
         })
         .catch();
     }
@@ -35,14 +35,28 @@ const MyOffers = ({ userData }) => {
 
   return (
     <div className={styles.myOffers}>
-      <p>Take a look at the offers you are interested in and start contacting the companies!</p>
-      <div className={styles.chat}>
+      {offers === undefined || offers.length < 1 ? (
+        <div className={styles.text}>
+          <p>You have no accepted offers.</p> <br />
+          <p> Go back to the offers page to find your ideal job!</p>
+        </div>
+      ) : (
+        <div className={styles.text}>
+          <p>
+            Take a look at the offers you are interested in <br /> and start contacting the
+            companies!
+          </p>
+        </div>
+      )}
+      <div className={styles.jobOffer}>
         {offers ? (
           offers.map((offer) => (
             <AcceptedOffer offer={offer} userData={userData} refresh={refresh} />
           ))
         ) : (
-          <p>loading...</p>
+          <div className={styles.Loader}>
+            <Loader />
+          </div>
         )}
       </div>
     </div>

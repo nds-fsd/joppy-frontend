@@ -9,3 +9,22 @@
   background: #fcfcfc;
   box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
 }
+@media (max-width: 600px) {
+  .myOffers {
+    width: 100%;
+  }
+}
+
+.text {
+  position: inherit;
+  margin: auto;
+  width: 70%;
+  color: #4e4b66;
+  text-align: center;
+}
+
+.Loader {
+  position: inherit;
+  margin: auto;
+  width: 20%;
+}

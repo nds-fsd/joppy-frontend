@@ -6,10 +6,11 @@
   background-color: #5f2eea;
   height: 48px;
   width: 48px;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   border-radius: 50px;
   border-color: #5f2eea;
+  cursor: pointer;
 }
 
 .menuButton:hover {
@@ -17,35 +18,39 @@
   background-color: #fcfcfc;
   transform: scale(1.05);
 }
+.tip {
+  width: 15px;
+  height: 15px;
+  background: #d9dbe9;
+  position: absolute;
+  z-index: 0;
+  top: -0.4em;
+  left: 2.2em;
+  transform: rotate(45deg);
+}
 
 .menuContent {
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 12px;
+  padding: 2%;
   position: absolute;
-  width: 90px;
-  height: 80px;
-  right: 14%;
-  top: 60px;
+  min-height: 110%;
+  right: 15.8%;
+  top: 4em;
   background: #d9dbe9;
   border-radius: 16px;
   color: #2a00a2;
   font-size: 18px;
-  line-height: 34px;
   letter-spacing: 0.75px;
-  flex: none;
-  order: 1;
   margin: 0px 8px;
 }
 
 .Link {
-  position: absolute;
+  position: relative;
   color: #2a00a2;
   font-size: 18px;
-  line-height: 34px;
+  text-decoration: none;
+  display: grid;
+  text-align: center;
 }
 
 .Link:hover {

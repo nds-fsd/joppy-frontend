@@ -10,6 +10,12 @@
   box-shadow: 0 4px 10px 0 rgb(189 208 223 / 25%);
 }
 
+@media (max-width: 600px) {
+  .profile {
+    width: 100%;
+  }
+}
+
 .icon {
   right: 0px;
   z-index: 1;
@@ -45,4 +51,9 @@
   height: 2em;
   margin-bottom: 1em;
   margin-right: 1em;
+}
+
+.Loader {
+  position: inherit;
+  width: 50%;
 }

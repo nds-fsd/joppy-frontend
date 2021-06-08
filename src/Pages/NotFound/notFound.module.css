@@ -1,0 +1,37 @@
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #fcfcfc;
+}
+
+.displayDiv {
+  display: flex;
+  align-items: center;
+}
+
+.halfLogoContainer {
+  height: 10em;
+}
+
+.halfLogo {
+  height: inherit;
+  width: inherit;
+}
+.numberFour {
+  font-size: 10em;
+  margin: 0 0.2em;
+}
+
+.message {
+  text-align: center;
+  font-size: 2em;
+}
+
+.messageAlt {
+  margin-top: 0;
+  font-size: 1.5em;
+}

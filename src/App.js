@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCheck,
@@ -24,9 +24,10 @@ import {
   faComments,
   faEnvelope,
   faTrashAlt,
+  faPaperPlane,
 } from '@fortawesome/free-solid-svg-icons';
 import { getUserToken } from './Utils/Auth';
-import styles from './App.css';
+import './App.css';
 import { OFFER_PAGE, PROFILE_PAGE, REGISTER_PAGE, LOGIN_PAGE, ADMIN_PAGE } from './Routers/routers'; //eslint-disable-line
 import OfferPage from './Pages/OfferPage';
 import ProfilePage from './Pages/ProfilePage';
@@ -37,7 +38,8 @@ import AdminPage from './Pages/AdminPage';
 import UserContext from './Contexts/userContext';
 import { fetchMeStuff } from './Utils/functions';
 import { API_URL } from './Routers/routers'; //eslint-disable-line
-// import Loader from './Components/Loader';
+import Loader from './Components/Loader';
+import NotFound from './Pages/NotFound';
 
 library.add(
   faCheck,
@@ -61,12 +63,14 @@ library.add(
   faEuroSign,
   faEnvelope,
   faComments,
-  faTrashAlt
+  faTrashAlt,
+  faPaperPlane
 );
 
 function App() {
   const [userInfo, setUserInfo] = useState();
   const value = { userInfo, setUserInfo };
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const userToken = getUserToken();
@@ -79,28 +83,47 @@ function App() {
       };
       fetchMeStuff(`${API_URL}/verify`, options, setUserInfo);
     }
-  }, []);
+  }, [refresh]);
 
   return (
     <Router>
       <UserContext.Provider value={value}>
-        <div className={styles.App}>
-          <Switch>
-            <Route path={REGISTER_PAGE}>{userInfo ? <Redirect to="/" /> : <RegisterPage />}</Route>
-            <Route path={LOGIN_PAGE}>{userInfo ? <Redirect to="/" /> : <LoginPage />}</Route>
-            <Route path={ADMIN_PAGE}>{userInfo ? <AdminPage /> : <h1>Nope</h1>}</Route>
-            <div className={styles.main}>
-              <Route exact path={PROFILE_PAGE}>
-                <NavBar />
-                <ProfilePage />
-              </Route>
-              <Route exact path={OFFER_PAGE}>
-                <NavBar />
-                <OfferPage />
-              </Route>
-            </div>
-          </Switch>
-        </div>
+        <Switch>
+          <Route path={REGISTER_PAGE}>
+            <RegisterPage />
+          </Route>
+          <Route path={LOGIN_PAGE}>
+            <LoginPage />
+          </Route>
+          <Route path={ADMIN_PAGE}>
+            {userInfo ? (
+              <AdminPage
+                refresh={() => {
+                  setRefresh(!refresh);
+                }}
+              />
+            ) : (
+              <div className="loaderDiv">
+                <Loader />
+              </div>
+            )}
+          </Route>
+          <Route exact path={PROFILE_PAGE}>
+            <NavBar />
+            <ProfilePage
+              refresh={() => {
+                setRefresh(!refresh);
+              }}
+            />
+          </Route>
+          <Route exact path={OFFER_PAGE}>
+            <NavBar />
+            <OfferPage />
+          </Route>
+          <Route>
+            <NotFound />
+          </Route>
+        </Switch>
       </UserContext.Provider>
     </Router>
   );

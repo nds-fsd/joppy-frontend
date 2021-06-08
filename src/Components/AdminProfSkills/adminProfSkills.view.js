@@ -50,9 +50,6 @@ const AdminProfSkills = ({ userSkills, close }) => {
           }
           return Promise.reject();
         })
-        .then((res) => {
-          console.log(res);
-        })
         .then(close())
         .catch();
     }
