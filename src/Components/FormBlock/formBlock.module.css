@@ -30,3 +30,9 @@
   padding: 0;
   margin-bottom: 2em;
 }
+
+@media (max-width: 600px) {
+  .formBlock {
+    width: 85vw;
+  }
+}
