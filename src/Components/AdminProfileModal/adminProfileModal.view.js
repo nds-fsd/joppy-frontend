@@ -10,6 +10,9 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
   const [newLocation, setNewLocation] = useState(userData.location);
   const [previewSource, setPreviewSource] = useState();
   const [updatedImage, setUpdatedImage] = useState(userData.photo[0]);
+  const [showSave, setShowSave] = useState(false);
+  const [uploadStyle, setUploadStyle] = useState(`${styles.notUploaded}`);
+  const [buttonValue, setButtonValue] = useState('Save');
 
   if (!open) {
     return null;
@@ -26,11 +29,20 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
     reader.onloadend = () => {
       setPreviewSource(reader.result);
     };
+    setShowSave(true);
+
+    setButtonValue('Save');
+    setUploadStyle(`${styles.notUploaded}`);
   };
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     previewFile(file);
+  };
+
+  const changeStyle = () => {
+    setButtonValue('Saved');
+    setUploadStyle(`${styles.okUploaded}`);
   };
 
   const uploadImage = () => {
@@ -52,6 +64,7 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
       .then((res) => {
         console.log(res);
         setUpdatedImage(res.url);
+        changeStyle();
         refresh();
         console.log(updatedImage);
       })
@@ -105,8 +118,19 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
           </div>
           <div className={styles.body}>
             <div className={styles.headline}>Profile picture</div>
-            <input type="file" onChange={handleFileInputChange} />
-            <input type="button" className={styles.saveButton} value="Save" onClick={uploadImage} />
+            <div className={styles.chooseFile}>
+              <label className={styles.inputFile}>
+                <input type="file" className={styles.fileButton} onChange={handleFileInputChange} />
+              </label>
+              {showSave && (
+                <input
+                  type="button"
+                  className={uploadStyle}
+                  value={buttonValue}
+                  onClick={uploadImage}
+                />
+              )}
+            </div>
 
             <br />
             {previewSource && <img src={previewSource} className={styles.preview} alt="chosen" />}
