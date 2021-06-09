@@ -8,29 +8,53 @@ const Profile = ({ userData, style }) => (
     {userData ? (
       <>
         <div className={styles.headline}>Short bio</div>
-        {userData.bio ? <p className={styles.infoText}>{userData.bio}</p> : null}
-        <div className={styles.headline}>Roles</div>
+        {userData.bio ? (
+          <p className={styles.infoText}>{userData.bio}</p>
+        ) : (
+          <p className={styles.infoText}>Add a short bio.</p>
+        )}
         {userData.positions
-          ? userData.positions.map((position) => <Tag name={position.name.name} isActive />)
+          ? userData.positions.map((position) => (
+              <>
+                <div className={styles.headline}>Roles</div>
+                <Tag name={position.name.name} isActive />
+              </>
+            ))
           : null}
-        <div className={styles.headline}>Skills</div>
         <div>
           {userData.skills
-            ? userData.skills.map((skill) => <Tag name={skill.name.skill} isActive />)
+            ? userData.skills.map((skill) => (
+                <>
+                  <div className={styles.headline}>Skills</div>
+                  <Tag name={skill.name.skill} isActive />
+                </>
+              ))
             : null}
         </div>
-        <div className={styles.headline}>Work Experience</div>
         {userData.workExperiences
-          ? userData.workExperiences.map((item) => <div className={styles.itemText}>{item}</div>)
+          ? userData.workExperiences.map((item) => (
+              <>
+                <div className={styles.headline}>Work Experience</div>
+                <div className={styles.itemText}>{item}</div>
+              </>
+            ))
           : null}
-        <div className={styles.headline}>Education</div>
         {userData.education
-          ? userData.education.map((item) => <div className={styles.itemText}>{item}</div>)
+          ? userData.education.map((item) => (
+              <>
+                <div className={styles.headline}>Education</div>
+                <div className={styles.itemText}>{item}</div>
+              </>
+            ))
           : null}{' '}
-        <div className={styles.headline}>Languages</div>
         <div>
           {userData
-            ? userData.languages.map((language) => <Tag name={language.name} isActive />)
+            ? userData.languages.map((language) => (
+                <>
+                  <div className={styles.headline}>Languages</div>
+                  <Tag name={language.name} isActive />
+                </>
+              ))
             : null}
         </div>
       </>

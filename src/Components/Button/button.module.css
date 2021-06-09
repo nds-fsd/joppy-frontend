@@ -1,4 +1,8 @@
 .icon {
-  font-size: 30px;
-  margin-bottom: -15px;
+  position: relative;
+  font-size: 22px;
+  margin-top: 20px;
+  margin-right: 4px;
+  top: -0.5em;
+  color: #4e4b66;
 }
