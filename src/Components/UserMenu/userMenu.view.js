@@ -32,7 +32,7 @@ const UserMenu = () => {
           <input
             type="button"
             onClick={displayMenu}
-            onPointerOver={displayMenu}
+            // onPointerOver={displayMenu}
             className={styles.menuButton}
             value={uName.charAt(0)}
           />

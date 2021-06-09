@@ -18,6 +18,16 @@
   background-color: #fcfcfc;
   transform: scale(1.05);
 }
+
+@media (max-width: 600px) {
+  .menuButton {
+    right: 5%;
+    top: 15%;
+    height: 35px;
+    width: 35px;
+  }
+}
+
 .tip {
   width: 15px;
   height: 15px;
@@ -42,6 +52,13 @@
   font-size: 18px;
   letter-spacing: 0.75px;
   margin: 0px 8px;
+}
+
+@media (max-width: 600px) {
+  .menuContent {
+    right: -1.5%;
+    top: 3em;
+  }
 }
 
 .Link {

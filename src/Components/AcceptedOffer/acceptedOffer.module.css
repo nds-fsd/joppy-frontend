@@ -142,3 +142,9 @@
   padding-left: 3%;
   padding-right: 3%;
 }
+
+@media (max-width: 600px) {
+  .seeOfferModal {
+    width: 90%;
+  }
+}
