@@ -135,7 +135,6 @@ const ProfileForm = () => {
         return Promise.reject();
       })
       .then((res) => {
-        console.log(res);
         setUserSession(res);
       })
       .then(() => {

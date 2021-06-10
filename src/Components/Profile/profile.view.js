@@ -13,49 +13,64 @@ const Profile = ({ userData, style }) => (
         ) : (
           <p className={styles.infoText}>Add a short bio.</p>
         )}
-        {userData.positions
-          ? userData.positions.map((position) => (
+
+        <div className={styles.headline}>Roles</div>
+        {userData.positions && userData.positions.length > 0 ? (
+          userData.positions.map((position) => (
+            <>
+              <Tag name={position.name.name} isActive />
+            </>
+          ))
+        ) : (
+          <p className={styles.infoText}>Add your roles in the profile editor.</p>
+        )}
+
+        <div className={styles.headline}>Skills</div>
+        <div>
+          {userData.skills && userData.skills.length > 0 ? (
+            userData.skills.map((skill) => (
               <>
-                <div className={styles.headline}>Roles</div>
-                <Tag name={position.name.name} isActive />
+                <Tag name={skill.name.skill} isActive />
               </>
             ))
-          : null}
-        <div>
-          {userData.skills
-            ? userData.skills.map((skill) => (
-                <>
-                  <div className={styles.headline}>Skills</div>
-                  <Tag name={skill.name.skill} isActive />
-                </>
-              ))
-            : null}
+          ) : (
+            <p className={styles.infoText}>Add your skills in the profile editor.</p>
+          )}
         </div>
-        {userData.workExperiences
-          ? userData.workExperiences.map((item) => (
-              <>
-                <div className={styles.headline}>Work Experience</div>
-                <div className={styles.itemText}>{item}</div>
-              </>
-            ))
-          : null}
-        {userData.education
-          ? userData.education.map((item) => (
-              <>
-                <div className={styles.headline}>Education</div>
-                <div className={styles.itemText}>{item}</div>
-              </>
-            ))
-          : null}{' '}
+
+        <div className={styles.headline}>Work Experience</div>
+        {userData.workExperiences && userData.workExperiences.length > 0 ? (
+          userData.workExperiences.map((item) => (
+            <>
+              <div className={styles.itemText}>{item}</div>
+            </>
+          ))
+        ) : (
+          <p className={styles.infoText}>Add your experience in the profile editor.</p>
+        )}
+
+        <div className={styles.headline}>Education</div>
+        {userData.education && userData.education.length > 0 ? (
+          userData.education.map((item) => (
+            <>
+              <div className={styles.itemText}>{item}</div>
+            </>
+          ))
+        ) : (
+          <p className={styles.infoText}>Add your studies in the profile editor.</p>
+        )}
+
+        <div className={styles.headline}>Languages</div>
         <div>
-          {userData
-            ? userData.languages.map((language) => (
-                <>
-                  <div className={styles.headline}>Languages</div>
-                  <Tag name={language.name} isActive />
-                </>
-              ))
-            : null}
+          {userData && userData.languages.length > 0 ? (
+            userData.languages.map((language) => (
+              <>
+                <Tag name={language.name} isActive />
+              </>
+            ))
+          ) : (
+            <p className={styles.infoText}>Add your languages in the profile editor.</p>
+          )}
         </div>
       </>
     ) : (

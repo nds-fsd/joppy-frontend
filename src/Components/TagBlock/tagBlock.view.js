@@ -3,8 +3,6 @@ import styles from './tagBlock.module.css';
 import Tag from '../Tag';
 
 const TagBlock = ({ array, tagClicked, attributeName, otherArray, yearsOnChange, noYears }) => {
-  console.log(array);
-  console.log(otherArray);
   const nameById = (id, arr, attribute) => {
     const object = arr.find((item) => item._id === id);
     return object[attribute];

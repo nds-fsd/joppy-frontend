@@ -63,7 +63,9 @@ const SnoozedOffers = ({ snoozedOfferArray }) => {
   return (
     <div className={styles.snoozedPage}>
       <NavBar />
-      {snoozedOfferArray !== undefined && snoozedOfferArray.length >= 1 ? (
+      {snoozedOfferArray !== undefined &&
+      snoozedOfferArray.length >= 1 &&
+      count < snoozedOfferArray.length ? (
         <>
           <div className={styles.offerBody}>
             <JobOffer offerInfo={snoozedOfferArray[count].offerId._id} />

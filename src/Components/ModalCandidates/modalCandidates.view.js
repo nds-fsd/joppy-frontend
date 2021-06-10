@@ -139,7 +139,6 @@ const ModalCandidates = ({ offer, handleClose }) => {
   useEffect(() => {
     fetchMeStuff(`${API_URL}/offerstatus/candidates`, options, (res) => {
       setCandidatesList(res);
-      console.log(res);
     });
   }, [trigger]);
   return (
