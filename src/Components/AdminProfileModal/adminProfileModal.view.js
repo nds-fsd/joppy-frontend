@@ -62,11 +62,9 @@ const AdminProfileModal = ({ open, close, userData, locations, refresh }) => {
         return Promise.reject();
       })
       .then((res) => {
-        console.log(res);
         setUpdatedImage(res.url);
         changeStyle();
         refresh();
-        console.log(updatedImage);
       })
       .catch();
   };

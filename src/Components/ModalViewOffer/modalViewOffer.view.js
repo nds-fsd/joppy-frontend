@@ -4,7 +4,7 @@ import styles from './modalViewOffer.module.css';
 import JobOffer from '../JobOffer';
 
 const ModalViewOffer = ({ offerId, handleClose }) => (
-  <Modal>
+  <Modal style={{ 'max-height': '90vh' }}>
     <div className={styles.container}>
       <div className={styles.offerContainer}>
         <p className={styles.title}>This is what candidates will see</p>

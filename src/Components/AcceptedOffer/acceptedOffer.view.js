@@ -18,6 +18,8 @@ const AcceptedOffer = ({ offer, refresh }) => {
 
   const { setActiveChat } = useChatContext();
 
+  console.log(offer);
+
   const options2 = {
     method: 'POST',
     headers: new Headers({
@@ -104,7 +106,6 @@ const AcceptedOffer = ({ offer, refresh }) => {
             {offer.companyAccepted ? (
               <>
                 <FontAwesomeIcon icon="comments" className={styles.icon} onClick={handleChat} />
-                <FontAwesomeIcon icon="envelope" className={styles.icon} />
               </>
             ) : null}
             <FontAwesomeIcon icon="trash-alt" className={styles.delete} onClick={rejectStatus} />

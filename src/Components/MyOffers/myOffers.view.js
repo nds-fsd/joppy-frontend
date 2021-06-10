@@ -50,9 +50,12 @@ const MyOffers = ({ userData }) => {
       )}
       <div className={styles.jobOffer}>
         {offers ? (
-          offers.map((offer) => (
-            <AcceptedOffer offer={offer} userData={userData} refresh={refresh} />
-          ))
+          offers.map(
+            (offer) =>
+              offer.offerId !== null && (
+                <AcceptedOffer offer={offer} userData={userData} refresh={refresh} />
+              )
+          )
         ) : (
           <div className={styles.Loader}>
             <Loader />

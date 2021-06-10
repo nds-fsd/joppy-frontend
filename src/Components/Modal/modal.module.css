@@ -30,6 +30,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: width 50ms;
+}
+
+@media (max-width: 700px) {
+  .modalBody {
+    width: 90vw;
+  }
 }
 
 .closeButton {

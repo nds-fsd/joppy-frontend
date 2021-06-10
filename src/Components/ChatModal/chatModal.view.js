@@ -48,7 +48,6 @@ const ChatModal = ({ handleClose, userId }) => {
   useEffect(() => {
     if (activeChat) {
       joinChat(activeChat._id);
-      console.log(activeChat._id);
       subscribeIncomingMessage(() => {
         setRefresh(true);
       });
@@ -96,7 +95,7 @@ const ChatModal = ({ handleClose, userId }) => {
   };
 
   return (
-    <Modal handleClose={handleClose} style={{ width: '40vw', 'max-height': '90vh' }}>
+    <Modal handleClose={handleClose} style={{ 'max-height': '90vh' }}>
       <div className={styles.container}>
         <div className={styles.nav}>
           <p className={styles.userName}>{userName}</p>

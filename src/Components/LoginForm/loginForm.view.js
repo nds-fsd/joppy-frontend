@@ -113,6 +113,14 @@ const LoginForm = () => {
             </Link>
           </p>
         </div>
+        <div className={`${styles.noAccount} ${styles.mailUs}`}>
+          <p>
+            <a href="mailto:devradarapp@gmail.com" className={styles.link}>
+              Contact us
+            </a>{' '}
+            to register as company
+          </p>
+        </div>
       </form>
       <img src={Plant} alt="plant" className={styles.plant} />
     </div>

@@ -37,7 +37,6 @@ const ProfilePage = ({ refresh }) => {
     setOpenEdit(false);
     setOpenChat(false);
   };
-  console.log(openChat);
   const userToken = getUserToken();
   const authObject = {
     headers: {

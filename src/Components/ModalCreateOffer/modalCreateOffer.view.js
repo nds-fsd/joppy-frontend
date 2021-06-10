@@ -4,7 +4,7 @@ import OfferForm from '../OfferForm/offerForm.view';
 import styles from './modalCreateOffer.module.css';
 
 const ModalCreateOffer = ({ handleClose, handleOfferCreated }) => (
-  <Modal handleClose={handleClose}>
+  <Modal handleClose={handleClose} style={{ 'max-height': '90vh' }}>
     <div className={styles.container}>
       <OfferForm handleClose={handleClose} handleOfferCreated={handleOfferCreated} />
     </div>
